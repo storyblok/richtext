@@ -381,6 +381,29 @@ const paragraph = {
     },
   ],
 }
+
+const link = {
+  type: 'paragraph',
+  content: [
+    {
+      text: 'info@marvin-rudolph.de',
+      type: 'text',
+      marks: [
+        {
+          type: 'link',
+          attrs: {
+            href: 'info@marvin-rudolph.de',
+            uuid: null,
+            anchor: null,
+            target: null,
+            linktype: 'email',
+          },
+        },
+      ],
+    },
+  ],
+}
+
 const html = RitchText().render(doc)
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `

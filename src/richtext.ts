@@ -1,6 +1,5 @@
-/* eslint-disable ts/no-use-before-define */
-import { BlockTypes, MarkTypes, TextTypes } from './types'
-import type { Node, NodeTypes, RichtextData, TextNode } from './types'
+import { BlockTypes, LinkTypes, MarkTypes, TextTypes } from './types'
+import type { MarkNode, Node, NodeTypes, RichtextData, TextNode } from './types'
 
 // Converts attributes object to a string of HTML attributes
 const attrsToString = (attrs: Record<string, string> = {}) => Object.keys(attrs)
@@ -25,18 +24,54 @@ export function RitchText() {
   const headingResolver = (node: Node) => `<h${node.attrs?.level} ${attrsToString(node.attrs)}>${node.children?.join('')}</h${node.attrs?.level}>`
 
   // Mark resolver for text formatting
-  const markResolver = (tag: string) => (text: string, attrs: Record<string, string> = {}) =>
+  const markResolver = (tag: string) => ({ text, attrs }: MarkNode) =>
     `<${tag} ${attrsToString(attrs)}>${text}</${tag}>`
 
   // Resolver for plain text nodes
-  const textResolver = (node: TextNode): string => {
-    return renderTextWithMarks(escapeHtml(node.text || ''), node.marks)
+  const textResolver = ({ marks, ...node }: TextNode) => {
+    if ('text' in node) {
+      // Now TypeScript knows that 'node' is a TextNode, so 'marks' can be accessed
+      return marks
+        ? marks.reduce(
+          (text: string, mark: MarkNode) => render({ ...mark, text }),
+          render(node),
+        )
+        : escapeHtml(node.text)
+    }
+  }
+
+  // Resolver for link nodes
+
+  const linkResolver = (node: Node): string => {
+    let href = ''
+    const targetAttr = node.attrs?.target ? ` target="${node.attrs.target}"` : ''
+
+    switch (node.attrs?.linktype) {
+      case LinkTypes.ASSET:
+      case LinkTypes.URL:
+        href = node.attrs?.href
+        break
+      case LinkTypes.EMAIL:
+        href = `mailto:${node.attrs?.href}`
+        break
+      case LinkTypes.STORY:
+        // Assuming you are not using Vue Router in a vanilla implementation.
+        // Directly link to the story URL.
+        href = node.attrs?.href
+        break
+      default:
+        // Optional: Handle default case or log an error.
+        break
+    }
+
+    return `<a href="${href}"${targetAttr}>${node.text}</a>`
   }
 
   const resolvers = new Map<string, (node: Node) => string>([
     [BlockTypes.DOCUMENT, ({ children }) => `<div>${children?.join('')}</div>`],
     [BlockTypes.HEADING, headingResolver],
     [BlockTypes.PARAGRAPH, nodeResolver('p')],
+    [MarkTypes.LINK, linkResolver],
     [TextTypes.TEXT, textResolver],
     [MarkTypes.BOLD, markResolver('strong')],
     [MarkTypes.ITALIC, markResolver('em')],
@@ -49,12 +84,12 @@ export function RitchText() {
   ])
 
   // Combines text and its marks into a styled HTML string
-  const renderTextWithMarks = (text: string, marks: Node[] = []) => {
+  /*  const renderTextWithMarks = (text: string, marks: Node[] = []) => {
     return marks.reduceRight((acc, mark) => {
       const resolver = resolvers.get(mark.type)
       return resolver ? resolver(acc) : acc // Apply the mark using its resolver
     }, text)
-  }
+  } */
 
   function renderNode(node: RichtextData): string {
     const resolver = resolvers.get(node.type)
@@ -72,7 +107,6 @@ export function RitchText() {
     return resolver({
       ...node,
       children: children as Node[], // Fix: Update the type of 'children' to Node[]
-      type: node.type as NodeTypes,
     })
   }
 
