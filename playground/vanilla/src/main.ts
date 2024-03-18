@@ -11,6 +11,7 @@ const doc = {
     },
     {
       type: 'paragraph',
+      attrs: { id: 'paragraph-id', class: 'bg-red' },
       content: [
         {
           text: 'Para',

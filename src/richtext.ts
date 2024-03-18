@@ -1,5 +1,5 @@
 import { BlockTypes, LinkTypes, MarkTypes, TextTypes } from './types'
-import type { MarkNode, Node, NodeTypes, RichtextData, TextNode } from './types'
+import type { MarkNode, Node, RichtextData, TextNode } from './types'
 
 // Converts attributes object to a string of HTML attributes
 const attrsToString = (attrs: Record<string, string> = {}) => Object.keys(attrs)
@@ -64,14 +64,19 @@ export function RitchText() {
         break
     }
 
-    return `<a href="${href}"${targetAttr}>${node.text}</a>`
+    return `<a ${attrsToString(node.attrs)} href="${href}"${targetAttr}>${node.text}</a>`
   }
 
   const resolvers = new Map<string, (node: Node) => string>([
     [BlockTypes.DOCUMENT, ({ children }) => `<div>${children?.join('')}</div>`],
     [BlockTypes.HEADING, headingResolver],
     [BlockTypes.PARAGRAPH, nodeResolver('p')],
+    [BlockTypes.UL_LIST, nodeResolver('ul')],
+    [BlockTypes.OL_LIST, nodeResolver('ol')],
+    [BlockTypes.LIST_ITEM, nodeResolver('li')],
     [MarkTypes.LINK, linkResolver],
+    [MarkTypes.ANCHOR, linkResolver],
+    [MarkTypes.STYLED, markResolver('span')],
     [TextTypes.TEXT, textResolver],
     [MarkTypes.BOLD, markResolver('strong')],
     [MarkTypes.ITALIC, markResolver('em')],
