@@ -1,0 +1,45 @@
+{
+  "name": "@storyblok/richtext-resolver",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@8.10.2",
+  "description": "A monorepo for the Storyblok RichText Resolver",
+  "author": "Alvaro Saburido <hola@alvarosaburido.dev> (https://github.com/alvarosabu/)",
+  "license": "MIT",
+  "keywords": [
+    "storyblok",
+    "richtext",
+    "resolver"
+  ],
+  ".": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/storyblok-richtext.es.js",
+    "require": "./dist/storyblok-richtext.umd.js"
+  },
+  "sideEffects": false,
+  "main": "./dist/storyblok-richtext.es.js",
+  "module": "./dist/storyblok-richtext.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "*.d.ts",
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "playground": "cd playground && npm run dev"
+  },
+  "devDependencies": {
+    "@alvarosabu/eslint-config": "^1.0.0",
+    "kolorist": "^1.8.0",
+    "pathe": "^1.1.2",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.6",
+    "vite-plugin-banner": "^0.7.1",
+    "vite-plugin-dts": "^3.7.3",
+    "vite-plugin-inspect": "^0.8.3"
+  }
+}
