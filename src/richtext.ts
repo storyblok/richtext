@@ -15,27 +15,33 @@ function escapeHtml(unsafeText: string): string {
     .replace(/'/g, '&#039;')
 }
 
-export function RitchText() {
+const defaultRenderFn = (tag: string, attrs: Record<string, string> = {}, children: string) =>
+  `<${tag} ${attrsToString(attrs)}>${Array.isArray(children) ? children.join('') : children}</${tag}>`
+
+export function RitchText(renderFn = defaultRenderFn) {
   // Creates an HTML string for a given tag, attributes, and children
   const nodeResolver = (tag: string): NodeResolver =>
-    (node: Node) =>
-    `<${tag} ${attrsToString(node.attrs)}>${node.children?.join('')}</${tag}>`
+    (node: Node) => {
+      console.log('node', node)
+      return renderFn(tag, node.attrs, node.children)
+    }
 
-  const headingResolver: NodeResolver = (node: Node) => `<h${node.attrs?.level} ${attrsToString(node.attrs)}>${node.children?.join('')}</h${node.attrs?.level}>`
+  const headingResolver: NodeResolver = (node: Node) => renderFn(`h${node.attrs?.level}`, node.attrs, node.children)
 
   // Mark resolver for text formatting
   const markResolver = (tag: string): NodeResolver => ({ text, attrs }) =>
-    `<${tag} ${attrsToString(attrs)}>${text}</${tag}>`
+    renderFn(tag, attrs, text as string)
 
   // Resolver for plain text nodes
   const textResolver: NodeResolver = (node: Node) => {
+    const { marks, ...rest } = node as TextNode
     if ('text' in node) {
       // Now TypeScript knows that 'node' is a TextNode, so 'marks' can be accessed
-      const { marks, ...rest } = node as TextNode
+
       return marks
         ? marks.reduce(
           (text: string, mark: MarkNode) => render({ ...mark, text }),
-          render(node),
+          render(rest),
         )
         : escapeHtml(rest.text)
     }
@@ -68,11 +74,11 @@ export function RitchText() {
         break
     }
 
-    return `<a ${attrsToString(node.attrs)} href="${href}"${targetAttr}>${node.text}</a>`
+    return renderFn('a', { ...node.attrs, targetAttr, href }, node.text as string)
   }
 
   const resolvers = new Map<NodeTypes, NodeResolver>([
-    [BlockTypes.DOCUMENT, ({ children }) => `<div>${children?.join('')}</div>`],
+    [BlockTypes.DOCUMENT, nodeResolver('div')],
     [BlockTypes.HEADING, headingResolver],
     [BlockTypes.PARAGRAPH, nodeResolver('p')],
     [BlockTypes.UL_LIST, nodeResolver('ul')],
@@ -112,13 +118,7 @@ export function RitchText() {
   }
 
   function render(node: Node): string {
-    if (!node) {
-      console.warn(`No content to render,
-      The render method must receive an Object with a "content" field that is an array of nodes`)
-
-      return ''
-    }
-    return Array.isArray(node) ? node.map(renderNode).join('') : renderNode(node)
+    return Array.isArray(node) ? node.map(renderNode) : renderNode(node)
   }
 
   return {
