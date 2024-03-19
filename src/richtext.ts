@@ -1,5 +1,5 @@
 import { BlockTypes, LinkTypes, MarkTypes, TextTypes } from './types'
-import type { MarkNode, Node, RichtextData, TextNode } from './types'
+import type { MarkNode, Node, NodeResolver, NodeTypes, TextNode } from './types'
 
 // Converts attributes object to a string of HTML attributes
 const attrsToString = (attrs: Record<string, string> = {}) => Object.keys(attrs)
@@ -17,32 +17,36 @@ function escapeHtml(unsafeText: string): string {
 
 export function RitchText() {
   // Creates an HTML string for a given tag, attributes, and children
-  const nodeResolver = (tag: string) =>
+  const nodeResolver = (tag: string): NodeResolver =>
     (node: Node) =>
     `<${tag} ${attrsToString(node.attrs)}>${node.children?.join('')}</${tag}>`
 
-  const headingResolver = (node: Node) => `<h${node.attrs?.level} ${attrsToString(node.attrs)}>${node.children?.join('')}</h${node.attrs?.level}>`
+  const headingResolver: NodeResolver = (node: Node) => `<h${node.attrs?.level} ${attrsToString(node.attrs)}>${node.children?.join('')}</h${node.attrs?.level}>`
 
   // Mark resolver for text formatting
-  const markResolver = (tag: string) => ({ text, attrs }: MarkNode) =>
+  const markResolver = (tag: string): NodeResolver => ({ text, attrs }) =>
     `<${tag} ${attrsToString(attrs)}>${text}</${tag}>`
 
   // Resolver for plain text nodes
-  const textResolver = ({ marks, ...node }: TextNode) => {
+  const textResolver: NodeResolver = (node: Node) => {
     if ('text' in node) {
       // Now TypeScript knows that 'node' is a TextNode, so 'marks' can be accessed
+      const { marks, ...rest } = node as TextNode
       return marks
         ? marks.reduce(
           (text: string, mark: MarkNode) => render({ ...mark, text }),
           render(node),
         )
-        : escapeHtml(node.text)
+        : escapeHtml(rest.text)
+    }
+    else {
+      return ''
     }
   }
 
   // Resolver for link nodes
 
-  const linkResolver = (node: Node): string => {
+  const linkResolver: NodeResolver = (node: Node) => {
     let href = ''
     const targetAttr = node.attrs?.target ? ` target="${node.attrs.target}"` : ''
 
@@ -67,17 +71,17 @@ export function RitchText() {
     return `<a ${attrsToString(node.attrs)} href="${href}"${targetAttr}>${node.text}</a>`
   }
 
-  const resolvers = new Map<string, (node: Node) => string>([
+  const resolvers = new Map<NodeTypes, NodeResolver>([
     [BlockTypes.DOCUMENT, ({ children }) => `<div>${children?.join('')}</div>`],
     [BlockTypes.HEADING, headingResolver],
     [BlockTypes.PARAGRAPH, nodeResolver('p')],
     [BlockTypes.UL_LIST, nodeResolver('ul')],
     [BlockTypes.OL_LIST, nodeResolver('ol')],
     [BlockTypes.LIST_ITEM, nodeResolver('li')],
+    [TextTypes.TEXT, textResolver],
     [MarkTypes.LINK, linkResolver],
     [MarkTypes.ANCHOR, linkResolver],
     [MarkTypes.STYLED, markResolver('span')],
-    [TextTypes.TEXT, textResolver],
     [MarkTypes.BOLD, markResolver('strong')],
     [MarkTypes.ITALIC, markResolver('em')],
     [MarkTypes.UNDERLINE, markResolver('u')],
@@ -88,15 +92,7 @@ export function RitchText() {
     [MarkTypes.HIGHLIGHT, markResolver('mark')],
   ])
 
-  // Combines text and its marks into a styled HTML string
-  /*  const renderTextWithMarks = (text: string, marks: Node[] = []) => {
-    return marks.reduceRight((acc, mark) => {
-      const resolver = resolvers.get(mark.type)
-      return resolver ? resolver(acc) : acc // Apply the mark using its resolver
-    }, text)
-  } */
-
-  function renderNode(node: RichtextData): string {
+  function renderNode(node: Node): string {
     const resolver = resolvers.get(node.type)
     if (!resolver) {
       console.error('<Storyblok>', `No resolver found for node type ${node.type}`)
@@ -111,11 +107,11 @@ export function RitchText() {
 
     return resolver({
       ...node,
-      children: children as Node[], // Fix: Update the type of 'children' to Node[]
+      children: children as unknown as Node[], // Fix: Update the type of 'children' to Node[]
     })
   }
 
-  function render(node: RichtextData): string {
+  function render(node: Node): string {
     if (!node) {
       console.warn(`No content to render,
       The render method must receive an Object with a "content" field that is an array of nodes`)

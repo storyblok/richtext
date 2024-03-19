@@ -82,10 +82,4 @@ export interface TextNode extends Node {
   marks?: MarkNode[]
 }
 
-export interface RichtextData {
-  content?: RichtextData[]
-  marks?: RichtextData[]
-  attrs?: Record<string, any>
-  text?: string
-  type: string
-}
+export type NodeResolver = (node: Node | TextNode | MarkNode) => string
