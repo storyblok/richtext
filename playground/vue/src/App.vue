@@ -327,16 +327,8 @@ const doc = {
       type: 'paragraph',
       content: [
         {
-          text: 'And this is an emoji  ',
+          text: 'And this is an emoji 🥳',
           type: 'text',
-          marks: [
-            {
-              type: 'textStyle',
-              attrs: {
-                color: null,
-              },
-            },
-          ],
         },
         {
           type: 'emoji',

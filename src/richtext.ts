@@ -24,6 +24,18 @@ export function RitchText(renderFn = defaultRenderFn) {
 
   const headingResolver: NodeResolver = (node: Node) => renderFn(`h${node.attrs?.level}`, node.attrs, node.children)
 
+  const emojiResolver: NodeResolver = (node: Node) => renderFn('span', {
+    'data-type': 'emoji',
+    'data-name': node.attrs?.name,
+    'emoji': node.attrs?.emoji,
+  }, renderFn('img', {
+    src: node.attrs?.fallbackImage,
+    alt: node.attrs?.alt,
+    style: 'width: 1.25em; height: 1.25em; vertical-align: text-top',
+    draggable: 'false',
+    loading: 'lazy',
+  }, ''))
+
   // Mark resolver for text formatting
   const markResolver = (tag: string): NodeResolver => ({ text, attrs }) =>
     renderFn(tag, attrs, text as string)
@@ -81,6 +93,7 @@ export function RitchText(renderFn = defaultRenderFn) {
     [BlockTypes.OL_LIST, nodeResolver('ol')],
     [BlockTypes.LIST_ITEM, nodeResolver('li')],
     [BlockTypes.IMAGE, nodeResolver('img')],
+    [BlockTypes.EMOJI, emojiResolver],
     [TextTypes.TEXT, textResolver],
     [MarkTypes.LINK, linkResolver],
     [MarkTypes.ANCHOR, linkResolver],

@@ -327,16 +327,8 @@ const doc = {
       type: 'paragraph',
       content: [
         {
-          text: 'And this is an emoji  ',
+          text: 'And this is an emoji 🥳',
           type: 'text',
-          marks: [
-            {
-              type: 'textStyle',
-              attrs: {
-                color: null,
-              },
-            },
-          ],
         },
         {
           type: 'emoji',
@@ -405,7 +397,26 @@ const link = {
   ],
 }
 
-const html = RitchText().render(doc)
+const emoji = {
+  type: 'paragraph',
+  content: [
+    {
+      text: 'And this is an emoji 🥳',
+      type: 'text',
+    },
+    {
+      type: 'emoji',
+      attrs: {
+        name: 'innocent',
+        emoji: '😇',
+        fallbackImage:
+          'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f607.png',
+      },
+    },
+  ],
+}
+
+const html = RitchText().render(emoji)
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
