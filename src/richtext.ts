@@ -20,7 +20,7 @@ const defaultRenderFn = (tag: string, attrs: Record<string, string> = {}, childr
 
 export function RitchText(renderFn = defaultRenderFn) {
   // Creates an HTML string for a given tag, attributes, and children
-  const nodeResolver = (tag: string): NodeResolver => (node: Node) => renderFn(tag, node.attrs, node.children || [])
+  const nodeResolver = (tag: string): NodeResolver => (node: Node) => renderFn(tag, node.attrs, node.children || null)
 
   const headingResolver: NodeResolver = (node: Node) => renderFn(`h${node.attrs?.level}`, node.attrs, node.children)
 

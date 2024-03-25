@@ -373,7 +373,22 @@ function App() {
       },
     ],
   }
-  const html = RitchText(React.createElement).render(doc)
+
+  const img = {
+    type: 'paragraph',
+    content: [
+      {
+        type: 'image',
+        attrs: {
+          alt: 'Alt',
+          src: 'https://a.storyblok.com/f/67536/400x400/166f21bd2c/vue.png',
+          title: 'Caption',
+        },
+      },
+    ],
+  }
+
+  const html = RitchText(React.createElement).render(img)
   console.log(html)
   return (
     <>
