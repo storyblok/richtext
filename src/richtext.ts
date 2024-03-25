@@ -20,7 +20,7 @@ const defaultRenderFn = (tag: string, attrs: Record<string, string> = {}, childr
 
 export function RitchText(renderFn = defaultRenderFn) {
   // Creates an HTML string for a given tag, attributes, and children
-  const nodeResolver = (tag: string): NodeResolver => (node: Node) => renderFn(tag, node.attrs, node.children)
+  const nodeResolver = (tag: string): NodeResolver => (node: Node) => renderFn(tag, node.attrs, node.children || [])
 
   const headingResolver: NodeResolver = (node: Node) => renderFn(`h${node.attrs?.level}`, node.attrs, node.children)
 
@@ -35,6 +35,10 @@ export function RitchText(renderFn = defaultRenderFn) {
     draggable: 'false',
     loading: 'lazy',
   }, ''))
+
+  const codeBlockResolver: NodeResolver = (node: Node) => {
+    return renderFn('pre', node.attrs, renderFn('code', {}, node.children))
+  }
 
   // Mark resolver for text formatting
   const markResolver = (tag: string): NodeResolver => ({ text, attrs }) =>
@@ -94,6 +98,7 @@ export function RitchText(renderFn = defaultRenderFn) {
     [BlockTypes.LIST_ITEM, nodeResolver('li')],
     [BlockTypes.IMAGE, nodeResolver('img')],
     [BlockTypes.EMOJI, emojiResolver],
+    [BlockTypes.CODE_BLOCK, codeBlockResolver],
     [TextTypes.TEXT, textResolver],
     [MarkTypes.LINK, linkResolver],
     [MarkTypes.ANCHOR, linkResolver],
