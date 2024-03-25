@@ -52,15 +52,15 @@ export enum LinkTypes {
 
 export type NodeTypes = BlockTypes | MarkTypes | TextTypes | ComponentTypes
 
-export interface Node {
+export interface Node<T = string> {
   type: NodeTypes
   content: Node[]
-  children?: Node[]
+  children?: T
   attrs?: Record<string, any>
   text?: string
 }
 
-export interface MarkNode extends Node {
+export interface MarkNode<T = string> extends Node<T> {
   type: MarkTypes.BOLD |
     MarkTypes.ITALIC |
     MarkTypes.UNDERLINE |
@@ -74,17 +74,18 @@ export interface MarkNode extends Node {
     MarkTypes.TEXT_STYLE |
     MarkTypes.HIGHLIGHT
   attrs?: Record<string, any>
+  linkType: LinkTypes
 }
 
-export interface TextNode extends Node {
+export interface TextNode<T = string> extends Node<T> {
   type: TextTypes.TEXT
   text: string
-  marks?: MarkNode[]
+  marks?: MarkNode<T>[]
 }
 
-export type NodeResolver = (node: Node | TextNode | MarkNode) => string
+export type NodeResolver<T = string> = (node: Node<T> | TextNode<T> | MarkNode<T>) => T
 
-export interface SbRichtextOptions {
-  renderFn: (tag: string, attrs: Record<string, any>, text: string) => string
-  resolvers?: Array<[NodeTypes, NodeResolver]>
+export interface SbRichtextOptions<T = string, S = (tag: string, attrs: Record<string, any>, text: string) => T> {
+  renderFn: S
+  resolvers?: Array<[NodeTypes, NodeResolver<T>]>
 }

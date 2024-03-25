@@ -1,5 +1,5 @@
 import './style.css'
-import { MarkTypes, RitchText } from '@storyblok/richtext-resolver'
+import { MarkTypes, type Node, RitchText, type SbRichtextOptions } from '@storyblok/richtext-resolver'
 
 const doc = {
   type: 'doc',
@@ -423,13 +423,13 @@ const emoji = {
   ],
 }
 
-const html = RitchText({
-  /* resolvers: {
-    [MarkTypes.LINK]: (node, children) => {
-      return `<button href="${node.attrs?.href}" target="${node.attrs?.target}">${children}</button>`
+const html = RitchText<string>({
+  resolvers: {
+    [MarkTypes.LINK]: (node: Node<string>) => {
+      return `<button href="${node.attrs?.href}" target="${node.attrs?.target}">${node.children}</button>`
     },
-  }, */
-}).render(doc)
+  },
+} as unknown as SbRichtextOptions<string>).render(doc as Node<string>)
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>

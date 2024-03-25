@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { h } from 'vue'
-import { BlockTypes, MarkTypes, RitchText } from '@storyblok/richtext-resolver'
+import { VNode, h } from 'vue'
+import { BlockTypes, MarkTypes, RitchText, type Node, type SbRichtextOptions} from '@storyblok/richtext-resolver'
 import { RouterLink } from 'vue-router'
 import CodeBlock from './CodeBlock.vue'
 const doc = {
@@ -365,27 +365,29 @@ const doc = {
   ],
 }
 
-const root = () => RitchText({
+const options : SbRichtextOptions<VNode, (type: any, props: any, children: any) => VNode> = {
   renderFn: h,
   resolvers: {
-    [MarkTypes.LINK]: (node) => {
+    [MarkTypes.LINK]: (node: Node) => {
       console.log(node.attrs)
       return node.linktype === 'STORY' ? 
       h(RouterLink, {
-        to: node.attrs.href,
-        target: node.attrs.target,
+        to: node.attrs?.href,
+        target: node.attrs?.target,
       }, node.text) : h('a', {
-        href: node.attrs.href,
-        target: node.attrs.target,
+        href: node.attrs?.href,
+        target: node.attrs?.target,
       }, node.text)
     },
-    [BlockTypes.CODE_BLOCK]: (node, children) => {
+    [BlockTypes.CODE_BLOCK]: (node: Node) => {
       return h(CodeBlock, {
-        class: node.attrs.class,
-      }, children)
+        class: node?.attrs?.class,
+      }, node.children)
     },
   }
-}).render(doc)
+}
+
+const root = () => RitchText<VNode>(options).render(doc as Node<string>)
 </script>
 
 <template>

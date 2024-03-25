@@ -15,17 +15,18 @@ function escapeHtml(unsafeText: string): string {
     .replace(/'/g, '&#039;')
 }
 
-const defaultRenderFn = (tag: string, attrs: Record<string, string> = {}, children: string) =>
-  `<${tag} ${attrsToString(attrs)}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>`
+function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, any> = {}, children: T): T {
+  return `<${tag} ${attrsToString(attrs)}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T
+}
 
-export function RitchText(options: SbRichtextOptions) {
+export function RitchText<T = string>(options: SbRichtextOptions) {
   // Creates an HTML string for a given tag, attributes, and children
   const { renderFn = defaultRenderFn, resolvers = {} } = options
-  const nodeResolver = (tag: string): NodeResolver => (node: Node) => renderFn(tag, node.attrs, node.children || null)
+  const nodeResolver = (tag: string): NodeResolver<T> => (node: Node<T>): T => renderFn(tag, node.attrs || {}, node.children || null as any) as T
 
-  const headingResolver: NodeResolver = (node: Node) => renderFn(`h${node.attrs?.level}`, node.attrs, node.children)
+  const headingResolver: NodeResolver<T> = (node: Node<T>): T => renderFn(`h${node.attrs?.level}`, node.attrs || {}, node.children as any) as T
 
-  const emojiResolver: NodeResolver = (node: Node) => renderFn('span', {
+  const emojiResolver: NodeResolver<T> = (node: Node<T>) => renderFn('span', {
     'data-type': 'emoji',
     'data-name': node.attrs?.name,
     'emoji': node.attrs?.emoji,
@@ -35,37 +36,43 @@ export function RitchText(options: SbRichtextOptions) {
     style: 'width: 1.25em; height: 1.25em; vertical-align: text-top',
     draggable: 'false',
     loading: 'lazy',
-  }, ''))
+  }, '')) as T
 
-  const codeBlockResolver: NodeResolver = (node: Node) => {
-    return renderFn('pre', node.attrs, renderFn('code', {}, node.children))
+  const codeBlockResolver: NodeResolver<T> = (node: Node<T>): T => {
+    return renderFn('pre', node.attrs || {}, renderFn('code', {}, node.children || '' as any)) as T
   }
 
   // Mark resolver for text formatting
-  const markResolver = (tag: string): NodeResolver => ({ text, attrs }) =>
-    renderFn(tag, attrs, text as string)
+  const markResolver = (tag: string): NodeResolver<T> => ({ text, attrs }): T =>
+    renderFn(tag, attrs || {}, text as string) as T
+
+  const renderToT = (node: any): T => {
+    // Implementation that ensures the return type is T
+    // This might involve checking the type of T and handling accordingly
+    return render(node) as unknown as T
+  }
 
   // Resolver for plain text nodes
-  const textResolver: NodeResolver = (node: Node) => {
-    const { marks, ...rest } = node as TextNode
+  const textResolver: NodeResolver<T> = (node: Node<T>): T => {
+    const { marks, ...rest } = node as TextNode<T>
     if ('text' in node) {
       // Now TypeScript knows that 'node' is a TextNode, so 'marks' can be accessed
 
       return marks
         ? marks.reduce(
-          (text: string, mark: MarkNode) => render({ ...mark, text }),
-          render(rest),
+          (text: T, mark: MarkNode<T>) => renderToT({ ...mark, text }) as T, // Fix: Ensure render function returns a string
+          renderToT({ ...rest, children: rest.children as T }) as T, // Fix: Cast children to string
         )
-        : escapeHtml(rest.text)
+        : escapeHtml(rest.text) as T // Fix: Ensure escapeHtml returns a string
     }
     else {
-      return ''
+      return '' as T // Fix: Ensure empty string is of type string
     }
   }
 
   // Resolver for link nodes
 
-  const linkResolver: NodeResolver = (node: Node) => {
+  const linkResolver: NodeResolver<T> = (node: Node<T>) => {
     let href = ''
     const targetAttr = node.attrs?.target ? ` target="${node.attrs.target}"` : ''
 
@@ -87,10 +94,10 @@ export function RitchText(options: SbRichtextOptions) {
         break
     }
 
-    return renderFn('a', { ...node.attrs, targetAttr, href }, node.text as string)
+    return renderFn('a', { ...node.attrs, targetAttr, href }, node.text as string) as T
   }
 
-  const mergedResolvers = new Map<NodeTypes, NodeResolver>([
+  const mergedResolvers = new Map<NodeTypes, NodeResolver<T>>([
     [BlockTypes.DOCUMENT, nodeResolver('div')],
     [BlockTypes.HEADING, headingResolver],
     [BlockTypes.PARAGRAPH, nodeResolver('p')],
@@ -112,30 +119,30 @@ export function RitchText(options: SbRichtextOptions) {
     [MarkTypes.SUPERSCRIPT, markResolver('sup')],
     [MarkTypes.SUBSCRIPT, markResolver('sub')],
     [MarkTypes.HIGHLIGHT, markResolver('mark')],
-    ...(Object.entries(resolvers).map(([type, resolver]) => [type as NodeTypes, resolver])) as Array<[NodeTypes, NodeResolver]>,
+    ...(Object.entries(resolvers).map(([type, resolver]) => [type as NodeTypes, resolver])) as Array<[NodeTypes, NodeResolver<T>]>,
   ])
 
-  function renderNode(node: Node): string {
+  function renderNode(node: Node): T {
     const resolver = mergedResolvers.get(node.type)
     if (!resolver) {
       console.error('<Storyblok>', `No resolver found for node type ${node.type}`)
-      return ''
+      return '' as unknown as T
     }
 
     if (node.type === 'text') {
-      return resolver(node as Node)
+      return resolver(node as Node<T>) // Fix: Update the type of 'node' to Node<string>
     }
 
     const children = node.content ? node.content.map(render) : undefined
 
     return resolver({
       ...node,
-      children: children as unknown as Node[], // Fix: Update the type of 'children' to Node[]
+      children: children as T, // Fix: Update the type of 'children' to Node[]
     })
   }
 
-  function render(node: Node): string {
-    return Array.isArray(node) ? node.map(renderNode) : renderNode(node)
+  function render(node: Node): T {
+    return Array.isArray(node) ? node.map(renderNode) as T : renderNode(node) as T
   }
 
   return {
