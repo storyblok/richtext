@@ -173,7 +173,7 @@ function App() {
               {
                 type: 'link',
                 attrs: {
-                  href: 'https://www.marvin-rudolph.de',
+                  href: 'https://alvarosaburido.dev',
                   uuid: null,
                   anchor: null,
                   target: '_blank',
@@ -209,13 +209,13 @@ function App() {
         type: 'paragraph',
         content: [
           {
-            text: 'info@marvin-rudolph.de',
+            text: 'hola@alvarosaburido.dev',
             type: 'text',
             marks: [
               {
                 type: 'link',
                 attrs: {
-                  href: 'info@marvin-rudolph.de',
+                  href: 'hola@alvarosaburido.dev',
                   uuid: null,
                   anchor: null,
                   target: null,

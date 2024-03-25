@@ -2,7 +2,5 @@
 
 </script>
 <template>
-  <main>
-    <RouterView />
-  </main>
+<div>Fancy Code Block</div>
 </template>

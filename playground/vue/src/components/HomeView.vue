@@ -1,6 +1,8 @@
-import './style.css'
-import { MarkTypes, RitchText } from '@storyblok/richtext-resolver'
-
+<script setup lang="ts">
+import { h } from 'vue'
+import { BlockTypes, MarkTypes, RitchText } from '@storyblok/richtext-resolver'
+import { RouterLink } from 'vue-router'
+import CodeBlock from './CodeBlock.vue'
 const doc = {
   type: 'doc',
   content: [
@@ -11,7 +13,6 @@ const doc = {
     },
     {
       type: 'paragraph',
-      attrs: { id: 'paragraph-id', class: 'bg-red' },
       content: [
         {
           text: 'Para',
@@ -133,15 +134,8 @@ const doc = {
     { type: 'horizontal_rule' },
     {
       type: 'code_block',
-      attrs: {
-        class: 'language-html',
-      },
-      content: [
-        {
-          text: `<script setup lang=\"ts\">\nimport { useGLTF, useTweakPane } from '@tresjs/cientos'\nimport { useRenderLoop } from '@tresjs/core'\nimport { shallowRef, watch } from 'vue'\nimport Airplane from './Airplane.vue'\nimport Cloud from './Cloud.vue'\n\nconst { scene: planet } = await useGLTF(\n  'https://raw.githubusercontent.com/Tresjs/assets/main/models/gltf/low-poly/planet.gltf',\n)\n\nconst { pane } = useTweakPane()\n\nconst planetRef = shallowRef()\n\nplanet.traverse(child => {\n  if (child.isMesh) {\n    child.receiveShadow = true\n  }\n})\n\nwatch(\n  () => planetRef.value,\n  planet => {\n    if (!planet) return\n    pane.addInput(planetRef.value, 'visible', { label: 'Planet' })\n  },\n)\n\nconst { onLoop } = useRenderLoop()\n\nonLoop(({ delta }) => {\n  if (!planet) return\n  planet.rotation.y += delta * 0.04\n  planet.rotation.z += delta * 0.02\n  planet.rotation.x += delta * 0.05\n  planet.updateMatrixWorld()\n})\n</script>\n<template>\n  <TresMesh ref=\"planetRef\" v-bind=\"planet\" />\n  <Airplane :planet=\"planetRef\" />\n  <Cloud v-for=\"cloud of [1, 2, 3, 4, 5, 6, 7, 8, 9]\" :key=\"cloud\" :planet=\"planetRef\" />\n</template>\n`,
-          type: 'text',
-        },
-      ],
+      attrs: { class: 'language-javascript' },
+      content: [{ text: 'JavaScript Code', type: 'text' }],
     },
     {
       type: 'paragraph',
@@ -371,68 +365,32 @@ const doc = {
   ],
 }
 
-const paragraph = {
-  type: 'paragraph',
-  content: [
-    {
-      text: 'Bold and italic',
-      type: 'text',
-      marks: [{ type: 'bold' }, { type: 'italic' }],
+const root = () => RitchText({
+  renderFn: h,
+  resolvers: {
+    [MarkTypes.LINK]: (node) => {
+      console.log(node.attrs)
+      return node.linktype === 'STORY' ? 
+      h(RouterLink, {
+        to: node.attrs.href,
+        target: node.attrs.target,
+      }, node.text) : h('a', {
+        href: node.attrs.href,
+        target: node.attrs.target,
+      }, node.text)
     },
-  ],
-}
-
-const link = {
-  type: 'paragraph',
-  content: [
-    {
-      text: 'hola@alvarosaburido.dev',
-      type: 'text',
-      marks: [
-        {
-          type: 'link',
-          attrs: {
-            href: 'hola@alvarosaburido.dev',
-            uuid: null,
-            anchor: null,
-            target: null,
-            linktype: 'email',
-          },
-        },
-      ],
+    [BlockTypes.CODE_BLOCK]: (node, children) => {
+      return h(CodeBlock, {
+        class: node.attrs.class,
+      }, children)
     },
-  ],
-}
-
-const emoji = {
-  type: 'paragraph',
-  content: [
-    {
-      text: 'And this is an emoji 🥳',
-      type: 'text',
-    },
-    {
-      type: 'emoji',
-      attrs: {
-        name: 'innocent',
-        emoji: '😇',
-        fallbackImage:
-          'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f607.png',
-      },
-    },
-  ],
-}
-
-const html = RitchText({
-  /* resolvers: {
-    [MarkTypes.LINK]: (node, children) => {
-      return `<button href="${node.attrs?.href}" target="${node.attrs?.target}">${children}</button>`
-    },
-  }, */
+  }
 }).render(doc)
+</script>
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-  ${html}
-  </div>
-`
+<template>
+  <RouterLink to="http://alvarosaburido.dev">About</RouterLink>
+
+    <root />
+</template>
+

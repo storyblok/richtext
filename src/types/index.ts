@@ -83,3 +83,8 @@ export interface TextNode extends Node {
 }
 
 export type NodeResolver = (node: Node | TextNode | MarkNode) => string
+
+export interface SbRichtextOptions {
+  renderFn: (tag: string, attrs: Record<string, any>, text: string) => string
+  resolvers?: Array<[NodeTypes, NodeResolver]>
+}

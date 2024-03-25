@@ -2,7 +2,5 @@
 
 </script>
 <template>
-  <main>
-    <RouterView />
-  </main>
+Not found
 </template>

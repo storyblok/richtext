@@ -1,5 +1,5 @@
 import { BlockTypes, LinkTypes, MarkTypes, TextTypes } from './types'
-import type { MarkNode, Node, NodeResolver, NodeTypes, TextNode } from './types'
+import type { MarkNode, Node, NodeResolver, NodeTypes, SbRichtextOptions, TextNode } from './types'
 
 // Converts attributes object to a string of HTML attributes
 const attrsToString = (attrs: Record<string, string> = {}) => Object.keys(attrs)
@@ -18,8 +18,9 @@ function escapeHtml(unsafeText: string): string {
 const defaultRenderFn = (tag: string, attrs: Record<string, string> = {}, children: string) =>
   `<${tag} ${attrsToString(attrs)}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>`
 
-export function RitchText(renderFn = defaultRenderFn) {
+export function RitchText(options: SbRichtextOptions) {
   // Creates an HTML string for a given tag, attributes, and children
+  const { renderFn = defaultRenderFn, resolvers = {} } = options
   const nodeResolver = (tag: string): NodeResolver => (node: Node) => renderFn(tag, node.attrs, node.children || null)
 
   const headingResolver: NodeResolver = (node: Node) => renderFn(`h${node.attrs?.level}`, node.attrs, node.children)
@@ -89,7 +90,7 @@ export function RitchText(renderFn = defaultRenderFn) {
     return renderFn('a', { ...node.attrs, targetAttr, href }, node.text as string)
   }
 
-  const resolvers = new Map<NodeTypes, NodeResolver>([
+  const mergedResolvers = new Map<NodeTypes, NodeResolver>([
     [BlockTypes.DOCUMENT, nodeResolver('div')],
     [BlockTypes.HEADING, headingResolver],
     [BlockTypes.PARAGRAPH, nodeResolver('p')],
@@ -111,10 +112,11 @@ export function RitchText(renderFn = defaultRenderFn) {
     [MarkTypes.SUPERSCRIPT, markResolver('sup')],
     [MarkTypes.SUBSCRIPT, markResolver('sub')],
     [MarkTypes.HIGHLIGHT, markResolver('mark')],
+    ...(Object.entries(resolvers).map(([type, resolver]) => [type as NodeTypes, resolver])) as Array<[NodeTypes, NodeResolver]>,
   ])
 
   function renderNode(node: Node): string {
-    const resolver = resolvers.get(node.type)
+    const resolver = mergedResolvers.get(node.type)
     if (!resolver) {
       console.error('<Storyblok>', `No resolver found for node type ${node.type}`)
       return ''
