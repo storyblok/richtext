@@ -16,7 +16,7 @@ function escapeHtml(unsafeText: string): string {
 }
 
 const defaultRenderFn = (tag: string, attrs: Record<string, string> = {}, children: string) =>
-  `<${tag} ${attrsToString(attrs)}>${Array.isArray(children) ? children.join('') : children}</${tag}>`
+  `<${tag} ${attrsToString(attrs)}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>`
 
 export function RitchText(renderFn = defaultRenderFn) {
   // Creates an HTML string for a given tag, attributes, and children
@@ -80,6 +80,7 @@ export function RitchText(renderFn = defaultRenderFn) {
     [BlockTypes.UL_LIST, nodeResolver('ul')],
     [BlockTypes.OL_LIST, nodeResolver('ol')],
     [BlockTypes.LIST_ITEM, nodeResolver('li')],
+    [BlockTypes.IMAGE, nodeResolver('img')],
     [TextTypes.TEXT, textResolver],
     [MarkTypes.LINK, linkResolver],
     [MarkTypes.ANCHOR, linkResolver],
