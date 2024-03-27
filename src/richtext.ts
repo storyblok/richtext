@@ -107,6 +107,8 @@ export function RichTextResolver<T = string>(options: SbRichtextOptions) {
     [BlockTypes.IMAGE, nodeResolver('img')],
     [BlockTypes.EMOJI, emojiResolver],
     [BlockTypes.CODE_BLOCK, codeBlockResolver],
+    [BlockTypes.HR, nodeResolver('hr')],
+    [BlockTypes.BR, nodeResolver('br')],
     [TextTypes.TEXT, textResolver],
     [MarkTypes.LINK, linkResolver],
     [MarkTypes.ANCHOR, linkResolver],
