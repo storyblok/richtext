@@ -6,6 +6,10 @@ const attrsToString = (attrs: Record<string, string> = {}) => Object.keys(attrs)
   .map(key => `${key}="${attrs[key]}"`)
   .join(' ')
 
+const attrsToStyle = (attrs: Record<string, string> = {}) => Object.keys(attrs)
+  .map(key => `${key}: ${attrs[key]}`)
+  .join('; ')
+
 function escapeHtml(unsafeText: string): string {
   return unsafeText
     .replace(/&/g, '&amp;')
@@ -43,8 +47,13 @@ export function RichTextResolver<T = string>(options: SbRichtextOptions) {
   }
 
   // Mark resolver for text formatting
-  const markResolver = (tag: string): NodeResolver<T> => ({ text, attrs }): T =>
-    renderFn(tag, attrs || {}, text as string) as T
+  const markResolver = (tag: string, styled = false): NodeResolver<T> => ({ text, attrs }): T => {
+    return renderFn(tag, styled
+      ? {
+          style: attrsToStyle(attrs),
+        }
+      : attrs || {}, text as string) as T
+  }
 
   const renderToT = (node: any): T => {
     // Implementation that ensures the return type is T
@@ -114,6 +123,7 @@ export function RichTextResolver<T = string>(options: SbRichtextOptions) {
     [MarkTypes.ANCHOR, linkResolver],
     [MarkTypes.STYLED, markResolver('span')],
     [MarkTypes.BOLD, markResolver('strong')],
+    [MarkTypes.TEXT_STYLE, markResolver('span', true)],
     [MarkTypes.ITALIC, markResolver('em')],
     [MarkTypes.UNDERLINE, markResolver('u')],
     [MarkTypes.STRIKE, markResolver('s')],
