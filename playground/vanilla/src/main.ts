@@ -438,9 +438,9 @@ const doc = story.data.story.content.richtext
 
 const options: SbRichtextOptions<string> = {
   resolvers: {
-    [MarkTypes.LINK]: (node: Node<string>) => {
+    /* [MarkTypes.LINK]: (node: Node<string>) => {
       return `<button href="${node.attrs?.href}" target="${node.attrs?.target}">${node.children}</button>`
-    },
+    }, */
   },
 }
 
