@@ -86,6 +86,6 @@ export interface TextNode<T = string> extends Node<T> {
 export type NodeResolver<T = string> = (node: Node<T> | TextNode<T> | MarkNode<T>) => T
 
 export interface SbRichtextOptions<T = string, S = (tag: string, attrs: Record<string, any>, text: string) => T> {
-  renderFn: S
-  resolvers?: Array<[NodeTypes, NodeResolver<T>]>
+  renderFn?: S
+  resolvers?: Partial<Record<NodeTypes, NodeResolver<T>>>
 }

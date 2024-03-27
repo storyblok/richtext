@@ -1,4 +1,4 @@
-import { RitchText } from '@storyblok/richtext-resolver'
+import { RichTextResolver } from '@storyblok/richtext-resolver'
 
 import './App.css'
 import React from 'react'
@@ -388,7 +388,9 @@ function App() {
     ],
   }
 
-  const html = RitchText(React.createElement).render(img)
+  const html = RichTextResolver({
+    renderFn: React.createElement,
+  }).render(img)
   console.log(html)
   return (
     <>

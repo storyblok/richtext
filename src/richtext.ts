@@ -19,7 +19,7 @@ function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, a
   return `<${tag} ${attrsToString(attrs)}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T
 }
 
-export function RitchText<T = string>(options: SbRichtextOptions) {
+export function RichTextResolver<T = string>(options: SbRichtextOptions) {
   // Creates an HTML string for a given tag, attributes, and children
   const { renderFn = defaultRenderFn, resolvers = {} } = options
   const nodeResolver = (tag: string): NodeResolver<T> => (node: Node<T>): T => renderFn(tag, node.attrs || {}, node.children || null as any) as T
@@ -119,7 +119,7 @@ export function RitchText<T = string>(options: SbRichtextOptions) {
     [MarkTypes.SUPERSCRIPT, markResolver('sup')],
     [MarkTypes.SUBSCRIPT, markResolver('sub')],
     [MarkTypes.HIGHLIGHT, markResolver('mark')],
-    ...(Object.entries(resolvers).map(([type, resolver]) => [type as NodeTypes, resolver])) as Array<[NodeTypes, NodeResolver<T>]>,
+    ...(Object.entries(resolvers).map(([type, resolver]) => [type as NodeTypes, resolver])) as unknown as Array<[NodeTypes, NodeResolver<T>]>,
   ])
 
   function renderNode(node: Node): T {

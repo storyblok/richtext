@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { VNode, h } from 'vue'
-import { BlockTypes, MarkTypes, RitchText, type Node, type SbRichtextOptions} from '@storyblok/richtext-resolver'
+import { BlockTypes, MarkTypes, RichTextResolver, type Node, type SbRichtextOptions} from '@storyblok/richtext-resolver'
 import { RouterLink } from 'vue-router'
 import CodeBlock from './CodeBlock.vue'
 const doc = {
@@ -365,11 +365,10 @@ const doc = {
   ],
 }
 
-const options : SbRichtextOptions<VNode, (type: any, props: any, children: any) => VNode> = {
+const options : SbRichtextOptions<VNode> = {
   renderFn: h,
   resolvers: {
     [MarkTypes.LINK]: (node: Node) => {
-      console.log(node.attrs)
       return node.linktype === 'STORY' ? 
       h(RouterLink, {
         to: node.attrs?.href,
@@ -387,7 +386,7 @@ const options : SbRichtextOptions<VNode, (type: any, props: any, children: any) 
   }
 }
 
-const root = () => RitchText<VNode>(options).render(doc as Node<string>)
+const root = () => RichTextResolver<VNode>(options).render(doc)
 </script>
 
 <template>
