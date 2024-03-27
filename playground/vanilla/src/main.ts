@@ -1,7 +1,8 @@
 import './style.css'
 import { MarkTypes, type Node, RichTextResolver, type SbRichtextOptions } from '@storyblok/richtext-resolver'
+import StoryblokClient from 'storyblok-js-client'
 
-const doc: Node<string> = {
+/* const doc: Node<string> = {
   type: 'doc',
   content: [
     {
@@ -421,7 +422,19 @@ const emoji = {
       },
     },
   ],
-}
+} */
+
+// Storyblok
+
+const client = new StoryblokClient({
+  accessToken: import.meta.env.VITE_STORYBLOK_TOKEN,
+})
+
+const story = await client.get('cdn/stories/home', {
+  version: 'draft',
+})
+
+const doc = story.data.story.content.richtext
 
 const options: SbRichtextOptions<string> = {
   resolvers: {

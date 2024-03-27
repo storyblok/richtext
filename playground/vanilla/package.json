@@ -14,6 +14,7 @@
     "vite-plugin-qrcode": "^0.2.3"
   },
   "dependencies": {
-    "@storyblok/richtext-resolver": "workspace:^"
+    "@storyblok/richtext-resolver": "workspace:^",
+    "storyblok-js-client": "^6.7.1"
   }
 }
