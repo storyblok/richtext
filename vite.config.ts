@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import { defineConfig } from 'vite'
 import { lightGreen } from 'kolorist'
 import banner from 'vite-plugin-banner'

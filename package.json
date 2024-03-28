@@ -35,6 +35,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
     "playground": "cd playground && npm run dev",
     "playground:vue": "cd playground/vue && npm run dev",
     "playground:react": "cd playground/react && npm run dev"
@@ -42,6 +44,7 @@
   "devDependencies": {
     "@alvarosabu/eslint-config": "^1.0.0",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
+    "@vitest/ui": "^1.4.0",
     "kolorist": "^1.8.0",
     "pathe": "^1.1.2",
     "typescript": "^5.2.2",
@@ -49,6 +52,7 @@
     "vite-plugin-banner": "^0.7.1",
     "vite-plugin-dts": "^3.7.3",
     "vite-plugin-inspect": "^0.8.3",
-    "vite-plugin-qrcode": "^0.2.3"
+    "vite-plugin-qrcode": "^0.2.3",
+    "vitest": "^1.4.0"
   }
 }

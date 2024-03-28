@@ -20,7 +20,9 @@ function escapeHtml(unsafeText: string): string {
 }
 
 function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, any> = {}, children: T): T {
-  return `<${tag} ${attrsToString(attrs)}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T
+  const attrsString = attrsToString(attrs)
+  const tagString = attrsString ? `${tag} ${attrsString}` : tag
+  return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T
 }
 
 export function RichTextResolver<T = string>(options: SbRichtextOptions) {
@@ -28,7 +30,10 @@ export function RichTextResolver<T = string>(options: SbRichtextOptions) {
   const { renderFn = defaultRenderFn, resolvers = {} } = options
   const nodeResolver = (tag: string): NodeResolver<T> => (node: Node<T>): T => renderFn(tag, node.attrs || {}, node.children || null as any) as T
 
-  const headingResolver: NodeResolver<T> = (node: Node<T>): T => renderFn(`h${node.attrs?.level}`, node.attrs || {}, node.children as any) as T
+  const headingResolver: NodeResolver<T> = (node: Node<T>): T => {
+    const { level, ...rest } = node.attrs || {}
+    return renderFn(`h${level}`, rest || {}, node.children as any) as T
+  }
 
   const emojiResolver: NodeResolver<T> = (node: Node<T>) => renderFn('span', {
     'data-type': 'emoji',
