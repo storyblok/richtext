@@ -118,6 +118,7 @@ export function RichTextResolver<T = string>(options: SbRichtextOptions) {
     [BlockTypes.CODE_BLOCK, codeBlockResolver],
     [BlockTypes.HR, nodeResolver('hr')],
     [BlockTypes.BR, nodeResolver('br')],
+    [BlockTypes.QUOTE, nodeResolver('blockquote')],
     [TextTypes.TEXT, textResolver],
     [MarkTypes.LINK, linkResolver],
     [MarkTypes.ANCHOR, linkResolver],
