@@ -3,6 +3,8 @@
 </script>
 <template>
   <main>
-    <RouterView />
+    <Suspense>
+      <RouterView />
+    </Suspense>
   </main>
 </template>

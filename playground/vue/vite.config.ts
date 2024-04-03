@@ -15,6 +15,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@storyblok/richtext-resolver': resolve(__dirname, '../../src/index.ts'),
+      '@storyblok/vue-richtext': resolve(__dirname, '../../packages/vue/src/index.ts'),
     },
   },
 })

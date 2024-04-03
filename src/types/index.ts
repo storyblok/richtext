@@ -34,10 +34,6 @@ export enum TextTypes {
   TEXT = 'text',
 }
 
-export enum ComponentTypes {
-  COMPONENT = 'blok',
-}
-
 export enum LinkTargets {
   SELF = '_self',
   BLANK = '_blank',
@@ -50,14 +46,20 @@ export enum LinkTypes {
   EMAIL = 'email',
 }
 
-export type NodeTypes = BlockTypes | MarkTypes | TextTypes | ComponentTypes
+export type NodeTypes = BlockTypes | MarkTypes | TextTypes
 
 export interface Node<T = string> {
   type: NodeTypes
-  content: Node[]
+  content: Node<T>[]
   children?: T
   attrs?: Record<string, any>
   text?: string
+}
+
+export interface LinkNode<T = string> extends Node<T> {
+  type: MarkTypes.LINK | MarkTypes.ANCHOR
+  linktype: LinkTypes.ASSET | LinkTypes.EMAIL | LinkTypes.STORY | LinkTypes.URL
+  attrs: Record<string, any>
 }
 
 export interface MarkNode<T = string> extends Node<T> {
@@ -83,7 +85,7 @@ export interface TextNode<T = string> extends Node<T> {
   marks?: MarkNode<T>[]
 }
 
-export type NodeResolver<T = string> = (node: Node<T> | TextNode<T> | MarkNode<T>) => T
+export type NodeResolver<T = string> = (node: Node<T> | TextNode<T> | MarkNode<T> | LinkNode<T>) => T
 
 export interface SbRichtextOptions<T = string, S = (tag: string, attrs: Record<string, any>, text: string) => T> {
   renderFn?: S

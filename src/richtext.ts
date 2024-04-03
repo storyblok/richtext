@@ -25,7 +25,7 @@ function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, a
   return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T
 }
 
-export function RichTextResolver<T = string>(options: SbRichtextOptions) {
+export function RichTextResolver<T>(options: SbRichtextOptions<T>) {
   // Creates an HTML string for a given tag, attributes, and children
   const { renderFn = defaultRenderFn, resolvers = {} } = options
   const nodeResolver = (tag: string): NodeResolver<T> => (node: Node<T>): T => renderFn(tag, node.attrs || {}, node.children || null as any) as T
@@ -45,7 +45,7 @@ export function RichTextResolver<T = string>(options: SbRichtextOptions) {
     style: 'width: 1.25em; height: 1.25em; vertical-align: text-top',
     draggable: 'false',
     loading: 'lazy',
-  }, '')) as T
+  }, '' as any)) as T
 
   const codeBlockResolver: NodeResolver<T> = (node: Node<T>): T => {
     return renderFn('pre', node.attrs || {}, renderFn('code', {}, node.children || '' as any)) as T
@@ -57,7 +57,7 @@ export function RichTextResolver<T = string>(options: SbRichtextOptions) {
       ? {
           style: attrsToStyle(attrs),
         }
-      : attrs || {}, text as string) as T
+      : attrs || {}, text as any) as T
   }
 
   const renderToT = (node: any): T => {
@@ -108,7 +108,7 @@ export function RichTextResolver<T = string>(options: SbRichtextOptions) {
         break
     }
 
-    return renderFn('a', { ...node.attrs, targetAttr, href }, node.text as string) as T
+    return renderFn('a', { ...node.attrs, targetAttr, href }, node.text as any) as T
   }
 
   // Placeholder default compoment resolver
@@ -151,7 +151,7 @@ export function RichTextResolver<T = string>(options: SbRichtextOptions) {
     ...(Object.entries(resolvers).map(([type, resolver]) => [type as NodeTypes, resolver])) as unknown as Array<[NodeTypes, NodeResolver<T>]>,
   ])
 
-  function renderNode(node: Node): T {
+  function renderNode(node: Node<T>): T {
     const resolver = mergedResolvers.get(node.type)
     if (!resolver) {
       console.error('<Storyblok>', `No resolver found for node type ${node.type}`)
@@ -170,7 +170,7 @@ export function RichTextResolver<T = string>(options: SbRichtextOptions) {
     })
   }
 
-  function render(node: Node): T {
+  function render(node: Node<T>): T {
     return Array.isArray(node) ? node.map(renderNode) as T : renderNode(node) as T
   }
 

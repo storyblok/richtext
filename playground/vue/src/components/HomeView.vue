@@ -2,6 +2,9 @@
 import { VNode, h } from 'vue'
 import { BlockTypes, MarkTypes, RichTextResolver, type Node, type SbRichtextOptions} from '@storyblok/richtext-resolver'
 import { RouterLink } from 'vue-router'
+import { SbRichText } from '@storyblok/vue-richtext'
+import { useStoryblok } from '@storyblok/vue'
+
 import CodeBlock from './CodeBlock.vue'
 const doc = {
   type: 'doc',
@@ -365,19 +368,13 @@ const doc = {
   ],
 }
 
+const story = await useStoryblok('/home', {
+  version: 'draft',
+})
+
 const options : SbRichtextOptions<VNode> = {
   renderFn: h,
   resolvers: {
-    [MarkTypes.LINK]: (node: Node) => {
-      return node.linktype === 'STORY' ? 
-      h(RouterLink, {
-        to: node.attrs?.href,
-        target: node.attrs?.target,
-      }, node.text) : h('a', {
-        href: node.attrs?.href,
-        target: node.attrs?.target,
-      }, node.text)
-    },
     [BlockTypes.CODE_BLOCK]: (node: Node) => {
       return h(CodeBlock, {
         class: node?.attrs?.class,
@@ -386,12 +383,10 @@ const options : SbRichtextOptions<VNode> = {
   }
 }
 
-const root = () => RichTextResolver<VNode>(options).render(doc)
+/* const root = () => RichTextResolver<VNode>(options).render(doc) */
 </script>
 
 <template>
   <RouterLink to="http://alvarosaburido.dev">About</RouterLink>
-
-    <root />
+  <SbRichText v-if="story" :doc="story.content.richtext"/>
 </template>
-

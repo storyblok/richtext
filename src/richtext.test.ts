@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { RichTextResolver } from './richtext'
 
-import type { Node } from './richtext/types'
+import type { Node } from './types'
 
 describe('richtext', () => {
   it('should render a paragraph', async () => {
