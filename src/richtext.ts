@@ -111,6 +111,16 @@ export function RichTextResolver<T = string>(options: SbRichtextOptions) {
     return renderFn('a', { ...node.attrs, targetAttr, href }, node.text as string) as T
   }
 
+  // Placeholder default compoment resolver
+  const componentResolver: NodeResolver<T> = (node: Node<T>): T => {
+    console.warn('[SbRichtText] - BLOK resolver is not available for vanilla usage')
+    return renderFn('span', {
+      blok: node?.attrs?.body[0],
+      id: node.attrs?.id,
+      style: 'display: none',
+    }, '') as T
+  }
+
   const mergedResolvers = new Map<NodeTypes, NodeResolver<T>>([
     [BlockTypes.DOCUMENT, nodeResolver('div')],
     [BlockTypes.HEADING, headingResolver],
@@ -124,6 +134,7 @@ export function RichTextResolver<T = string>(options: SbRichtextOptions) {
     [BlockTypes.HR, nodeResolver('hr')],
     [BlockTypes.BR, nodeResolver('br')],
     [BlockTypes.QUOTE, nodeResolver('blockquote')],
+    [BlockTypes.COMPONENT, componentResolver],
     [TextTypes.TEXT, textResolver],
     [MarkTypes.LINK, linkResolver],
     [MarkTypes.ANCHOR, linkResolver],
