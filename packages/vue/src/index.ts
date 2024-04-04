@@ -1,5 +1,5 @@
 import type { VNode } from 'vue'
-import { h } from 'vue'
+import { createTextVNode, h } from 'vue'
 import { RouterLink } from 'vue-router'
 
 import type { Node, NodeResolver, SbRichtextOptions } from '@storyblok/richtext-resolver'
@@ -17,6 +17,7 @@ const componentResolver: NodeResolver<VNode> = (node: Node<VNode>): VNode => {
 export function useSbRichtextResolver(options: SbRichtextOptions<VNode>) {
   const mergedOptions: SbRichtextOptions<VNode> = {
     renderFn: h,
+    textFn: createTextVNode,
     resolvers: {
       [MarkTypes.LINK]: (node: Node<VNode>) => {
         return node.attrs?.linktype === 'STORY'
@@ -30,7 +31,7 @@ export function useSbRichtextResolver(options: SbRichtextOptions<VNode>) {
           }, node.text)
       },
       [BlockTypes.COMPONENT]: componentResolver,
-      /* ...options.resolvers, */
+      ...options.resolvers,
     },
   }
   return RichTextResolver<VNode>(mergedOptions)

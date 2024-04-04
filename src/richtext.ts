@@ -27,7 +27,11 @@ function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, a
 
 export function RichTextResolver<T>(options: SbRichtextOptions<T>) {
   // Creates an HTML string for a given tag, attributes, and children
-  const { renderFn = defaultRenderFn, resolvers = {} } = options
+  const {
+    renderFn = defaultRenderFn,
+    textFn = escapeHtml,
+    resolvers = {},
+  } = options
   const nodeResolver = (tag: string): NodeResolver<T> => (node: Node<T>): T => renderFn(tag, node.attrs || {}, node.children || null as any) as T
 
   const headingResolver: NodeResolver<T> = (node: Node<T>): T => {
@@ -77,7 +81,7 @@ export function RichTextResolver<T>(options: SbRichtextOptions<T>) {
           (text: T, mark: MarkNode<T>) => renderToT({ ...mark, text }) as T, // Fix: Ensure render function returns a string
           renderToT({ ...rest, children: rest.children as T }) as T, // Fix: Cast children to string
         )
-        : escapeHtml(rest.text) as T // Fix: Ensure escapeHtml returns a string
+        : textFn(rest.text) as T // Fix: Ensure escapeHtml returns a string
     }
     else {
       return '' as T // Fix: Ensure empty string is of type string
