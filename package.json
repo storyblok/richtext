@@ -32,14 +32,18 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:packages": "pnpm -r --filter='./packages/*' run build",
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "lint:all": "pnpm -r --parallel --filter='./packages/*' run lint",
+    "lint:all:fix": "pnpm -r --parallel --filter='./packages/*' run lint:fix",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "playground": "cd playground && npm run dev",
     "playground:vue": "cd playground/vue && npm run dev",
-    "playground:react": "cd playground/react && npm run dev"
+    "playground:react": "cd playground/react && npm run dev",
+    "playground:all": "pnpm -r --parallel --filter='./playground/*' run dev"
   },
   "devDependencies": {
     "@alvarosabu/eslint-config": "^1.0.0",
