@@ -27,22 +27,24 @@ function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, a
 
 export function RichTextResolver<T>(options: SbRichtextOptions<T>) {
   // Creates an HTML string for a given tag, attributes, and children
+  let currentKey = 0
   const {
     renderFn = defaultRenderFn,
     textFn = escapeHtml,
     resolvers = {},
   } = options
-  const nodeResolver = (tag: string): NodeResolver<T> => (node: Node<T>): T => renderFn(tag, node.attrs || {}, node.children || null as any) as T
+  const nodeResolver = (tag: string): NodeResolver<T> => (node: Node<T>): T => renderFn(tag, { ...node.attrs, key: `${tag}-${currentKey}` } || {}, node.children || null as any) as T
 
   const headingResolver: NodeResolver<T> = (node: Node<T>): T => {
     const { level, ...rest } = node.attrs || {}
-    return renderFn(`h${level}`, rest || {}, node.children as any) as T
+    return renderFn(`h${level}`, { ...rest, key: `h${level}-${currentKey}` } || {}, node.children as any) as T
   }
 
   const emojiResolver: NodeResolver<T> = (node: Node<T>) => renderFn('span', {
     'data-type': 'emoji',
     'data-name': node.attrs?.name,
     'emoji': node.attrs?.emoji,
+    'key': `emoji-${currentKey}`,
   }, renderFn('img', {
     src: node.attrs?.fallbackImage,
     alt: node.attrs?.alt,
@@ -52,7 +54,7 @@ export function RichTextResolver<T>(options: SbRichtextOptions<T>) {
   }, '' as any)) as T
 
   const codeBlockResolver: NodeResolver<T> = (node: Node<T>): T => {
-    return renderFn('pre', node.attrs || {}, renderFn('code', {}, node.children || '' as any)) as T
+    return renderFn('pre', { ...node.attrs, key: `code-${currentKey}` } || {}, renderFn('code', { key: `code-${currentKey}` }, node.children || '' as any)) as T
   }
 
   // Mark resolver for text formatting
@@ -60,8 +62,9 @@ export function RichTextResolver<T>(options: SbRichtextOptions<T>) {
     return renderFn(tag, styled
       ? {
           style: attrsToStyle(attrs),
+          key: `${tag}-${currentKey}`,
         }
-      : attrs || {}, text as any) as T
+      : { ...attrs, key: `${tag}-${currentKey}` } || {}, text as any) as T
   }
 
   const renderToT = (node: any): T => {
@@ -112,7 +115,7 @@ export function RichTextResolver<T>(options: SbRichtextOptions<T>) {
         break
     }
 
-    return renderFn('a', { ...node.attrs, targetAttr, href }, node.text as any) as T
+    return renderFn('a', { ...node.attrs, targetAttr, href, key: `a-${currentKey}` }, node.text as any) as T
   }
 
   // Placeholder default compoment resolver
@@ -121,6 +124,7 @@ export function RichTextResolver<T>(options: SbRichtextOptions<T>) {
     return renderFn('span', {
       blok: node?.attrs?.body[0],
       id: node.attrs?.id,
+      key: `component-${currentKey}`,
       style: 'display: none',
     }, '') as T
   }
@@ -156,6 +160,7 @@ export function RichTextResolver<T>(options: SbRichtextOptions<T>) {
   ])
 
   function renderNode(node: Node<T>): T {
+    currentKey += 1
     const resolver = mergedResolvers.get(node.type)
     if (!resolver) {
       console.error('<Storyblok>', `No resolver found for node type ${node.type}`)
