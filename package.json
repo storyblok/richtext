@@ -47,11 +47,16 @@
     "playground:all": "pnpm -r --parallel --filter='./playground/*' run dev"
   },
   "devDependencies": {
-    "@alvarosabu/eslint-config": "^1.0.0",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
     "@vitest/ui": "^1.4.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-vue": "^9.25.0",
     "kolorist": "^1.8.0",
+    "lint-staged": "^15.2.2",
     "pathe": "^1.1.2",
+    "prettier": "^3.2.5",
     "typescript": "^5.4.3",
     "vite": "^5.2.7",
     "vite-plugin-banner": "^0.7.1",
@@ -59,5 +64,46 @@
     "vite-plugin-inspect": "^0.8.3",
     "vite-plugin-qrcode": "^0.2.3",
     "vitest": "^1.4.0"
+  },
+  "lint-staged": {
+    "*.{vue,js,css,ts}": [
+      "prettier --write",
+      "eslint"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "parser": "vue-eslint-parser",
+    "env": {
+      "node": true,
+      "vue/setup-compiler-macros": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended",
+      "prettier"
+    ],
+    "parserOptions": {
+      "parser": "@typescript-eslint/parser",
+      "sourceType": "module"
+    },
+    "ignorePatterns": "dist/",
+    "rules": {
+      "vue/multi-word-component-names": 0
+    }
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": false
   }
 }
