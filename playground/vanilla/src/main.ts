@@ -449,6 +449,7 @@ const options: SbRichtextOptions<string> = {
     height: 600,
     filters: {
       format: 'webp',
+      blur: 120
      /*  quality: 10,
       grayscale: true,
       blur: 10,

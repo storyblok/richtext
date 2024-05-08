@@ -17,8 +17,20 @@ export function optimizeImage(src: string, options?: boolean | Partial<ImageOpti
       const { filters } = options || {};
       const { blur, brightness, fill, format, grayscale, quality, rotate } = filters || {};
   
-      if (blur) filterParams.push(`blur(${blur})`);
-      if(quality) filterParams.push(`quality(${quality})`)
+      if (blur) {
+        if (typeof blur !== 'number' || blur <= 0 || blur >= 100) {
+          console.warn('[SbRichText] - Blur value must be a number between 0 and 100 (inclusive)');
+        } else {
+          filterParams.push(`blur(${blur})`);
+        }
+      }
+      if (quality) {
+        if (typeof quality !== 'number' || quality <= 0 || quality >= 100) {
+          console.warn('[SbRichText] - Quality value must be a number between 0 and 100 (inclusive)');
+        } else {
+          filterParams.push(`quality(${quality})`);
+        }
+      }
       if (brightness) filterParams.push(`brightness(${brightness})`);
       if (fill) filterParams.push(`fill(${fill})`);
       if (grayscale) filterParams.push(`grayscale()`);
@@ -31,7 +43,7 @@ export function optimizeImage(src: string, options?: boolean | Partial<ImageOpti
   // https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg/m/
   let resultSrc = `${src}/m/`;
   if(w > 0 && h > 0) {
-    resultSrc = `${resultSrc}${w}x${h}`;
+    resultSrc = `${resultSrc}${w}x${h}/`;
   }
   if(filterParams.length > 0) {
     resultSrc = `${resultSrc}filters:${filterParams.join(':')}`;
