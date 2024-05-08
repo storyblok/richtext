@@ -27,10 +27,42 @@ describe('images-optimization', () => {
     expect(resultSrc).toBe(`${src}/m/800x600/`)
   })
 
-  it('should add width and height to the attrs if provided', async () => {
+  it('should not add width to the src if width is not a number', async () => {
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
+    const consoleWarnSpy = vi.spyOn(console, 'warn')
+    optimizeImage(src, { width: '800', height: 600 })
+    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Width value must be a number greater than 0')
+    consoleWarnSpy.mockRestore()
+  })
+
+  it('should not add width to the src if width is less than 0', async () => {
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
+    const consoleWarnSpy = vi.spyOn(console, 'warn')
+    optimizeImage(src, { width: -800, height: 600 })
+    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Width value must be a number greater than 0')
+    consoleWarnSpy.mockRestore()
+  })
+
+  it('should add width to the attrs if provided', async () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const { attrs } = optimizeImage(src, { width: 800, height: 600 })
     expect(attrs).toEqual({ width: 800, height: 600 })
+  })
+
+  it('should not add height to the src if height is not a number', async () => {
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
+    const consoleWarnSpy = vi.spyOn(console, 'warn')
+    optimizeImage(src, { width: 800, height: '600' })
+    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Height value must be a number greater than 0')
+    consoleWarnSpy.mockRestore()
+  })
+
+  it('should not add height to the src if height is less than 0', async () => {
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
+    const consoleWarnSpy = vi.spyOn(console, 'warn')
+    optimizeImage(src, { width: 800, height: -600 })
+    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Height value must be a number greater than 0')
+    consoleWarnSpy.mockRestore()
   })
 
   it('should add loading attribute if provided', async () => {
@@ -79,6 +111,30 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const { src: resultSrc } = optimizeImage(src, { filters: { brightness: 0.5 } })
     expect(resultSrc).toBe(`${src}/m/filters:brightness(0.5)`)
+  })
+
+  it('should not add brightness filter if value is not a number', async () => {
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
+    const consoleWarnSpy = vi.spyOn(console, 'warn')
+    optimizeImage(src, { filters: { brightness: '0.5' } })
+    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Brightness value must be a number between 0 and 100 (inclusive)')
+    consoleWarnSpy.mockRestore()
+  })
+
+  it('should not add brightness filter if value is less than 0', async () => {
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
+    const consoleWarnSpy = vi.spyOn(console, 'warn')
+    optimizeImage(src, { filters: { brightness: -0.5 } })
+    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Brightness value must be a number between 0 and 100 (inclusive)')
+    consoleWarnSpy.mockRestore()
+  })
+
+  it('should not add brightness filter if value is greater than 100', async () => {
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
+    const consoleWarnSpy = vi.spyOn(console, 'warn')
+    optimizeImage(src, { filters: { brightness: 105 } })
+    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Brightness value must be a number between 0 and 100 (inclusive)')
+    consoleWarnSpy.mockRestore()
   })
 
   it('should add fill filter if provided', async () => {
@@ -148,5 +204,11 @@ describe('images-optimization', () => {
     }
     const { src: resultSrc } = optimizeImage(src, { filters })
     expect(resultSrc).toBe(`${src}/m/filters:blur(5):quality(80):brightness(0.5):fill(transparent):grayscale():rotate(90):format(webp)`)
+  })
+
+  it('should not add filters if options filter is empty', async () => {
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
+    const { src: resultSrc } = optimizeImage(src, { filters: {} })
+    expect(resultSrc).toBe(`${src}/m/`)
   })
 })

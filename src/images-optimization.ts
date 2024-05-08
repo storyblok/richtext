@@ -5,10 +5,29 @@ export function optimizeImage(src: string, options?: boolean | Partial<ImageOpti
   let w = 0;
   let h = 0;
   const attrs: Record<string, unknown> = {};
-  const filterParams = [];
+  const filterParams: string[] = [];
+
+  function validateAndPushFilterParam(value: number, min: number, max: number, filter: string, filterParams: string[]) {
+    if (typeof value !== 'number' || value <= min || value >= max) {
+      console.warn(`[SbRichText] - ${filter.charAt(0).toUpperCase() + filter.slice(1)} value must be a number between ${min} and ${max} (inclusive)`);
+    } else {
+      filterParams.push(`${filter}(${value})`);
+    }
+  }
+
   if(typeof options === 'object') {
-      if(options.width) {attrs.width = options.width; w = options.width};
-      if(options.height) {attrs.height = options.height; h = options.height};
+      if (typeof options.width === 'number' && options.width > 0) {
+        attrs.width = options.width;
+        w = options.width;
+      } else {
+        console.warn("[SbRichText] - Width value must be a number greater than 0");
+      }
+      if (options.height && typeof options.height === 'number' && options.height > 0) {
+        attrs.height = options.height;
+        h = options.height;
+      } else {
+        console.warn("[SbRichText] - Height value must be a number greater than 0");
+      }
       if(options.loading && ['lazy', 'eager'].includes(options.loading)) attrs.loading = options.loading;
       if(options.class) attrs.class = options.class;
 
@@ -18,20 +37,14 @@ export function optimizeImage(src: string, options?: boolean | Partial<ImageOpti
       const { blur, brightness, fill, format, grayscale, quality, rotate } = filters || {};
   
       if (blur) {
-        if (typeof blur !== 'number' || blur <= 0 || blur >= 100) {
-          console.warn('[SbRichText] - Blur value must be a number between 0 and 100 (inclusive)');
-        } else {
-          filterParams.push(`blur(${blur})`);
-        }
+        validateAndPushFilterParam(blur, 0, 100, 'blur', filterParams);
       }
       if (quality) {
-        if (typeof quality !== 'number' || quality <= 0 || quality >= 100) {
-          console.warn('[SbRichText] - Quality value must be a number between 0 and 100 (inclusive)');
-        } else {
-          filterParams.push(`quality(${quality})`);
-        }
+        validateAndPushFilterParam(quality, 0, 100, 'quality', filterParams);
       }
-      if (brightness) filterParams.push(`brightness(${brightness})`);
+      if (brightness) {
+        validateAndPushFilterParam(brightness, 0, 100, 'brightness', filterParams);
+      }
       if (fill) filterParams.push(`fill(${fill})`);
       if (grayscale) filterParams.push(`grayscale()`);
       if (rotate && [90, 180, 270].includes(options.filters.rotate)) filterParams.push(`rotate(${rotate})`);
