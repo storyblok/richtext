@@ -442,6 +442,19 @@ const options: SbRichtextOptions<string> = {
       return `<button href="${node.attrs?.href}" target="${node.attrs?.target}">${node.children}</button>`
     }, */
   },
+  optimizeImages: {
+    class: 'v-class',
+    loading: 'lazy',
+    width: 400,
+    height: 400,
+    filters: {
+      format: 'webp',
+      quality: 10,
+      grayscale: true,
+      blur: 10,
+      brightness: 10,
+    },
+  }
 }
 
 const html = RichTextResolver(options).render(doc)
