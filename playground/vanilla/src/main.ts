@@ -443,16 +443,16 @@ const options: SbRichtextOptions<string> = {
     }, */
   },
   optimizeImages: {
-    class: 'v-class',
-    loading: 'lazy',
-    width: 400,
-    height: 400,
+    /* class: 'v-class',
+    loading: 'lazy', */
+    width: 800,
+    height: 600,
     filters: {
       format: 'webp',
-      quality: 10,
+     /*  quality: 10,
       grayscale: true,
       blur: 10,
-      brightness: 10,
+      brightness: 10, */
     },
   }
 }
