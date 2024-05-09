@@ -189,4 +189,104 @@ describe('richtext', () => {
     const html = render(text as Node<string>)
     expect(html).toBe('<p key="p-5"><em key="em-5"><strong key="strong-4">Bold and italic</strong></em></p>')
   })
+
+  it('should render an external link', async () => {
+    const { render } = RichTextResolver({})
+    const link = {
+      text: 'External link',
+      type: 'text',
+      marks: [
+        {
+          type: 'link',
+          attrs: {
+            href: 'https://alvarosaburido.dev',
+            target: '_blank',
+            linktype: 'url',
+          },
+        },
+      ],
+    }
+    const html = render(link as Node<string>)
+    expect(html).toBe('<a target="_blank" href="https://alvarosaburido.dev" key="a-3">External link</a>')
+  })
+
+  it('should render an anchor link', async () => {
+    const { render } = RichTextResolver({})
+    const link = {
+      text: 'Anchor link',
+      type: 'text',
+      marks: [
+        {
+          type: 'link',
+          attrs: {
+            href: 'https://alvarosaburido.dev',
+            target: '_self',
+            anchor: 'anchor',
+          },
+        },
+      ],
+    }
+    const html = render(link as Node<string>)
+    expect(html).toBe('<a target="_self" href="#anchor" key="a-3">Anchor link</a>')
+  })
+
+  it('should render an email link', async () => {
+    const { render } = RichTextResolver({})
+    const link = {
+      text: 'hola@alvarosaburido.dev',
+      type: 'text',
+      marks: [
+        {
+          type: 'link',
+          attrs: {
+            href: 'hola@alvarosaburido.dev',
+            linktype: 'email',
+          },
+        },
+      ],
+    }
+    const html = render(link as Node<string>)
+    expect(html).toBe('<a href="mailto:hola@alvarosaburido.dev" key="a-3">hola@alvarosaburido.dev</a>')
+  })
+
+  it('should render an internal link', async () => {
+    const { render } = RichTextResolver({})
+    const link = {
+      text: 'Internal Link',
+      type: 'text',
+      marks: [
+        {
+          type: 'link',
+          attrs: {
+            href: '/',
+            uuid: '2bbf3ee7-acbe-401c-ade5-cf33e6e0babb',
+            anchor: null,
+            target: '_blank',
+            linktype: 'story',
+          },
+        },
+      ],
+    }
+    const html = render(link as Node<string>)
+    expect(html).toBe('<a uuid="2bbf3ee7-acbe-401c-ade5-cf33e6e0babb" target="_blank" href="/" key="a-3">Internal Link</a>')
+  })
+
+  it('should render an asset link', async () => {
+    const { render } = RichTextResolver({})
+    const link = {
+      text: 'Asset link',
+      type: 'text',
+      marks: [
+        {
+          type: 'link',
+          attrs: {
+            href: 'https://a.storyblok.com/f/67536/400x303/ccbe9ca7b3/nuxt-logo.png',
+            linktype: 'asset',
+          },
+        },
+      ],
+    }
+    const html = render(link as Node<string>)
+    expect(html).toBe('<a href="https://a.storyblok.com/f/67536/400x303/ccbe9ca7b3/nuxt-logo.png" key="a-3">Asset link</a>')
+  })
 })
