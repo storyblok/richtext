@@ -47,7 +47,7 @@ export function optimizeImage(src: string, options?: boolean | Partial<ImageOpti
       }
       if (fill) filterParams.push(`fill(${fill})`);
       if (grayscale) filterParams.push(`grayscale()`);
-      if (rotate && [90, 180, 270].includes(options.filters.rotate)) filterParams.push(`rotate(${rotate})`);
+      if (rotate && [0, 90, 180, 270].includes(options.filters.rotate)) filterParams.push(`rotate(${rotate})`);
       if (format && ['webp', 'png', 'jpeg'].includes(format)) filterParams.push(`format(${format})`);
     }
 

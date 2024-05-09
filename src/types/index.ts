@@ -99,7 +99,7 @@ export interface ImageOptimizationOptions {
     format: 'webp' | 'png' | 'jpg'
     grayscale: boolean
     quality: number
-    rotate: 90 | 180 | 270
+    rotate: 0 | 90 | 180 | 270
   }
   srcset:(number | [number, number])[]
   sizes: string[]
