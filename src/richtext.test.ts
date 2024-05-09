@@ -190,6 +190,23 @@ describe('richtext', () => {
     expect(html).toBe('<p key="p-5"><em key="em-5"><strong key="strong-4">Bold and italic</strong></em></p>')
   })
 
+  it('should render text with styled marks', async () => {
+    const { render } = RichTextResolver({})
+    const text = {
+      type: 'paragraph',
+      content: [
+        {
+          text: 'Bold and italic',
+          type: 'text',
+          marks: [{ type: 'styled', attrs: { color: 'red' } }, { type: 'styled', attrs: { color: 'blue' } }],
+        },
+      ],
+    }
+    const html = render(text as Node<string>)
+    // Update the expected HTML to reflect the styles
+    expect(html).toBe('<p key="p-5"><span style="color: blue" key="span-5"><span style="color: red" key="span-4">Bold and italic</span></span></p>')
+  })
+
   it('should render an external link', async () => {
     const { render } = RichTextResolver({})
     const link = {
@@ -288,5 +305,93 @@ describe('richtext', () => {
     }
     const html = render(link as Node<string>)
     expect(html).toBe('<a href="https://a.storyblok.com/f/67536/400x303/ccbe9ca7b3/nuxt-logo.png" key="a-3">Asset link</a>')
+  })
+
+  it('should render a bold text', async () => {
+    const { render } = RichTextResolver({})
+    const bold = {
+      text: 'Bold',
+      type: 'text',
+      marks: [{ type: 'bold' }],
+    }
+    const html = render(bold as Node<string>)
+    expect(html).toBe('<strong key="strong-3">Bold</strong>')
+  })
+
+  it('should render an italic text', async () => {
+    const { render } = RichTextResolver({})
+    const italic = {
+      text: 'Italic',
+      type: 'text',
+      marks: [{ type: 'italic' }],
+    }
+    const html = render(italic as Node<string>)
+    expect(html).toBe('<em key="em-3">Italic</em>')
+  })
+
+  it('should render a underline text', async () => {
+    const { render } = RichTextResolver({})
+    const underline = {
+      text: 'Underline',
+      type: 'text',
+      marks: [{ type: 'underline' }],
+    }
+    const html = render(underline as Node<string>)
+    expect(html).toBe('<u key="u-3">Underline</u>')
+  })
+
+  it('should render a strike text', async () => {
+    const { render } = RichTextResolver({})
+    const strike = {
+      text: 'Strike',
+      type: 'text',
+      marks: [{ type: 'strike' }],
+    }
+    const html = render(strike as Node<string>)
+    expect(html).toBe('<s key="s-3">Strike</s>')
+  })
+
+  it('should render a code text', async () => {
+    const { render } = RichTextResolver({})
+    const code = {
+      text: 'Code',
+      type: 'text',
+      marks: [{ type: 'code' }],
+    }
+    const html = render(code as Node<string>)
+    expect(html).toBe('<code key="code-3">Code</code>')
+  })
+
+  it('should renser a superscript text', async () => {
+    const { render } = RichTextResolver({})
+    const superscript = {
+      text: 'Superscript',
+      type: 'text',
+      marks: [{ type: 'superscript' }],
+    }
+    const html = render(superscript as Node<string>)
+    expect(html).toBe('<sup key="sup-3">Superscript</sup>')
+  })
+
+  it('should render a subscript text', async () => {
+    const { render } = RichTextResolver({})
+    const subscript = {
+      text: 'Subscript',
+      type: 'text',
+      marks: [{ type: 'subscript' }],
+    }
+    const html = render(subscript as Node<string>)
+    expect(html).toBe('<sub key="sub-3">Subscript</sub>')
+  })
+
+  it('should render a highlight text', async () => {
+    const { render } = RichTextResolver({})
+    const highlight = {
+      text: 'Highlight',
+      type: 'text',
+      marks: [{ type: 'highlight' }],
+    }
+    const html = render(highlight as Node<string>)
+    expect(html).toBe('<mark key="mark-3">Highlight</mark>')
   })
 })

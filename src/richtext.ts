@@ -148,7 +148,7 @@ export function RichTextResolver<T>(options: SbRichtextOptions<T>) {
     [TextTypes.TEXT, textResolver],
     [MarkTypes.LINK, linkResolver],
     [MarkTypes.ANCHOR, linkResolver],
-    [MarkTypes.STYLED, markResolver('span')],
+    [MarkTypes.STYLED, markResolver('span', true)],
     [MarkTypes.BOLD, markResolver('strong')],
     [MarkTypes.TEXT_STYLE, markResolver('span', true)],
     [MarkTypes.ITALIC, markResolver('em')],
