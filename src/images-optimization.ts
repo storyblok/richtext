@@ -50,6 +50,24 @@ export function optimizeImage(src: string, options?: boolean | Partial<ImageOpti
       if (rotate && [90, 180, 270].includes(options.filters.rotate)) filterParams.push(`rotate(${rotate})`);
       if (format && ['webp', 'png', 'jpeg'].includes(format)) filterParams.push(`format(${format})`);
     }
+
+    // Construct srcset attribute
+    if (options.srcset) {
+      attrs.srcset = options.srcset.map((entry) => {
+        if (typeof entry === 'number') {
+          return `${src}/m/${entry}x0/${filterParams.length > 0 ? 'filters:' + filterParams.join(':') : ''} ${entry}w`;
+        }
+        if (Array.isArray(entry) && entry.length === 2) {
+          const [entryWidth, entryHeight] = entry;
+          return `${src}/m/${entryWidth}x${entryHeight}/${filterParams.length > 0 ? 'filters:' + filterParams.join(':') : ''} ${entryWidth}w`;
+        }
+      }).join(', ');
+    }
+
+    // Construct sizes attribute
+    if (options.sizes) {
+      attrs.sizes = options.sizes.join(', ');
+    }
   }
   
   // server-side WebP support detection https://www.storyblok.com/docs/image-service/#optimize 

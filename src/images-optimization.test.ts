@@ -211,4 +211,33 @@ describe('images-optimization', () => {
     const { src: resultSrc } = optimizeImage(src, { filters: {} })
     expect(resultSrc).toBe(`${src}/m/`)
   })
+
+  it('should add srcset attribute if provided', async () => {
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
+    const srcset = [400, 800, 1200]
+    const { attrs } = optimizeImage(src, { srcset })
+    expect(attrs).toEqual({ srcset: 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/400x0/ 400w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/800x0/ 800w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/1200x0/ 1200w' })
+  })
+
+  it('should add srcset attribute with width and height if provided as an array of arrays', async () => {
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
+    const srcset = [[400, 300], [800, 600], [1200, 900]]
+    const { attrs } = optimizeImage(src, { srcset })
+    expect(attrs).toEqual({ srcset: 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/400x300/ 400w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/800x600/ 800w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/1200x900/ 1200w' })
+  })
+
+  it('should add sizes attribute if provided', async () => {
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
+    const sizes = ['(min-width: 600px) 50vw', '100vw']
+    const { attrs } = optimizeImage(src, { sizes })
+    expect(attrs).toEqual({ sizes: '(min-width: 600px) 50vw, 100vw' })
+  })
+
+  it('should add srcset and sizes attributes if provided', async () => {
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
+    const srcset = [400, 800, 1200]
+    const sizes = ['(min-width: 600px) 50vw', '100vw']
+    const { attrs } = optimizeImage(src, { srcset, sizes })
+    expect(attrs).toEqual({ srcset: 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/400x0/ 400w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/800x0/ 800w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/1200x0/ 1200w', sizes: '(min-width: 600px) 50vw, 100vw' })
+  })
 })
