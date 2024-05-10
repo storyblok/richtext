@@ -28,4 +28,9 @@ export default defineConfig({
       fileName: format => `storyblok-richtext.${format}.js`,
     },
   },
+  test: {
+    coverage: {
+      exclude: ['playground/**', 'packages/**', 'src/index.ts']
+    }
+  }
 })
