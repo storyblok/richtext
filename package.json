@@ -108,5 +108,8 @@
     "tabWidth": 2,
     "semi": true,
     "singleQuote": false
+  },
+  "dependencies": {
+    "consola": "^3.2.3"
   }
 }
