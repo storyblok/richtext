@@ -50,6 +50,7 @@ export function RichTextResolver<T>(options: SbRichtextOptions<T> ) {
     const imgAttrs = {
       src: finalSrc,
       alt: alt || '',
+      key: `img-${currentKey}`,
       ...rest,
       ...finalAttrs,
     };
@@ -115,28 +116,30 @@ export function RichTextResolver<T>(options: SbRichtextOptions<T> ) {
   // Resolver for link nodes
 
   const linkResolver: NodeResolver<T> = (node: Node<T>) => {
-    let href = ''
-    const targetAttr = node.attrs?.target ? ` target="${node.attrs.target}"` : ''
+    const { linktype, href, anchor, ...rest } = node.attrs || {}
 
-    switch (node.attrs?.linktype) {
+    let finalHref = ''
+    switch (linktype) {
       case LinkTypes.ASSET:
       case LinkTypes.URL:
-        href = node.attrs?.href
+        finalHref = href
         break
       case LinkTypes.EMAIL:
-        href = `mailto:${node.attrs?.href}`
+        finalHref = `mailto:${href}`
         break
       case LinkTypes.STORY:
         // Assuming you are not using Vue Router in a vanilla implementation.
         // Directly link to the story URL.
-        href = node.attrs?.href
+        finalHref = href
         break
       default:
         // Optional: Handle default case or log an error.
         break
     }
-
-    return renderFn('a', { ...node.attrs, targetAttr, href, key: `a-${currentKey}` }, node.text as any) as T
+    if (anchor) {
+      finalHref = `${finalHref}#${anchor}`
+    }
+    return renderFn('a', { ...rest, href: finalHref, key: `a-${currentKey}` }, node.text as any) as T
   }
 
   // Placeholder default compoment resolver
@@ -167,7 +170,7 @@ export function RichTextResolver<T>(options: SbRichtextOptions<T> ) {
     [TextTypes.TEXT, textResolver],
     [MarkTypes.LINK, linkResolver],
     [MarkTypes.ANCHOR, linkResolver],
-    [MarkTypes.STYLED, markResolver('span')],
+    [MarkTypes.STYLED, markResolver('span', true)],
     [MarkTypes.BOLD, markResolver('strong')],
     [MarkTypes.TEXT_STYLE, markResolver('span', true)],
     [MarkTypes.ITALIC, markResolver('em')],
