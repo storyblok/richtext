@@ -87,8 +87,27 @@ export interface TextNode<T = string> extends Node<T> {
 
 export type NodeResolver<T = string> = (node: Node<T> | TextNode<T> | MarkNode<T> | LinkNode<T>) => T
 
+export interface ImageOptimizationOptions {
+  class: string
+  width: number
+  height: number
+  loading: 'lazy' | 'eager'
+  filters: {
+    blur: number
+    brightness: number
+    fill: 'transparent'
+    format: 'webp' | 'png' | 'jpg'
+    grayscale: boolean
+    quality: number
+    rotate: 0 | 90 | 180 | 270
+  }
+  srcset:(number | [number, number])[]
+  sizes: string[]
+}
+
 export interface SbRichtextOptions<T = string, S = (tag: string, attrs: Record<string, any>, text: string) => T> {
   renderFn?: S
   textFn?: Function
   resolvers?: Partial<Record<NodeTypes, NodeResolver<T>>>
+  optimizeImages?: boolean | Partial<ImageOptimizationOptions>
 }

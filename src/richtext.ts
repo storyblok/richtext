@@ -1,3 +1,4 @@
+import { optimizeImage } from './images-optimization'
 import { BlockTypes, LinkTypes, MarkTypes, TextTypes } from './types'
 import type { MarkNode, Node, NodeResolver, NodeTypes, SbRichtextOptions, TextNode } from './types'
 
@@ -25,16 +26,36 @@ function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, a
   return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T
 }
 
-export function RichTextResolver<T>(options: SbRichtextOptions<T>) {
+export function RichTextResolver<T>(options: SbRichtextOptions<T> ) {
   // Creates an HTML string for a given tag, attributes, and children
   let currentKey = 0
   const {
     renderFn = defaultRenderFn,
     textFn = escapeHtml,
     resolvers = {},
+    optimizeImages = false,
   } = options
   const nodeResolver = (tag: string): NodeResolver<T> => (node: Node<T>): T => renderFn(tag, { ...node.attrs, key: `${tag}-${currentKey}` } || {}, node.children || null as any) as T
 
+  const imageResolver: NodeResolver<T> = (node: Node<T>) => {
+    const { src, alt, ...rest } = node.attrs || {};
+    let finalSrc = src;
+    let finalAttrs = {};
+
+    if(optimizeImages) {
+      const { src: optimizedSrc, attrs: optimizedAttrs } = optimizeImage(src, optimizeImages);
+      finalSrc = optimizedSrc;
+      finalAttrs = optimizedAttrs;
+    }
+    const imgAttrs = {
+      src: finalSrc,
+      alt: alt || '',
+      ...rest,
+      ...finalAttrs,
+    };
+
+    return renderFn('img', imgAttrs, '') as T;
+  };
   const headingResolver: NodeResolver<T> = (node: Node<T>): T => {
     const { level, ...rest } = node.attrs || {}
     return renderFn(`h${level}`, { ...rest, key: `h${level}-${currentKey}` } || {}, node.children as any) as T
@@ -136,7 +157,7 @@ export function RichTextResolver<T>(options: SbRichtextOptions<T>) {
     [BlockTypes.UL_LIST, nodeResolver('ul')],
     [BlockTypes.OL_LIST, nodeResolver('ol')],
     [BlockTypes.LIST_ITEM, nodeResolver('li')],
-    [BlockTypes.IMAGE, nodeResolver('img')],
+    [BlockTypes.IMAGE, imageResolver],
     [BlockTypes.EMOJI, emojiResolver],
     [BlockTypes.CODE_BLOCK, codeBlockResolver],
     [BlockTypes.HR, nodeResolver('hr')],

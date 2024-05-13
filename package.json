@@ -50,6 +50,7 @@
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
+    "@vitest/coverage-v8": "^1.6.0",
     "@vitest/ui": "^1.4.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vue": "^9.25.0",
@@ -105,5 +106,8 @@
     "tabWidth": 2,
     "semi": true,
     "singleQuote": false
+  },
+  "dependencies": {
+    "consola": "^3.2.3"
   }
 }
