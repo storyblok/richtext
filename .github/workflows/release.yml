@@ -26,9 +26,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
       - name: Build lib
-        run: npm run build
+        run: pnpm run build
       - name: Test run
-        run: npm run test
+        run: pnpm run test
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
