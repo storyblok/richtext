@@ -1,17 +1,18 @@
-name: Run Tests
-on: [push]
+name: Release CI
+
+on:
+  push:
+    branches: [main, next, beta]
+  pull_request:
+    branches: [main, next, beta]
 
 env:
   PNPM_CACHE_FOLDER: .pnpm-store
   HUSKY: 0 # Bypass husky commit hook for CI
 
 jobs:
-  test:
-    name: Unit Test
+  release:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,7 +25,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
-      - name: Install dependencies
-        run: pnpm install
-      - name: Run Unit Tests
-        run: pnpm run test
+      - name: Build lib
+        run: npm run build
+      - name: Test run
+        run: npm run test
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release@18
