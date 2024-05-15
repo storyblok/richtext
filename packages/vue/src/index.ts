@@ -2,8 +2,8 @@ import type { VNode } from 'vue'
 import { createTextVNode, h } from 'vue'
 import { RouterLink } from 'vue-router'
 
-import type { Node, NodeResolver, SbRichtextOptions } from '@storyblok/richtext-resolver'
-import { BlockTypes, MarkTypes, RichTextResolver } from '@storyblok/richtext-resolver'
+import type { Node, NodeResolver, SbRichtextOptions } from '@storyblok/richtext'
+import { BlockTypes, MarkTypes, RichTextResolver } from '@storyblok/richtext'
 import { StoryblokComponent } from '@storyblok/vue'
 import SbRichText from './components/SbRichText.vue'
 

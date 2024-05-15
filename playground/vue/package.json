@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@storyblok/richtext-resolver": "workspace:^",
+    "@storyblok/richtext": "workspace:^",
     "@storyblok/vue": "^8.0.7",
     "@storyblok/vue-richtext": "workspace:^",
     "vue": "^3.4.21",

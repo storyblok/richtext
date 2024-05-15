@@ -1,7 +1,7 @@
 import React from 'react'
 import { StoryblokComponent } from '@storyblok/react'
-import type { Node, SbRichtextOptions } from '@storyblok/richtext-resolver'
-import { BlockTypes, RichTextResolver } from '@storyblok/richtext-resolver'
+import type { Node, SbRichtextOptions } from '@storyblok/richtext'
+import { BlockTypes, RichTextResolver } from '@storyblok/richtext'
 import SbRichText from './SbRichText'
 
 function componentResolver(node: Node<React.ReactElement>) {

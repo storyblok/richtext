@@ -34,7 +34,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@storyblok/richtext-resolver": "workspace:^",
+    "@storyblok/richtext": "workspace:^",
     "@storyblok/vue": "^8.0.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"

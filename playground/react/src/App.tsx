@@ -1,4 +1,4 @@
-import { RichTextResolver } from '@storyblok/richtext-resolver'
+import { RichTextResolver } from '@storyblok/richtext'
 import { StoryblokComponent, useStoryblok } from '@storyblok/react'
 import { SbRichText } from '@storyblok/react-richtext'
 import './App.css'
