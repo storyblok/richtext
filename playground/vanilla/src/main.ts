@@ -1,5 +1,5 @@
 import './style.css'
-import { MarkTypes, type Node, RichTextResolver, type SbRichtextOptions } from '@storyblok/richtext-resolver'
+import { MarkTypes, type Node, RichTextResolver, type SbRichtextOptions } from '@storyblok/richtext'
 import StoryblokClient from 'storyblok-js-client'
 
 /* const doc: Node<string> = {

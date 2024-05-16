@@ -78,7 +78,7 @@ importers:
       '@storyblok/react':
         specifier: ^3.0.9
         version: 3.0.9(react-dom@18.2.0)(react@18.2.0)
-      '@storyblok/richtext-resolver':
+      '@storyblok/richtext':
         specifier: workspace:^
         version: link:../..
       '@vitejs/plugin-react':
@@ -124,7 +124,7 @@ importers:
 
   packages/vue:
     dependencies:
-      '@storyblok/richtext-resolver':
+      '@storyblok/richtext':
         specifier: workspace:^
         version: link:../..
       '@storyblok/vue':
@@ -198,7 +198,7 @@ importers:
 
   playground/vanilla:
     dependencies:
-      '@storyblok/richtext-resolver':
+      '@storyblok/richtext':
         specifier: workspace:^
         version: link:../..
       storyblok-js-client:
@@ -217,7 +217,7 @@ importers:
 
   playground/vue:
     dependencies:
-      '@storyblok/richtext-resolver':
+      '@storyblok/richtext':
         specifier: workspace:^
         version: link:../..
       '@storyblok/vue':

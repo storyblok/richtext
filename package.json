@@ -1,5 +1,5 @@
 {
-  "name": "@storyblok/richtext-resolver",
+  "name": "@storyblok/richtext",
   "type": "module",
   "version": "0.0.0",
   "packageManager": "pnpm@8.10.2",
@@ -108,6 +108,19 @@
     "tabWidth": 2,
     "semi": true,
     "singleQuote": false
+  },
+  "release": {
+    "branches": [
+      "main",
+      {
+        "name": "next",
+        "prerelease": true
+      },
+      {
+        "name": "beta",
+        "prerelease": true
+      }
+    ]
   },
   "dependencies": {
     "consola": "^3.2.3"

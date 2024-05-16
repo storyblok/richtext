@@ -16,7 +16,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@storyblok/richtext-resolver': resolve(__dirname, '../../src/index.ts'),
+      '@storyblok/richtext': resolve(__dirname, '../../src/index.ts'),
     },
   },
 })

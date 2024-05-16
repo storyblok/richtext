@@ -10,7 +10,7 @@ This is a proof of concept for a custom resolver for the Storyblok Richtext fiel
 ### Basic
 
 ```ts
-import { RichTextResolver } from '@storyblok/richtext-resolver'
+import { RichTextResolver } from '@storyblok/richtext'
 
 const { render } = RichTextResolver()
 
@@ -28,7 +28,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 To overwrite an existing resolver, you can pass a property called resolvers available on the `RichTextResolver` options.
 
 ```ts
-import { MarkTypes, RichTextResolver } from '@storyblok/richtext-resolver'
+import { MarkTypes, RichTextResolver } from '@storyblok/richtext'
 
 const html = RichTextResolver({
   resolvers: {
@@ -47,7 +47,7 @@ It is possible to ensure correct typing support in a framework-agnostic way by u
 - Vue `VNode`
 - React `React.ReactElement`
 
-This way the `@storyblok/richtext-resolver` is ignorant of framework specific types, avoiding having to import them and having `vue` `react` etc as dependencies.
+This way the `@storyblok/richtext` is ignorant of framework specific types, avoiding having to import them and having `vue` `react` etc as dependencies.
 
 ```ts
 // Vanilla

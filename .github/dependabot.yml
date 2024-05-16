@@ -1,0 +1,28 @@
+version: 2
+updates:
+  - package-ecosystem: "pnpm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: fix
+      prefix-development: chore
+      include: scope
+    groups:
+      linting-dx-tools:
+        patterns:
+          - "*lint*" # eslint, eslint-*, vue-eslint-parser, lint-staged, @commitlint/*, @typescript-eslint/*
+          - "prettier"
+          - "husky"
+          - "@vue/tsconfig"
+          - "*babel*" # babel-*, @vue/babel-preset-app, @babel/*
+        update-types:
+          - "minor"
+          - "patch"
+      testing-tools:
+        patterns:
+          - "@vue/test-utils"
+          - "vitest"
+        update-types:
+          - "minor"
+          - "patch"
