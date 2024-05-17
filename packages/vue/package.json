@@ -37,7 +37,7 @@
     "@storyblok/richtext": "workspace:^",
     "@storyblok/vue": "^8.0.7",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
