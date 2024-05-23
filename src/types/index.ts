@@ -92,7 +92,7 @@ export interface ImageOptimizationOptions {
   width: number
   height: number
   loading: 'lazy' | 'eager'
-  filters: {
+  filters: Partial<{
     blur: number
     brightness: number
     fill: 'transparent'
@@ -100,7 +100,7 @@ export interface ImageOptimizationOptions {
     grayscale: boolean
     quality: number
     rotate: 0 | 90 | 180 | 270
-  }
+  }>
   srcset:(number | [number, number])[]
   sizes: string[]
 }
