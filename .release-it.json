@@ -6,12 +6,6 @@
     "release": true,
     "releaseName": "v${version}"
   },
-  "plugins": {
-    "@release-it/conventional-changelog": {
-      "preset": "conventionalcommits",
-      "infile": "CHANGELOG.md"
-    }
-  },
   "hooks": {
     "before:init": ["pnpm run lint", "pnpm test:ci"],
     "after:bump": "pnpm run build",
