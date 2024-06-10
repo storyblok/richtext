@@ -1,0 +1,15 @@
+---
+// Astro component script
+// Define your component's properties using TypeScript
+interface Props {
+  blok: {
+    url: {
+      url: string;
+    };
+  };
+}
+const { blok } = Astro.props as Props;
+---
+
+<!-- Template -->
+<iframe src={blok.url.url} class="w-full aspect-video"></iframe>

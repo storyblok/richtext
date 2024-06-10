@@ -1,0 +1,75 @@
+---
+import { useStoryblokApi } from '@storyblok/astro'
+import { MarkTypes,type Node, RichTextResolver, type SbRichtextOptions, BlockTypes} from '@storyblok/richtext'
+
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
+import BaseLayout from '../layouts/BaseLayout.astro'
+ 
+const storyblokApi = useStoryblokApi()
+const { data } = await storyblokApi.get('cdn/stories/home', {
+  version: 'draft',
+})
+ 
+const story = data.story
+const doc = story.content.richtext
+const iframe = doc.content[doc.content.length - 1].content[1].content[1].attrs.body[0]
+console.log(doc.content[doc.content.length - 1].content[1].content[1].attrs.body[0])
+const Component = StoryblokComponent
+---
+ 
+<BaseLayout>
+	<div set:html={RichTextResolver({}).render(doc)}></div>
+	<!-- { 
+		() => RichTextResolver({
+			resolvers: {
+				/* [MarkTypes.LINK]: (node: Node<string>) => {
+					return `<button href="${node.attrs?.href}" target="${node.attrs?.target}">${node.children}</button>`
+				}, */
+				[BlockTypes.COMPONENT]: (node: Node<string>) => {
+					const props = {
+						blok: node.attrs,
+					}
+
+					return  <StoryblokComponent />;
+				}
+				
+			},
+
+		}).render(doc)
+	} -->
+<!-- 	<div set:html={
+		RichTextResolver({
+			renderFn: (node) => {
+				const props = {
+					blok: node.attrs,
+				}
+
+				return  <StoryblokComponent {...props} />;
+			},
+			resolvers: {
+				[BlockTypes.COMPONENT]: (node) => {
+					const props = {
+						blok: node?.attrs?.body[0],
+					}
+
+					return  <StoryblokComponent {...props} />;
+				}
+			} 
+		}).render(doc)
+	}></div> -->
+
+<!-- { 
+	() => RichTextResolver({
+			resolvers: {
+				[BlockTypes.COMPONENT]: (node) => {
+					const props = {
+						blok: node.attrs.body[0],
+					}
+
+					return  <StoryblokComponent {...props} />;
+				}
+			}
+		}).render(doc)
+} -->
+
+</BaseLayout>
