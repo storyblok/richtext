@@ -80,7 +80,7 @@ importers:
     dependencies:
       '@storyblok/react':
         specifier: ^3.0.9
-        version: 3.0.9(react-dom@18.2.0)(react@18.2.0)
+        version: 3.0.9(react-dom@18.3.1)(react@18.2.0)
       '@storyblok/richtext':
         specifier: workspace:^
         version: link:../..
@@ -91,15 +91,15 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.2.0)
     devDependencies:
       '@types/react':
         specifier: ^18.2.66
         version: 18.2.67
       '@types/react-dom':
-        specifier: ^18.2.22
-        version: 18.2.22
+        specifier: ^18.3.0
+        version: 18.3.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.2.0
         version: 7.2.0(@typescript-eslint/parser@7.2.0)(eslint@8.57.0)(typescript@5.4.3)
@@ -157,7 +157,7 @@ importers:
     dependencies:
       '@storyblok/react':
         specifier: ^3.0.9
-        version: 3.0.9(react-dom@18.2.0)(react@18.2.0)
+        version: 3.0.9(react-dom@18.3.1)(react@18.2.0)
       '@storyblok/react-richtext':
         specifier: workspace:^
         version: link:../../packages/react
@@ -165,15 +165,15 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.2.0)
     devDependencies:
       '@types/react':
         specifier: ^18.2.64
         version: 18.2.67
       '@types/react-dom':
-        specifier: ^18.2.21
-        version: 18.2.22
+        specifier: ^18.3.0
+        version: 18.3.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.1.1
         version: 7.2.0(@typescript-eslint/parser@7.2.0)(eslint@8.57.0)(typescript@5.4.2)
@@ -1795,7 +1795,7 @@ packages:
       storyblok-js-client: 6.7.3
     dev: true
 
-  /@storyblok/react@3.0.9(react-dom@18.2.0)(react@18.2.0):
+  /@storyblok/react@3.0.9(react-dom@18.3.1)(react@18.2.0):
     resolution: {integrity: sha512-N362hE+sBH3QebCrJtqgzGI2l+Dre8hfNJmAJvEtx1bEtfvu6hcA5ch5eQjjILxgDMwtseA0BnCXP7zoqJ2KCg==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0
@@ -1803,7 +1803,7 @@ packages:
     dependencies:
       '@storyblok/js': 3.0.7
       react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react-dom: 18.3.1(react@18.2.0)
     dev: false
 
   /@storyblok/vue@8.0.7:
@@ -2019,8 +2019,8 @@ packages:
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
     dev: true
 
-  /@types/react-dom@18.2.22:
-    resolution: {integrity: sha512-fHkBXPeNtfvri6gdsMYyW+dW7RXFo6Ad09nLFK0VQWR7yGLai/Cyvyj696gbwYvBnhGtevUG9cET0pmUbMtoPQ==}
+  /@types/react-dom@18.3.0:
+    resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
     dependencies:
       '@types/react': 18.2.67
     dev: true
@@ -5680,14 +5680,14 @@ packages:
       strip-json-comments: 2.0.1
     dev: true
 
-  /react-dom@18.2.0(react@18.2.0):
-    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
+  /react-dom@18.3.1(react@18.2.0):
+    resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
-      react: ^18.2.0
+      react: ^18.3.1
     dependencies:
       loose-envify: 1.4.0
       react: 18.2.0
-      scheduler: 0.23.0
+      scheduler: 0.23.2
     dev: false
 
   /react-is@18.3.1:
@@ -5989,8 +5989,8 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: true
 
-  /scheduler@0.23.0:
-    resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
+  /scheduler@0.23.2:
+    resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
     dependencies:
       loose-envify: 1.4.0
     dev: false
