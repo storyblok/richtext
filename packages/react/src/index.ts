@@ -1,7 +1,7 @@
 import React from 'react'
 import { StoryblokComponent } from '@storyblok/react'
 import type { Node, SbRichtextOptions } from '@storyblok/richtext'
-import { BlockTypes, RichTextResolver } from '@storyblok/richtext'
+import { BlockTypes, richTextResolver } from '@storyblok/richtext'
 import SbRichText from './SbRichText'
 
 function componentResolver(node: Node<React.ReactElement>) {
@@ -18,7 +18,7 @@ export function useSbRichtextResolver(options: SbRichtextOptions<React.ReactElem
       ...options.resolvers,
     },
   }
-  return RichTextResolver(mergedOptions)
+  return richTextResolver(mergedOptions)
 }
 
 export { SbRichText }

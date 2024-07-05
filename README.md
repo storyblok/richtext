@@ -56,9 +56,9 @@ pnpm add @storyblok/richtext
 ### Basic
 
 ```ts
-import { RichTextResolver } from '@storyblok/richtext'
+import { richTextResolver } from '@storyblok/richtext'
 
-const { render } = RichTextResolver()
+const { render } = richTextResolver()
 
 const html = render(doc)
 
@@ -71,12 +71,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
 ### Overwrite resolvers
 
-To overwrite an existing resolver, you can pass a property called resolvers available on the `RichTextResolver` options.
+To overwrite an existing resolver, you can pass a property called resolvers available on the `richTextResolver` options.
 
 ```ts
-import { MarkTypes, RichTextResolver } from '@storyblok/richtext'
+import { MarkTypes, richTextResolver } from '@storyblok/richtext'
 
-const html = RichTextResolver({
+const html = richTextResolver({
   resolvers: {
     [MarkTypes.LINK]: (node) => {
       return `<button href="${node.attrs?.href}" target="${node.attrs?.target}">${node.children}</button>`
@@ -105,7 +105,7 @@ const options: SbRichtextOptions<string> = {
   },
 }
 
-const html = RichTextResolver<string>(options).render(doc)
+const html = richTextResolver<string>(options).render(doc)
 ```
 
 ```ts
@@ -113,7 +113,7 @@ const html = RichTextResolver<string>(options).render(doc)
 const options: SbRichtextOptions<VNode> = {
   renderFn: h,
 }
-const root = () => RichTextResolver<VNode>(options).render(doc)
+const root = () => richTextResolver<VNode>(options).render(doc)
 ```
 
 ## Setup

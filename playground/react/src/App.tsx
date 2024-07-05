@@ -1,4 +1,4 @@
-import { RichTextResolver } from '@storyblok/richtext'
+import { richTextResolver } from '@storyblok/richtext'
 import { StoryblokComponent, useStoryblok } from '@storyblok/react'
 import { SbRichText } from '@storyblok/react-richtext'
 import './App.css'
@@ -456,7 +456,7 @@ function App() {
     return <div>Loading...</div>
   }
 
-  /*  const html = RichTextResolver({
+  /*  const html = richTextResolver({
     renderFn: React.createElement,
   }).render(story.content.richtext)
 

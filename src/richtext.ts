@@ -26,7 +26,7 @@ function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, a
   return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T
 }
 
-export function RichTextResolver<T>(options: SbRichtextOptions<T> ) {
+export function richTextResolver<T>(options: SbRichtextOptions<T> ) {
   // Creates an HTML string for a given tag, attributes, and children
   let currentKey = 0
   const {

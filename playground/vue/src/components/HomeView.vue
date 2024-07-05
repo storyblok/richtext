@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { VNode, createTextVNode, h } from 'vue'
-import { BlockTypes, MarkTypes, RichTextResolver, type Node, type SbRichtextOptions} from '@storyblok/richtext'
+import { BlockTypes, MarkTypes, richTextResolver, type Node, type SbRichtextOptions} from '@storyblok/richtext'
 import { RouterLink } from 'vue-router'
 import { SbRichText } from '@storyblok/vue-richtext'
 import { useStoryblok } from '@storyblok/vue'
@@ -384,7 +384,7 @@ const options : SbRichtextOptions<VNode> = {
   }
 }
 
-const root = () => RichTextResolver<VNode>(options).render(story.value.content.richtext)
+const root = () => richTextResolver<VNode>(options).render(story.value.content.richtext)
 </script>
 
 <template>

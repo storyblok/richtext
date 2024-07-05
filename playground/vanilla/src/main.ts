@@ -1,5 +1,5 @@
 import './style.css'
-import { MarkTypes, type Node, RichTextResolver, type SbRichtextOptions } from '@storyblok/richtext'
+import { MarkTypes, type Node, richTextResolver, type SbRichtextOptions } from '@storyblok/richtext'
 import StoryblokClient from 'storyblok-js-client'
 
 /* const doc: Node<string> = {
@@ -458,7 +458,7 @@ const options: SbRichtextOptions<string> = {
   }
 }
 
-const html = RichTextResolver(options).render(doc)
+const html = richTextResolver(options).render(doc)
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>

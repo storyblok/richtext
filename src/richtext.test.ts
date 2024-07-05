@@ -1,6 +1,6 @@
 
 import { describe, expect, it } from 'vitest'
-import { RichTextResolver } from './richtext'
+import { richTextResolver } from './richtext'
 import { h, createTextVNode } from 'vue'
 import type { VNode } from 'vue'
 import { BlockTypes, MarkTypes, NodeResolver, type Node } from './types'
@@ -9,7 +9,7 @@ import { StoryblokComponent } from '@storyblok/vue'
 describe('richtext', () => {
   describe('Blocktypes', () => {
     it('should render a paragraph', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const paragraph = {
         type: 'paragraph',
         content: [
@@ -24,7 +24,7 @@ describe('richtext', () => {
     })
   
     it('should render a heading 1', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const heading = {
         type: 'heading',
         attrs: {
@@ -42,7 +42,7 @@ describe('richtext', () => {
     })
   
     it('should render an unordered list', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const list = {
         type: 'bullet_list',
         content: [
@@ -71,7 +71,7 @@ describe('richtext', () => {
     })
   
     it('should render an ordered list', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const list = {
         type: 'ordered_list',
         attrs: { order: 1 },
@@ -101,7 +101,7 @@ describe('richtext', () => {
     })
   
     it('should render an image with attrs', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const image = {
         type: 'image',
         attrs: {
@@ -114,7 +114,7 @@ describe('richtext', () => {
     })
   
     it('should render an emoji', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const emoji = {
         type: 'emoji',
         attrs: {
@@ -126,7 +126,7 @@ describe('richtext', () => {
     })
   
     it('should render a code block', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const code = {
         type: 'code_block',
         content: [
@@ -141,7 +141,7 @@ describe('richtext', () => {
     })
   
     it('should render a horizontal rule', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const hr = {
         type: 'horizontal_rule',
       }
@@ -150,7 +150,7 @@ describe('richtext', () => {
     })
   
     it('should render a break', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const br = {
         type: 'hard_break',
       }
@@ -159,7 +159,7 @@ describe('richtext', () => {
     })
   
     it('should render a quote' , async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const quote = {
         type: 'blockquote',
         content: [
@@ -181,7 +181,7 @@ describe('richtext', () => {
 
   describe('TextTypes & MarksTypes', () => {
     it('should render text with marks', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const text = {
         type: 'paragraph',
         content: [
@@ -197,7 +197,7 @@ describe('richtext', () => {
     })
   
     it('should render text with styled marks', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const text = {
         type: 'paragraph',
         content: [
@@ -214,7 +214,7 @@ describe('richtext', () => {
     })
   
     it('should render an external link', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const link = {
         text: 'External link',
         type: 'text',
@@ -234,7 +234,7 @@ describe('richtext', () => {
     })
   
     it('should render an anchor link', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const link = {
         text: 'Anchor link',
         type: 'text',
@@ -254,7 +254,7 @@ describe('richtext', () => {
     })
   
     it('should render an email link', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const link = {
         text: 'hola@alvarosaburido.dev',
         type: 'text',
@@ -273,7 +273,7 @@ describe('richtext', () => {
     })
   
     it('should render an internal link', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const link = {
         text: 'Internal Link',
         type: 'text',
@@ -295,7 +295,7 @@ describe('richtext', () => {
     })
   
     it('should render an asset link', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const link = {
         text: 'Asset link',
         type: 'text',
@@ -314,7 +314,7 @@ describe('richtext', () => {
     })
   
     it('should render a bold text', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const bold = {
         text: 'Bold',
         type: 'text',
@@ -325,7 +325,7 @@ describe('richtext', () => {
     })
   
     it('should render an italic text', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const italic = {
         text: 'Italic',
         type: 'text',
@@ -336,7 +336,7 @@ describe('richtext', () => {
     })
   
     it('should render a underline text', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const underline = {
         text: 'Underline',
         type: 'text',
@@ -347,7 +347,7 @@ describe('richtext', () => {
     })
   
     it('should render a strike text', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const strike = {
         text: 'Strike',
         type: 'text',
@@ -358,7 +358,7 @@ describe('richtext', () => {
     })
   
     it('should render a code text', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const code = {
         text: 'Code',
         type: 'text',
@@ -369,7 +369,7 @@ describe('richtext', () => {
     })
   
     it('should render a superscript text', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const superscript = {
         text: 'Superscript',
         type: 'text',
@@ -380,7 +380,7 @@ describe('richtext', () => {
     })
   
     it('should render a subscript text', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const subscript = {
         text: 'Subscript',
         type: 'text',
@@ -391,7 +391,7 @@ describe('richtext', () => {
     })
   
     it('should render a highlight text', async () => {
-      const { render } = RichTextResolver({})
+      const { render } = richTextResolver({})
       const highlight = {
         text: 'Highlight',
         type: 'text',
@@ -403,7 +403,7 @@ describe('richtext', () => {
   })
   describe('Frameworks', () => {
     it('should use the framework render function', async () => {
-      const { render } = RichTextResolver({
+      const { render } = richTextResolver({
         renderFn: h
       })
       const paragraph = {
@@ -420,7 +420,7 @@ describe('richtext', () => {
       expect(vnode.type).toBe('p')
     })
     it('should use the framework text function', async () => {
-      const { render } = RichTextResolver({
+      const { render } = richTextResolver({
         renderFn: h,
         textFn: createTextVNode
       })
@@ -439,7 +439,7 @@ describe('richtext', () => {
     it('should overwrite a resolver', async () => {
       const RouterLink = h('span')
 
-      const { render } = RichTextResolver({
+      const { render } = richTextResolver({
         resolvers: {
           [MarkTypes.LINK]: (node: Node<VNode>) => h(RouterLink, {
             to: node.attrs?.href,
@@ -475,7 +475,7 @@ describe('richtext', () => {
           id: node.attrs?.id,
         }, node.children)
       }
-      const { render } = RichTextResolver({
+      const { render } = richTextResolver({
         renderFn: h,
         textFn: createTextVNode,
         resolvers: {

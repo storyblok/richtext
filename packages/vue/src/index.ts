@@ -3,7 +3,7 @@ import { createTextVNode, h } from 'vue'
 import { RouterLink } from 'vue-router'
 
 import type { Node, NodeResolver, SbRichtextOptions } from '@storyblok/richtext'
-import { BlockTypes, MarkTypes, RichTextResolver } from '@storyblok/richtext'
+import { BlockTypes, MarkTypes, richTextResolver } from '@storyblok/richtext'
 import { StoryblokComponent } from '@storyblok/vue'
 import SbRichText from './components/SbRichText.vue'
 
@@ -34,7 +34,7 @@ export function useSbRichtextResolver(options: SbRichtextOptions<VNode>) {
       ...options.resolvers,
     },
   }
-  return RichTextResolver<VNode>(mergedOptions)
+  return richTextResolver<VNode>(mergedOptions)
 }
 
 export { SbRichText }
