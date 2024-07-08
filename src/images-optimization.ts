@@ -1,6 +1,6 @@
-import { SbRichImageOptimizationOptions } from "./types";
+import { SbRichTextImageOptimizationOptions } from "./types";
 
-export function optimizeImage(src: string, options?: boolean | Partial<SbRichImageOptimizationOptions>): { src: string, attrs: Record<string, any>} {
+export function optimizeImage(src: string, options?: boolean | Partial<SbRichTextImageOptimizationOptions>): { src: string, attrs: Record<string, any>} {
   if (!options) return {src, attrs: {}};
   let w = 0;
   let h = 0;

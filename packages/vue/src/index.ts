@@ -2,12 +2,12 @@ import type { VNode } from 'vue'
 import { createTextVNode, h } from 'vue'
 import { RouterLink } from 'vue-router'
 
-import type { SbRichNode, SbRichNodeResolver, SbRichTextOptions } from '@storyblok/richtext'
+import type { SbRichTextNode, SbRichTextNodeResolver, SbRichTextOptions } from '@storyblok/richtext'
 import { BlockTypes, MarkTypes, richTextResolver } from '@storyblok/richtext'
 import { StoryblokComponent } from '@storyblok/vue'
 import SbRichText from './components/SbRichText.vue'
 
-const componentResolver: SbRichNodeResolver<VNode> = (node: SbRichNode<VNode>): VNode => {
+const componentResolver: SbRichTextNodeResolver<VNode> = (node: SbRichTextNode<VNode>): VNode => {
   return h(StoryblokComponent, {
     blok: node?.attrs?.body[0],
     id: node.attrs?.id,
@@ -19,7 +19,7 @@ export function useSbRichtextResolver(options: SbRichTextOptions<VNode>) {
     renderFn: h,
     textFn: createTextVNode,
     resolvers: {
-      [MarkTypes.LINK]: (node: SbRichNode<VNode>) => {
+      [MarkTypes.LINK]: (node: SbRichTextNode<VNode>) => {
         return node.attrs?.linktype === 'STORY'
           ? h(RouterLink, {
             to: node.attrs?.href,

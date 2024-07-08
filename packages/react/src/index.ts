@@ -1,10 +1,10 @@
 import React from 'react'
 import { StoryblokComponent } from '@storyblok/react'
-import type { SbRichNode, SbRichTextOptions } from '@storyblok/richtext'
+import type { SbRichTextNode, SbRichTextOptions } from '@storyblok/richtext'
 import { BlockTypes, richTextResolver } from '@storyblok/richtext'
 import SbRichText from './SbRichText'
 
-function componentResolver(node: SbRichNode<React.ReactElement>) {
+function componentResolver(node: SbRichTextNode<React.ReactElement>) {
   // Convert this to use React.createElement or JSX
   // Example with JSX:
   return React.createElement(StoryblokComponent, { blok: node?.attrs?.body[0], id: node.attrs?.id })

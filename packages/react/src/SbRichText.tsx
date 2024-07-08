@@ -3,10 +3,10 @@ import React from 'react'
 import { forwardRef } from 'react'
 import { convertAttributesInElement } from './utils'
 import { useSbRichtextResolver } from '.'
-import { SbRichNode, SbRichTextResolvers } from '@storyblok/richtext'
+import { SbRichTextNode, SbRichTextResolvers } from '@storyblok/richtext'
 
 interface SbRichTextProps {
-  doc:  SbRichNode<React.ReactElement> // Try to avoid 'any' by specifying a more accurate type
+  doc:  SbRichTextNode<React.ReactElement> // Try to avoid 'any' by specifying a more accurate type
   resolvers?: SbRichTextResolvers<React.ReactElement> // Same here for resolvers
 }
 
