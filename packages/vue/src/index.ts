@@ -2,24 +2,24 @@ import type { VNode } from 'vue'
 import { createTextVNode, h } from 'vue'
 import { RouterLink } from 'vue-router'
 
-import type { Node, NodeResolver, SbRichtextOptions } from '@storyblok/richtext'
+import type { SbRichTextNode, SbRichTextNodeResolver, SbRichTextOptions } from '@storyblok/richtext'
 import { BlockTypes, MarkTypes, richTextResolver } from '@storyblok/richtext'
 import { StoryblokComponent } from '@storyblok/vue'
 import SbRichText from './components/SbRichText.vue'
 
-const componentResolver: NodeResolver<VNode> = (node: Node<VNode>): VNode => {
+const componentResolver: SbRichTextNodeResolver<VNode> = (node: SbRichTextNode<VNode>): VNode => {
   return h(StoryblokComponent, {
     blok: node?.attrs?.body[0],
     id: node.attrs?.id,
   }, node.children)
 }
 
-export function useSbRichtextResolver(options: SbRichtextOptions<VNode>) {
-  const mergedOptions: SbRichtextOptions<VNode> = {
+export function useSbRichtextResolver(options: SbRichTextOptions<VNode>) {
+  const mergedOptions: SbRichTextOptions<VNode> = {
     renderFn: h,
     textFn: createTextVNode,
     resolvers: {
-      [MarkTypes.LINK]: (node: Node<VNode>) => {
+      [MarkTypes.LINK]: (node: SbRichTextNode<VNode>) => {
         return node.attrs?.linktype === 'STORY'
           ? h(RouterLink, {
             to: node.attrs?.href,

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { VNode, createTextVNode, h } from 'vue'
-import { BlockTypes, MarkTypes, richTextResolver, type Node, type SbRichtextOptions} from '@storyblok/richtext'
+import { BlockTypes, richTextResolver, type SbRichTextNode, type SbRichTextOptions} from '@storyblok/richtext'
 import { RouterLink } from 'vue-router'
 import { SbRichText } from '@storyblok/vue-richtext'
 import { useStoryblok } from '@storyblok/vue'
@@ -372,11 +372,11 @@ const story = await useStoryblok('/home', {
   version: 'draft',
 })
 
-const options : SbRichtextOptions<VNode> = {
+const options : SbRichTextOptions<VNode> = {
   renderFn: h,
   textFn: createTextVNode,
   resolvers: {
-    [BlockTypes.CODE_BLOCK]: (node: Node) => {
+    [BlockTypes.CODE_BLOCK]: (node: SbRichTextNode) => {
       return h(CodeBlock, {
         class: node?.attrs?.class,
       }, node.children)
@@ -390,5 +390,5 @@ const root = () => richTextResolver<VNode>(options).render(story.value.content.r
 <template>
   <RouterLink to="http://alvarosaburido.dev">About</RouterLink>
 <!--   <root /> -->
-  <SbRichText v-if="story" :doc="story.content.richtext" :resolvers="options.resolvers"/>
+  <SbRichText v-if="story && options.resolvers" :doc="story.content.richtext" :resolvers="options.resolvers"/>
 </template>

@@ -1,10 +1,13 @@
+import React from 'react'
+
 import { forwardRef } from 'react'
 import { convertAttributesInElement } from './utils'
 import { useSbRichtextResolver } from '.'
+import { SbRichTextNode, SbRichTextResolvers } from '@storyblok/richtext'
 
 interface SbRichTextProps {
-  doc: any // Try to avoid 'any' by specifying a more accurate type
-  resolvers?: any // Same here for resolvers
+  doc:  SbRichTextNode<React.ReactElement> // Try to avoid 'any' by specifying a more accurate type
+  resolvers?: SbRichTextResolvers<React.ReactElement> // Same here for resolvers
 }
 
 // If you're forwarding a ref to SbRichText
