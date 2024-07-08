@@ -110,6 +110,6 @@ export type SbRichTextResolvers<T = string> = Partial<Record<SbRichNodeTypes, Sb
 export interface SbRichTextOptions<T = string, S = (tag: string, attrs: Record<string, any>, text: string) => T> {
   renderFn?: S
   textFn?: Function
-  resolvers?: SbRichTextResolvers
+  resolvers?: SbRichTextResolvers<T>
   optimizeImages?: boolean | Partial<SbRichImageOptimizationOptions>
 }
