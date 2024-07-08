@@ -1,6 +1,6 @@
 import { optimizeImage } from './images-optimization'
-import { BlockTypes, LinkTypes, MarkTypes, TextTypes } from './types'
-import type { MarkNode, Node, NodeResolver, NodeTypes, SbRichtextOptions, TextNode } from './types'
+import { BlockTypes, LinkTypes, MarkTypes, TextTypes, SbRichTextOptions } from './types'
+import type { MarkNode, SbRichNode, SbRichNodeResolver, SbRichNodeTypes, TextNode } from './types'
 
 // Converts attributes object to a string of HTML attributes
 const attrsToString = (attrs: Record<string, string> = {}) => Object.keys(attrs)
@@ -26,7 +26,7 @@ function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, a
   return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T
 }
 
-export function richTextResolver<T>(options: SbRichtextOptions<T> ) {
+export function richTextResolver<T>(options: SbRichTextOptions<T> ) {
   // Creates an HTML string for a given tag, attributes, and children
   let currentKey = 0
   const {
@@ -35,9 +35,9 @@ export function richTextResolver<T>(options: SbRichtextOptions<T> ) {
     resolvers = {},
     optimizeImages = false,
   } = options
-  const nodeResolver = (tag: string): NodeResolver<T> => (node: Node<T>): T => renderFn(tag, { ...node.attrs, key: `${tag}-${currentKey}` } || {}, node.children || null as any) as T
+  const nodeResolver = (tag: string): SbRichNodeResolver<T> => (node: SbRichNode<T>): T => renderFn(tag, { ...node.attrs, key: `${tag}-${currentKey}` } || {}, node.children || null as any) as T
 
-  const imageResolver: NodeResolver<T> = (node: Node<T>) => {
+  const imageResolver: SbRichNodeResolver<T> = (node: SbRichNode<T>) => {
     const { src, alt, ...rest } = node.attrs || {};
     let finalSrc = src;
     let finalAttrs = {};
@@ -57,12 +57,12 @@ export function richTextResolver<T>(options: SbRichtextOptions<T> ) {
 
     return renderFn('img', imgAttrs, '') as T;
   };
-  const headingResolver: NodeResolver<T> = (node: Node<T>): T => {
+  const headingResolver: SbRichNodeResolver<T> = (node: SbRichNode<T>): T => {
     const { level, ...rest } = node.attrs || {}
     return renderFn(`h${level}`, { ...rest, key: `h${level}-${currentKey}` } || {}, node.children as any) as T
   }
 
-  const emojiResolver: NodeResolver<T> = (node: Node<T>) => renderFn('span', {
+  const emojiResolver: SbRichNodeResolver<T> = (node: SbRichNode<T>) => renderFn('span', {
     'data-type': 'emoji',
     'data-name': node.attrs?.name,
     'emoji': node.attrs?.emoji,
@@ -75,12 +75,12 @@ export function richTextResolver<T>(options: SbRichtextOptions<T> ) {
     loading: 'lazy',
   }, '' as any)) as T
 
-  const codeBlockResolver: NodeResolver<T> = (node: Node<T>): T => {
+  const codeBlockResolver: SbRichNodeResolver<T> = (node: SbRichNode<T>): T => {
     return renderFn('pre', { ...node.attrs, key: `code-${currentKey}` } || {}, renderFn('code', { key: `code-${currentKey}` }, node.children || '' as any)) as T
   }
 
   // Mark resolver for text formatting
-  const markResolver = (tag: string, styled = false): NodeResolver<T> => ({ text, attrs }): T => {
+  const markResolver = (tag: string, styled = false): SbRichNodeResolver<T> => ({ text, attrs }): T => {
     return renderFn(tag, styled
       ? {
           style: attrsToStyle(attrs),
@@ -96,7 +96,7 @@ export function richTextResolver<T>(options: SbRichtextOptions<T> ) {
   }
 
   // Resolver for plain text nodes
-  const textResolver: NodeResolver<T> = (node: Node<T>): T => {
+  const textResolver: SbRichNodeResolver<T> = (node: SbRichNode<T>): T => {
     const { marks, ...rest } = node as TextNode<T>
     if ('text' in node) {
       // Now TypeScript knows that 'node' is a TextNode, so 'marks' can be accessed
@@ -115,7 +115,7 @@ export function richTextResolver<T>(options: SbRichtextOptions<T> ) {
 
   // Resolver for link nodes
 
-  const linkResolver: NodeResolver<T> = (node: Node<T>) => {
+  const linkResolver: SbRichNodeResolver<T> = (node: SbRichNode<T>) => {
     const { linktype, href, anchor, ...rest } = node.attrs || {}
 
     let finalHref = ''
@@ -143,7 +143,7 @@ export function richTextResolver<T>(options: SbRichtextOptions<T> ) {
   }
 
   // Placeholder default compoment resolver
-  const componentResolver: NodeResolver<T> = (node: Node<T>): T => {
+  const componentResolver: SbRichNodeResolver<T> = (node: SbRichNode<T>): T => {
     console.warn('[SbRichtText] - BLOK resolver is not available for vanilla usage')
     return renderFn('span', {
       blok: node?.attrs?.body[0],
@@ -153,7 +153,7 @@ export function richTextResolver<T>(options: SbRichtextOptions<T> ) {
     }, '') as T
   }
 
-  const mergedResolvers = new Map<NodeTypes, NodeResolver<T>>([
+  const mergedResolvers = new Map<SbRichNodeTypes, SbRichNodeResolver<T>>([
     [BlockTypes.DOCUMENT, nodeResolver('div')],
     [BlockTypes.HEADING, headingResolver],
     [BlockTypes.PARAGRAPH, nodeResolver('p')],
@@ -180,10 +180,10 @@ export function richTextResolver<T>(options: SbRichtextOptions<T> ) {
     [MarkTypes.SUPERSCRIPT, markResolver('sup')],
     [MarkTypes.SUBSCRIPT, markResolver('sub')],
     [MarkTypes.HIGHLIGHT, markResolver('mark')],
-    ...(Object.entries(resolvers).map(([type, resolver]) => [type as NodeTypes, resolver])) as unknown as Array<[NodeTypes, NodeResolver<T>]>,
+    ...(Object.entries(resolvers).map(([type, resolver]) => [type as SbRichNodeTypes, resolver])) as unknown as Array<[SbRichNodeTypes, SbRichNodeResolver<T>]>,
   ])
 
-  function renderNode(node: Node<T>): T {
+  function renderNode(node: SbRichNode<T>): T {
     currentKey += 1
     const resolver = mergedResolvers.get(node.type)
     if (!resolver) {
@@ -192,7 +192,7 @@ export function richTextResolver<T>(options: SbRichtextOptions<T> ) {
     }
 
     if (node.type === 'text') {
-      return resolver(node as Node<T>) // Fix: Update the type of 'node' to Node<string>
+      return resolver(node as SbRichNode<T>) // Fix: Update the type of 'node' to Node<string>
     }
 
     const children = node.content ? node.content.map(render) : undefined
@@ -203,7 +203,7 @@ export function richTextResolver<T>(options: SbRichtextOptions<T> ) {
     })
   }
 
-  function render(node: Node<T>): T {
+  function render(node: SbRichNode<T>): T {
     return Array.isArray(node) ? node.map(renderNode) as T : renderNode(node) as T
   }
 

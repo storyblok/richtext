@@ -46,23 +46,23 @@ export enum LinkTypes {
   EMAIL = 'email',
 }
 
-export type NodeTypes = BlockTypes | MarkTypes | TextTypes
+export type SbRichNodeTypes = BlockTypes | MarkTypes | TextTypes
 
-export interface Node<T = string> {
-  type: NodeTypes
-  content: Node<T>[]
+export interface SbRichNode<T = string> {
+  type: SbRichNodeTypes
+  content: SbRichNode<T>[]
   children?: T
   attrs?: Record<string, any>
   text?: string
 }
 
-export interface LinkNode<T = string> extends Node<T> {
+export interface LinkNode<T = string> extends SbRichNode<T> {
   type: MarkTypes.LINK | MarkTypes.ANCHOR
   linktype: LinkTypes.ASSET | LinkTypes.EMAIL | LinkTypes.STORY | LinkTypes.URL
   attrs: Record<string, any>
 }
 
-export interface MarkNode<T = string> extends Node<T> {
+export interface MarkNode<T = string> extends SbRichNode<T> {
   type: MarkTypes.BOLD |
     MarkTypes.ITALIC |
     MarkTypes.UNDERLINE |
@@ -79,15 +79,15 @@ export interface MarkNode<T = string> extends Node<T> {
   linkType: LinkTypes
 }
 
-export interface TextNode<T = string> extends Node<T> {
+export interface TextNode<T = string> extends SbRichNode<T> {
   type: TextTypes.TEXT
   text: string
   marks?: MarkNode<T>[]
 }
 
-export type NodeResolver<T = string> = (node: Node<T> | TextNode<T> | MarkNode<T> | LinkNode<T>) => T
+export type SbRichNodeResolver<T = string> = (node: SbRichNode<T> | TextNode<T> | MarkNode<T> | LinkNode<T>) => T
 
-export interface ImageOptimizationOptions {
+export interface SbRichImageOptimizationOptions {
   class: string
   width: number
   height: number
@@ -105,9 +105,11 @@ export interface ImageOptimizationOptions {
   sizes: string[]
 }
 
-export interface SbRichtextOptions<T = string, S = (tag: string, attrs: Record<string, any>, text: string) => T> {
+export type SbRichTextResolvers<T = string> = Partial<Record<SbRichNodeTypes, SbRichNodeResolver<T>>>
+
+export interface SbRichTextOptions<T = string, S = (tag: string, attrs: Record<string, any>, text: string) => T> {
   renderFn?: S
   textFn?: Function
-  resolvers?: Partial<Record<NodeTypes, NodeResolver<T>>>
-  optimizeImages?: boolean | Partial<ImageOptimizationOptions>
+  resolvers?: SbRichTextResolvers
+  optimizeImages?: boolean | Partial<SbRichImageOptimizationOptions>
 }

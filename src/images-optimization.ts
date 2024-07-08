@@ -1,6 +1,6 @@
-import { ImageOptimizationOptions } from "./types";
+import { SbRichImageOptimizationOptions } from "./types";
 
-export function optimizeImage(src: string, options?: boolean | Partial<ImageOptimizationOptions>): { src: string, attrs: Record<string, any>} {
+export function optimizeImage(src: string, options?: boolean | Partial<SbRichImageOptimizationOptions>): { src: string, attrs: Record<string, any>} {
   if (!options) return {src, attrs: {}};
   let w = 0;
   let h = 0;
@@ -53,7 +53,7 @@ export function optimizeImage(src: string, options?: boolean | Partial<ImageOpti
 
     // Construct srcset attribute
     if (options.srcset) {
-      attrs.srcset = options.srcset.map((entry) => {
+      attrs.srcset = options.srcset.map((entry): string | undefined => {
         if (typeof entry === 'number') {
           return `${src}/m/${entry}x0/${filterParams.length > 0 ? 'filters:' + filterParams.join(':') : ''} ${entry}w`;
         }
