@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useSbRichtextResolver } from '../'
+import { SbRichTextProps } from '../types'
 
-const props = defineProps<{ doc: any, resolvers?: any }>()
+const props = defineProps<SbRichTextProps>()
 
 const { render } = useSbRichtextResolver({
   resolvers: props.resolvers,
