@@ -1,8 +1,8 @@
 import './style.css'
-import { MarkTypes, type Node, richTextResolver, type SbRichtextOptions } from '@storyblok/richtext'
+import { richTextResolver, type SbRichtextOptions, type SbRichTextDocumentNode, MarkTypes, SbRichTextNode } from '@storyblok/richtext'
 import StoryblokClient from 'storyblok-js-client'
 
-/* const doc: Node<string> = {
+const doc: SbRichTextDocumentNode = {
   type: 'doc',
   content: [
     {
@@ -422,7 +422,7 @@ const emoji = {
       },
     },
   ],
-} */
+}
 
 // Storyblok
 
@@ -434,13 +434,13 @@ const story = await client.get('cdn/stories/home', {
   version: 'draft',
 })
 
-const doc = story.data.story.content.richtext
+const docFromStory = story.data.story.content.richtext
 
 const options: SbRichtextOptions<string> = {
   resolvers: {
-    /* [MarkTypes.LINK]: (node: Node<string>) => {
+    [MarkTypes.LINK]: (node: SbRichTextNode<string>) => {
       return `<button href="${node.attrs?.href}" target="${node.attrs?.target}">${node.children}</button>`
-    }, */
+    },
   },
   optimizeImages: {
     /* class: 'v-class',
