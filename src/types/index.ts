@@ -46,6 +46,14 @@ export enum LinkTypes {
   EMAIL = 'email',
 }
 
+export interface SbRichTextDocumentNode {
+  type: string,
+  content?: SbRichTextDocumentNode[]
+  attrs?: Record<string, any>
+  text?: string
+  marks?: SbRichTextDocumentNode[]
+}
+
 export type SbRichTextNodeTypes = BlockTypes | MarkTypes | TextTypes
 
 export interface SbRichTextNode<T = string> {
