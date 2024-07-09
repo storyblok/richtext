@@ -458,7 +458,7 @@ const options: SbRichtextOptions<string> = {
   }
 }
 
-const html = richTextResolver(options).render(doc)
+const html = richTextResolver(options).render(docFromStory)
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>

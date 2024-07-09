@@ -20,10 +20,20 @@ function escapeHtml(unsafeText: string): string {
     .replace(/'/g, '&#039;')
 }
 
+const VOID_ELEMENTS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
+
 function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, any> = {}, children: T): T {
-  const attrsString = attrsToString(attrs)
-  const tagString = attrsString ? `${tag} ${attrsString}` : tag
-  return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T
+  const attrsString = attrsToString(attrs);
+  const tagString = attrsString ? `${tag} ${attrsString}` : tag;
+
+  if (VOID_ELEMENTS.has(tag)) {
+    // Return self-closing tag for void elements
+    if(children) console.warn(`[SbRichtText] - Void element <${tagString}> should not have children`)
+    return `<${tagString} />` as unknown as T;
+  }
+
+  // Handle non-void elements
+  return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T;
 }
 
 export function richTextResolver<T>(options: SbRichTextOptions<T> ) {

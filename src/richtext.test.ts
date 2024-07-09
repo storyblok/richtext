@@ -110,7 +110,7 @@ describe('richtext', () => {
         },
       }
       const html = render(image as Node<string>)
-      expect(html).toBe('<img src="https://example.com/image.jpg" alt="An image" key="img-1"></img>')
+      expect(html).toBe('<img src="https://example.com/image.jpg" alt="An image" key="img-1" />')
     })
   
     it('should render an emoji', async () => {
@@ -122,7 +122,7 @@ describe('richtext', () => {
         },
       }
       const html = render(emoji as Node<string>)
-      expect(html).toBe('<span data-type="emoji" data-name="undefined" emoji="🚀" key="emoji-1"><img src="undefined" alt="undefined" style="width: 1.25em; height: 1.25em; vertical-align: text-top" draggable="false" loading="lazy"></img></span>')
+      expect(html).toBe('<span data-type="emoji" data-name="undefined" emoji="🚀" key="emoji-1"><img src="undefined" alt="undefined" style="width: 1.25em; height: 1.25em; vertical-align: text-top" draggable="false" loading="lazy" /></span>')
     })
   
     it('should render a code block', async () => {
@@ -146,7 +146,7 @@ describe('richtext', () => {
         type: 'horizontal_rule',
       }
       const html = render(hr as Node<string>)
-      expect(html).toBe('<hr key="hr-1"></hr>')
+      expect(html).toBe('<hr key="hr-1" />')
     })
   
     it('should render a break', async () => {
@@ -155,7 +155,7 @@ describe('richtext', () => {
         type: 'hard_break',
       }
       const html = render(br as Node<string>)
-      expect(html).toBe('<br key="br-1"></br>')
+      expect(html).toBe('<br key="br-1" />')
     })
   
     it('should render a quote' , async () => {
