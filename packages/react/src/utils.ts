@@ -29,12 +29,12 @@ export function convertAttributesInElement(element: React.ReactElement): React.R
   if (!React.isValidElement(element)) {
     return element;
   }
+
   // Convert attributes of the current element.
   const attributeMap: { [key: string]: string } = {
     class: 'className',
     for: 'htmlFor',
     targetAttr: 'targetattr',
-    key: `${element.key}`
     // Add more attribute conversions here as needed
   };
 
@@ -49,10 +49,10 @@ export function convertAttributesInElement(element: React.ReactElement): React.R
     acc[mappedKey] = value;
     return acc;
   }, {});
-
+  
   // Process children recursively, unless the element is a void element.
   const children = VOID_ELEMENTS.has(element.type as string) ? undefined : React.Children.map((element.props as React.PropsWithChildren).children, child => convertAttributesInElement(child as React.ReactElement));
 
   // Clone the element with the new properties and updated children.
-  return React.createElement(element.type, newProps, children);
+  return React.createElement(element.type, {...newProps, id: element.key}, children);
 }

@@ -456,12 +456,12 @@ function App() {
     return <div>Loading...</div>
   }
 
-  /*  const html = richTextResolver({
+   const html = richTextResolver({
     renderFn: React.createElement,
   }).render(story.content.richtext)
 
   const formattedHtml = convertAttributesInElement(html)
-  console.log('formattedHtml', formattedHtml) */
+  console.log('formattedHtml', formattedHtml)
   return (
     <>
       <SbRichText doc={story.content.richtext} />
