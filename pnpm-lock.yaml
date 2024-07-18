@@ -23,10 +23,10 @@ importers:
         version: 8.0.8
       '@vitejs/plugin-basic-ssl':
         specifier: ^1.1.0
-        version: 1.1.0(vite@5.2.11)
+        version: 1.1.0(vite@5.2.11(@types/node@20.12.12))
       '@vitest/coverage-v8':
         specifier: ^1.6.0
-        version: 1.6.0(vitest@1.6.0)
+        version: 1.6.0(vitest@1.6.0(@types/node@20.12.12)(@vitest/ui@1.6.0))
       '@vitest/ui':
         specifier: ^1.6.0
         version: 1.6.0(vitest@1.6.0)
@@ -62,13 +62,13 @@ importers:
         version: 0.7.1
       vite-plugin-dts:
         specifier: ^3.9.1
-        version: 3.9.1(@types/node@20.12.12)(typescript@5.4.5)(vite@5.2.11)
+        version: 3.9.1(@types/node@20.12.12)(rollup@4.18.0)(typescript@5.4.5)(vite@5.2.11(@types/node@20.12.12))
       vite-plugin-inspect:
         specifier: ^0.8.4
-        version: 0.8.4(vite@5.2.11)
+        version: 0.8.4(rollup@4.18.0)(vite@5.2.11(@types/node@20.12.12))
       vite-plugin-qrcode:
         specifier: ^0.2.3
-        version: 0.2.3(vite@5.2.11)
+        version: 0.2.3(vite@5.2.11(@types/node@20.12.12))
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.12.12)(@vitest/ui@1.6.0)
@@ -80,13 +80,13 @@ importers:
     dependencies:
       '@storyblok/react':
         specifier: ^3.0.9
-        version: 3.0.9(react-dom@18.2.0)(react@18.2.0)
+        version: 3.0.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storyblok/richtext':
         specifier: workspace:^
         version: link:../..
       '@vitejs/plugin-react':
         specifier: ^4.2.1
-        version: 4.2.1(vite@5.2.7)
+        version: 4.2.1(vite@5.2.7(@types/node@20.12.12))
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -102,13 +102,13 @@ importers:
         version: 18.2.22
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.2.0
-        version: 7.2.0(@typescript-eslint/parser@7.2.0)(eslint@8.57.0)(typescript@5.4.3)
+        version: 7.2.0(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0)(typescript@5.4.3)
       '@typescript-eslint/parser':
         specifier: ^7.2.0
         version: 7.2.0(eslint@8.57.0)(typescript@5.4.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.5.0
-        version: 3.6.0(vite@5.2.7)
+        version: 3.6.0(vite@5.2.7(@types/node@20.12.12))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -138,11 +138,11 @@ importers:
         version: 3.4.21(typescript@5.4.3)
       vue-router:
         specifier: ^4.3.0
-        version: 4.3.0(vue@3.4.21)
+        version: 4.3.0(vue@3.4.21(typescript@5.4.3))
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^5.0.4
-        version: 5.0.4(vite@5.2.7)(vue@3.4.21)
+        version: 5.0.4(vite@5.2.7(@types/node@20.12.12))(vue@3.4.21(typescript@5.4.3))
       typescript:
         specifier: ^5.2.2
         version: 5.4.3
@@ -153,11 +153,17 @@ importers:
         specifier: ^2.0.6
         version: 2.0.7(typescript@5.4.3)
 
+  playground/node:
+    dependencies:
+      '@storyblok/richtext':
+        specifier: workspace:^
+        version: link:../..
+
   playground/react:
     dependencies:
       '@storyblok/react':
         specifier: ^3.0.9
-        version: 3.0.9(react-dom@18.2.0)(react@18.2.0)
+        version: 3.0.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storyblok/react-richtext':
         specifier: workspace:^
         version: link:../../packages/react
@@ -176,13 +182,13 @@ importers:
         version: 18.2.22
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.1.1
-        version: 7.2.0(@typescript-eslint/parser@7.2.0)(eslint@8.57.0)(typescript@5.4.2)
+        version: 7.2.0(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.2))(eslint@8.57.0)(typescript@5.4.2)
       '@typescript-eslint/parser':
         specifier: ^7.1.1
         version: 7.2.0(eslint@8.57.0)(typescript@5.4.2)
       '@vitejs/plugin-react-swc':
         specifier: ^3.5.0
-        version: 3.6.0(vite@5.1.6)
+        version: 3.6.0(vite@5.1.6(@types/node@20.12.12))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -216,7 +222,7 @@ importers:
         version: 5.2.11(@types/node@20.12.12)
       vite-plugin-qrcode:
         specifier: ^0.2.3
-        version: 0.2.3(vite@5.2.11)
+        version: 0.2.3(vite@5.2.11(@types/node@20.12.12))
 
   playground/vue:
     dependencies:
@@ -234,11 +240,11 @@ importers:
         version: 3.4.21(typescript@5.4.2)
       vue-router:
         specifier: ^4.3.0
-        version: 4.3.0(vue@3.4.21)
+        version: 4.3.0(vue@3.4.21(typescript@5.4.2))
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^5.0.4
-        version: 5.0.4(vite@5.1.6)(vue@3.4.21)
+        version: 5.0.4(vite@5.1.6(@types/node@20.12.12))(vue@3.4.21(typescript@5.4.2))
       typescript:
         specifier: ^5.2.2
         version: 5.4.2
@@ -4192,7 +4198,7 @@ snapshots:
       '@commitlint/types': 19.0.3
       chalk: 5.3.0
       cosmiconfig: 9.0.0(typescript@5.4.5)
-      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.12.12)(cosmiconfig@9.0.0)(typescript@5.4.5)
+      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.12.12)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -4572,11 +4578,13 @@ snapshots:
 
   '@polka/url@1.0.0-next.25': {}
 
-  '@rollup/pluginutils@5.1.0':
+  '@rollup/pluginutils@5.1.0(rollup@4.18.0)':
     dependencies:
       '@types/estree': 1.0.5
       estree-walker: 2.0.2
       picomatch: 2.3.1
+    optionalDependencies:
+      rollup: 4.18.0
 
   '@rollup/rollup-android-arm-eabi@4.13.0':
     optional: true
@@ -4712,13 +4720,14 @@ snapshots:
 
   '@rushstack/node-core-library@4.0.2(@types/node@20.12.12)':
     dependencies:
-      '@types/node': 20.12.12
       fs-extra: 7.0.1
       import-lazy: 4.0.0
       jju: 1.4.0
       resolve: 1.22.8
       semver: 7.5.4
       z-schema: 5.0.5
+    optionalDependencies:
+      '@types/node': 20.12.12
 
   '@rushstack/rig-package@0.5.2':
     dependencies:
@@ -4728,8 +4737,9 @@ snapshots:
   '@rushstack/terminal@0.10.0(@types/node@20.12.12)':
     dependencies:
       '@rushstack/node-core-library': 4.0.2(@types/node@20.12.12)
-      '@types/node': 20.12.12
       supports-color: 8.1.1
+    optionalDependencies:
+      '@types/node': 20.12.12
 
   '@rushstack/ts-command-line@4.19.1(@types/node@20.12.12)':
     dependencies:
@@ -4754,7 +4764,7 @@ snapshots:
     dependencies:
       storyblok-js-client: 6.7.3
 
-  '@storyblok/react@3.0.9(react-dom@18.2.0)(react@18.2.0)':
+  '@storyblok/react@3.0.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@storyblok/js': 3.0.7
       react: 18.2.0
@@ -4883,7 +4893,7 @@ snapshots:
 
   '@types/semver@7.5.8': {}
 
-  '@typescript-eslint/eslint-plugin@7.2.0(@typescript-eslint/parser@7.2.0)(eslint@8.57.0)(typescript@5.4.2)':
+  '@typescript-eslint/eslint-plugin@7.2.0(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.2))(eslint@8.57.0)(typescript@5.4.2)':
     dependencies:
       '@eslint-community/regexpp': 4.10.0
       '@typescript-eslint/parser': 7.2.0(eslint@8.57.0)(typescript@5.4.2)
@@ -4898,11 +4908,12 @@ snapshots:
       natural-compare: 1.4.0
       semver: 7.6.0
       ts-api-utils: 1.3.0(typescript@5.4.2)
+    optionalDependencies:
       typescript: 5.4.2
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/eslint-plugin@7.2.0(@typescript-eslint/parser@7.2.0)(eslint@8.57.0)(typescript@5.4.3)':
+  '@typescript-eslint/eslint-plugin@7.2.0(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0)(typescript@5.4.3)':
     dependencies:
       '@eslint-community/regexpp': 4.10.0
       '@typescript-eslint/parser': 7.2.0(eslint@8.57.0)(typescript@5.4.3)
@@ -4917,6 +4928,7 @@ snapshots:
       natural-compare: 1.4.0
       semver: 7.6.0
       ts-api-utils: 1.3.0(typescript@5.4.3)
+    optionalDependencies:
       typescript: 5.4.3
     transitivePeerDependencies:
       - supports-color
@@ -4929,6 +4941,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 7.2.0
       debug: 4.3.4
       eslint: 8.57.0
+    optionalDependencies:
       typescript: 5.4.2
     transitivePeerDependencies:
       - supports-color
@@ -4941,6 +4954,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 7.2.0
       debug: 4.3.4
       eslint: 8.57.0
+    optionalDependencies:
       typescript: 5.4.3
     transitivePeerDependencies:
       - supports-color
@@ -4957,6 +4971,7 @@ snapshots:
       debug: 4.3.4
       eslint: 8.57.0
       ts-api-utils: 1.3.0(typescript@5.4.2)
+    optionalDependencies:
       typescript: 5.4.2
     transitivePeerDependencies:
       - supports-color
@@ -4968,6 +4983,7 @@ snapshots:
       debug: 4.3.4
       eslint: 8.57.0
       ts-api-utils: 1.3.0(typescript@5.4.3)
+    optionalDependencies:
       typescript: 5.4.3
     transitivePeerDependencies:
       - supports-color
@@ -4984,6 +5000,7 @@ snapshots:
       minimatch: 9.0.3
       semver: 7.6.2
       ts-api-utils: 1.3.0(typescript@5.4.2)
+    optionalDependencies:
       typescript: 5.4.2
     transitivePeerDependencies:
       - supports-color
@@ -4998,6 +5015,7 @@ snapshots:
       minimatch: 9.0.3
       semver: 7.6.2
       ts-api-utils: 1.3.0(typescript@5.4.3)
+    optionalDependencies:
       typescript: 5.4.3
     transitivePeerDependencies:
       - supports-color
@@ -5037,25 +5055,25 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-basic-ssl@1.1.0(vite@5.2.11)':
+  '@vitejs/plugin-basic-ssl@1.1.0(vite@5.2.11(@types/node@20.12.12))':
     dependencies:
       vite: 5.2.11(@types/node@20.12.12)
 
-  '@vitejs/plugin-react-swc@3.6.0(vite@5.1.6)':
+  '@vitejs/plugin-react-swc@3.6.0(vite@5.1.6(@types/node@20.12.12))':
     dependencies:
       '@swc/core': 1.4.8
       vite: 5.1.6(@types/node@20.12.12)
     transitivePeerDependencies:
       - '@swc/helpers'
 
-  '@vitejs/plugin-react-swc@3.6.0(vite@5.2.7)':
+  '@vitejs/plugin-react-swc@3.6.0(vite@5.2.7(@types/node@20.12.12))':
     dependencies:
       '@swc/core': 1.4.8
       vite: 5.2.7(@types/node@20.12.12)
     transitivePeerDependencies:
       - '@swc/helpers'
 
-  '@vitejs/plugin-react@4.2.1(vite@5.2.7)':
+  '@vitejs/plugin-react@4.2.1(vite@5.2.7(@types/node@20.12.12))':
     dependencies:
       '@babel/core': 7.24.4
       '@babel/plugin-transform-react-jsx-self': 7.24.1(@babel/core@7.24.4)
@@ -5066,17 +5084,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-vue@5.0.4(vite@5.1.6)(vue@3.4.21)':
+  '@vitejs/plugin-vue@5.0.4(vite@5.1.6(@types/node@20.12.12))(vue@3.4.21(typescript@5.4.2))':
     dependencies:
       vite: 5.1.6(@types/node@20.12.12)
       vue: 3.4.21(typescript@5.4.2)
 
-  '@vitejs/plugin-vue@5.0.4(vite@5.2.7)(vue@3.4.21)':
+  '@vitejs/plugin-vue@5.0.4(vite@5.2.7(@types/node@20.12.12))(vue@3.4.21(typescript@5.4.3))':
     dependencies:
       vite: 5.2.7(@types/node@20.12.12)
       vue: 3.4.21(typescript@5.4.3)
 
-  '@vitest/coverage-v8@1.6.0(vitest@1.6.0)':
+  '@vitest/coverage-v8@1.6.0(vitest@1.6.0(@types/node@20.12.12)(@vitest/ui@1.6.0))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
@@ -5233,8 +5251,9 @@ snapshots:
       minimatch: 9.0.3
       muggle-string: 0.3.1
       path-browserify: 1.0.1
-      typescript: 5.4.2
       vue-template-compiler: 2.7.16
+    optionalDependencies:
+      typescript: 5.4.2
 
   '@vue/language-core@1.8.27(typescript@5.4.5)':
     dependencies:
@@ -5246,8 +5265,9 @@ snapshots:
       minimatch: 9.0.3
       muggle-string: 0.3.1
       path-browserify: 1.0.1
-      typescript: 5.4.5
       vue-template-compiler: 2.7.16
+    optionalDependencies:
+      typescript: 5.4.5
 
   '@vue/language-core@2.0.7(typescript@5.4.3)':
     dependencies:
@@ -5257,8 +5277,9 @@ snapshots:
       computeds: 0.0.1
       minimatch: 9.0.3
       path-browserify: 1.0.1
-      typescript: 5.4.3
       vue-template-compiler: 2.7.16
+    optionalDependencies:
+      typescript: 5.4.3
 
   '@vue/reactivity@3.4.21':
     dependencies:
@@ -5290,13 +5311,19 @@ snapshots:
       '@vue/shared': 3.4.27
       csstype: 3.1.3
 
-  '@vue/server-renderer@3.4.21(vue@3.4.21)':
+  '@vue/server-renderer@3.4.21(vue@3.4.21(typescript@5.4.2))':
+    dependencies:
+      '@vue/compiler-ssr': 3.4.21
+      '@vue/shared': 3.4.21
+      vue: 3.4.21(typescript@5.4.2)
+
+  '@vue/server-renderer@3.4.21(vue@3.4.21(typescript@5.4.3))':
     dependencies:
       '@vue/compiler-ssr': 3.4.21
       '@vue/shared': 3.4.21
       vue: 3.4.21(typescript@5.4.3)
 
-  '@vue/server-renderer@3.4.27(vue@3.4.27)':
+  '@vue/server-renderer@3.4.27(vue@3.4.27(typescript@5.4.5))':
     dependencies:
       '@vue/compiler-ssr': 3.4.27
       '@vue/shared': 3.4.27
@@ -5618,7 +5645,7 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  cosmiconfig-typescript-loader@5.0.0(@types/node@20.12.12)(cosmiconfig@9.0.0)(typescript@5.4.5):
+  cosmiconfig-typescript-loader@5.0.0(@types/node@20.12.12)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5):
     dependencies:
       '@types/node': 20.12.12
       cosmiconfig: 9.0.0(typescript@5.4.5)
@@ -5631,6 +5658,7 @@ snapshots:
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       parse-json: 5.2.0
+    optionalDependencies:
       typescript: 5.4.5
 
   cross-spawn@7.0.3:
@@ -7685,26 +7713,27 @@ snapshots:
 
   vite-plugin-banner@0.7.1: {}
 
-  vite-plugin-dts@3.9.1(@types/node@20.12.12)(typescript@5.4.5)(vite@5.2.11):
+  vite-plugin-dts@3.9.1(@types/node@20.12.12)(rollup@4.18.0)(typescript@5.4.5)(vite@5.2.11(@types/node@20.12.12)):
     dependencies:
       '@microsoft/api-extractor': 7.43.0(@types/node@20.12.12)
-      '@rollup/pluginutils': 5.1.0
+      '@rollup/pluginutils': 5.1.0(rollup@4.18.0)
       '@vue/language-core': 1.8.27(typescript@5.4.5)
       debug: 4.3.4
       kolorist: 1.8.0
       magic-string: 0.30.10
       typescript: 5.4.5
-      vite: 5.2.11(@types/node@20.12.12)
       vue-tsc: 1.8.27(typescript@5.4.5)
+    optionalDependencies:
+      vite: 5.2.11(@types/node@20.12.12)
     transitivePeerDependencies:
       - '@types/node'
       - rollup
       - supports-color
 
-  vite-plugin-inspect@0.8.4(vite@5.2.11):
+  vite-plugin-inspect@0.8.4(rollup@4.18.0)(vite@5.2.11(@types/node@20.12.12)):
     dependencies:
       '@antfu/utils': 0.7.8
-      '@rollup/pluginutils': 5.1.0
+      '@rollup/pluginutils': 5.1.0(rollup@4.18.0)
       debug: 4.3.4
       error-stack-parser-es: 0.1.4
       fs-extra: 11.2.0
@@ -7717,46 +7746,44 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-plugin-qrcode@0.2.3(vite@5.2.11):
+  vite-plugin-qrcode@0.2.3(vite@5.2.11(@types/node@20.12.12)):
     dependencies:
       qrcode-terminal: 0.12.0
       vite: 5.2.11(@types/node@20.12.12)
 
   vite@5.1.6(@types/node@20.12.12):
     dependencies:
-      '@types/node': 20.12.12
       esbuild: 0.19.12
       postcss: 8.4.36
       rollup: 4.13.0
     optionalDependencies:
+      '@types/node': 20.12.12
       fsevents: 2.3.3
 
   vite@5.2.11(@types/node@20.12.12):
     dependencies:
-      '@types/node': 20.12.12
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.18.0
     optionalDependencies:
+      '@types/node': 20.12.12
       fsevents: 2.3.3
 
   vite@5.2.7(@types/node@20.12.12):
     dependencies:
-      '@types/node': 20.12.12
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.14.0
     optionalDependencies:
+      '@types/node': 20.12.12
       fsevents: 2.3.3
 
   vitest@1.6.0(@types/node@20.12.12)(@vitest/ui@1.6.0):
     dependencies:
-      '@types/node': 20.12.12
       '@vitest/expect': 1.6.0
       '@vitest/runner': 1.6.0
       '@vitest/snapshot': 1.6.0
       '@vitest/spy': 1.6.0
-      '@vitest/ui': 1.6.0(vitest@1.6.0)
       '@vitest/utils': 1.6.0
       acorn-walk: 8.3.2
       chai: 4.4.1
@@ -7773,6 +7800,9 @@ snapshots:
       vite: 5.2.11(@types/node@20.12.12)
       vite-node: 1.6.0(@types/node@20.12.12)
       why-is-node-running: 2.2.2
+    optionalDependencies:
+      '@types/node': 20.12.12
+      '@vitest/ui': 1.6.0(vitest@1.6.0)
     transitivePeerDependencies:
       - less
       - lightningcss
@@ -7795,7 +7825,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vue-router@4.3.0(vue@3.4.21):
+  vue-router@4.3.0(vue@3.4.21(typescript@5.4.2)):
+    dependencies:
+      '@vue/devtools-api': 6.6.1
+      vue: 3.4.21(typescript@5.4.2)
+
+  vue-router@4.3.0(vue@3.4.21(typescript@5.4.3)):
     dependencies:
       '@vue/devtools-api': 6.6.1
       vue: 3.4.21(typescript@5.4.3)
@@ -7831,8 +7866,9 @@ snapshots:
       '@vue/compiler-dom': 3.4.21
       '@vue/compiler-sfc': 3.4.21
       '@vue/runtime-dom': 3.4.21
-      '@vue/server-renderer': 3.4.21(vue@3.4.21)
+      '@vue/server-renderer': 3.4.21(vue@3.4.21(typescript@5.4.2))
       '@vue/shared': 3.4.21
+    optionalDependencies:
       typescript: 5.4.2
 
   vue@3.4.21(typescript@5.4.3):
@@ -7840,8 +7876,9 @@ snapshots:
       '@vue/compiler-dom': 3.4.21
       '@vue/compiler-sfc': 3.4.21
       '@vue/runtime-dom': 3.4.21
-      '@vue/server-renderer': 3.4.21(vue@3.4.21)
+      '@vue/server-renderer': 3.4.21(vue@3.4.21(typescript@5.4.3))
       '@vue/shared': 3.4.21
+    optionalDependencies:
       typescript: 5.4.3
 
   vue@3.4.27(typescript@5.4.5):
@@ -7849,8 +7886,9 @@ snapshots:
       '@vue/compiler-dom': 3.4.27
       '@vue/compiler-sfc': 3.4.27
       '@vue/runtime-dom': 3.4.27
-      '@vue/server-renderer': 3.4.27(vue@3.4.27)
+      '@vue/server-renderer': 3.4.27(vue@3.4.27(typescript@5.4.5))
       '@vue/shared': 3.4.27
+    optionalDependencies:
       typescript: 5.4.5
 
   wcwidth@1.0.1:
