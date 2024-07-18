@@ -25,6 +25,7 @@ export default defineConfig({
       name: 'StoryblokRichtext',
       fileName: format => `storyblok-richtext.${format}.js`,
     },
+    /* minify: false, */
   },
   test: {
     coverage: {
