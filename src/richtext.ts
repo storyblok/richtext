@@ -2,15 +2,72 @@ import { optimizeImage } from './images-optimization'
 import { BlockTypes, LinkTypes, MarkTypes, TextTypes, SbRichTextOptions } from './types'
 import type { MarkNode, SbRichTextNode, SbRichTextNodeResolver, SbRichTextNodeTypes, TextNode } from './types'
 
-// Converts attributes object to a string of HTML attributes
+
+/**
+ * Converts an object of attributes to a string.
+ *
+ * @param {Record<string, string>} [attrs={}]
+ * 
+ * @returns {string} The string representation of the attributes.
+ * 
+ * @example
+ * 
+ * ```typescript
+ * const attrs = {
+ *  class: 'text-red',
+ *  style: 'color: red',
+ * }
+ * 
+ * const attrsString = attrsToString(attrs)
+ * 
+ * console.log(attrsString) // 'class="text-red" style="color: red"'
+ * 
+ * ```
+ *
+ */
 const attrsToString = (attrs: Record<string, string> = {}) => Object.keys(attrs)
   .map(key => `${key}="${attrs[key]}"`)
   .join(' ')
 
+/**
+ * Converts an object of attributes to a CSS style string.
+ *
+ * @param {Record<string, string>} [attrs={}]
+ * 
+ * @returns {string} The string representation of the CSS styles.
+ * 
+ * @example
+ * 
+ * ```typescript
+ * const attrs = {
+ *  color: 'red',
+ *  fontSize: '16px',
+ * }
+ * 
+ * const styleString = attrsToStyle(attrs)
+ * 
+ * console.log(styleString) // 'color: red; font-size: 16px'
+ */
 const attrsToStyle = (attrs: Record<string, string> = {}) => Object.keys(attrs)
   .map(key => `${key}: ${attrs[key]}`)
   .join('; ')
 
+/**
+ * Escapes HTML entities in a string.
+ *
+ * @param {string} unsafeText
+ * @return {*}  {string}
+ * 
+ * @example
+ * 
+ * ```typescript
+ * const unsafeText = '<script>alert("Hello")</script>'
+ * 
+ * const safeText = escapeHtml(unsafeText)
+ * 
+ * console.log(safeText) // '&lt;script&gt;alert("Hello")&lt;/script&gt;'
+ * ```
+ */
 function escapeHtml(unsafeText: string): string {
   return unsafeText
     .replace(/&/g, '&amp;')
@@ -20,12 +77,29 @@ function escapeHtml(unsafeText: string): string {
     .replace(/'/g, '&#039;')
 }
 
+/**
+ * Default render function that creates an HTML string for a given tag, attributes, and children.
+ *
+ * @template T
+ * @param {string} tag
+ * @param {Record<string, any>} [attrs={}]
+ * @param {T} children
+ * @return {*}  {T}
+ */
 function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, any> = {}, children: T): T {
   const attrsString = attrsToString(attrs)
   const tagString = attrsString ? `${tag} ${attrsString}` : tag
   return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T
 }
 
+/**
+ * Creates a rich text resolver with the given options.
+ *
+ * @export
+ * @template T
+ * @param {SbRichTextOptions<T>} [options={}]
+ * @return {*} 
+ */
 export function richTextResolver<T>(options: SbRichTextOptions<T> = {} ) {
   // Creates an HTML string for a given tag, attributes, and children
   let currentKey = 0
@@ -35,6 +109,8 @@ export function richTextResolver<T>(options: SbRichTextOptions<T> = {} ) {
     resolvers = {},
     optimizeImages = false,
   } = options
+
+
   const nodeResolver = (tag: string): SbRichTextNodeResolver<T> => (node: SbRichTextNode<T>): T => renderFn(tag, { ...node.attrs, key: `${tag}-${currentKey}` } || {}, node.children || null as any) as T
 
   const imageResolver: SbRichTextNodeResolver<T> = (node: SbRichTextNode<T>) => {
@@ -142,7 +218,7 @@ export function richTextResolver<T>(options: SbRichTextOptions<T> = {} ) {
     return renderFn('a', { ...rest, href: finalHref, key: `a-${currentKey}` }, node.text as any) as T
   }
 
-  // Placeholder default compoment resolver
+  
   const componentResolver: SbRichTextNodeResolver<T> = (node: SbRichTextNode<T>): T => {
     console.warn('[SbRichtText] - BLOK resolver is not available for vanilla usage')
     return renderFn('span', {
@@ -203,6 +279,30 @@ export function richTextResolver<T>(options: SbRichTextOptions<T> = {} ) {
     })
   }
 
+  /**
+   * Renders a rich text node coming from Storyblok.
+   *
+   * @param {SbRichTextNode<T>} node
+   * @return {*}  {T}
+   * 
+   * @example
+   * 
+   * ```typescript
+   * import StoryblokClient from 'storyblok-js-client'
+   * import { richTextResolver } from '@storyblok/richtext'
+   * 
+   * const storyblok = new StoryblokClient({
+   *  accessToken:  import.meta.env.VITE_STORYBLOK_TOKEN,
+   * })
+   * 
+   * const story = await client.get('cdn/stories/home', {
+   *  version: 'draft',
+   * })
+   * 
+   * const html = richTextResolver().render(story.data.story.content.richtext)
+   * ```
+   * 
+   */
   function render(node: SbRichTextNode<T>): T {
     return Array.isArray(node) ? node.map(renderNode) as T : renderNode(node) as T
   }
