@@ -116,6 +116,34 @@ const options: SbRichtextOptions<VNode> = {
 const root = () => richTextResolver<VNode>(options).render(doc)
 ```
 
+## Optimize Images
+
+To optimize images in the richtext, you can use the `optimizeImages` property on the `richTextResolver` options. For the full list of available options, check the [Image Optimization](https://github.com/storyblok/storyblok-js-client?tab=readme-ov-file#method-storyblokrichtextresolverrender) documentation.
+
+```ts
+import { richTextResolver } from '@storyblok/richtext'
+
+const html = richTextResolver({
+  optimizeImages: {
+    class: 'my-peformant-image',
+    loading: 'lazy',
+    width: 800,
+    height: 600,
+    srcset: [400, 800, 1200, 1600],
+    sizes: ['(max-width: 400px) 100vw', '50vw'],
+    filters: {
+      format: 'webp',
+      blur: 120
+      quality: 10,
+      grayscale: true,
+      blur: 10,
+      brightness: 10,
+    },
+  },
+}).render(doc)
+```
+
+
 ## Setup
 
 ```
