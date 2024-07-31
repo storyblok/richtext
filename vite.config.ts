@@ -29,7 +29,9 @@ export default defineConfig({
   },
   test: {
     coverage: {
-      exclude: ['playground/**', 'packages/**', 'src/index.ts']
+      include: ['src/**'],
+      exclude: ['src/index.ts'],
+      reportsDirectory: './tests/unit/coverage'
     }
   }
 })
