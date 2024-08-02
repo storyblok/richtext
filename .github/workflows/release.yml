@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main, next, beta]
 
+env:
+  PNPM_CACHE_FOLDER: .pnpm-store
+  HUSKY: 0 # Bypass husky commit hook for CI
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -15,6 +19,7 @@ jobs:
     steps:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
+        version: 9
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
