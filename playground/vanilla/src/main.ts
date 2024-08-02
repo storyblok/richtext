@@ -413,7 +413,7 @@ const emoji = {
       type: 'text',
     },
     {
-      type: 'emoji',
+      type: 'emoji',/*  */
       attrs: {
         name: 'innocent',
         emoji: '😇',
