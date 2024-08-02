@@ -17,6 +17,8 @@ jobs:
       matrix:
         node-version: [20]
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -29,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Build lib
-        run: npm run build
+        run: pnpm run build
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
