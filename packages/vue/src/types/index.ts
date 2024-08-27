@@ -1,7 +1,7 @@
 import { VNode } from 'vue';
-import { SbRichTextDocumentNode, SbRichTextResolvers } from '@storyblok/richtext';
+import { StoryblokRichTextDocumentNode, StoryblokRichTextResolvers } from '@storyblok/richtext';
 
-export interface SbRichTextProps {
-  doc: SbRichTextDocumentNode;
-  resolvers: SbRichTextResolvers<VNode>
+export interface StoryblokRichTextProps {
+  doc: StoryblokRichTextDocumentNode;
+  resolvers: StoryblokRichTextResolvers<VNode>
 }

@@ -1,16 +1,16 @@
 import React from 'react'
 import { StoryblokComponent } from '@storyblok/react'
-import type { SbRichTextNode, SbRichTextOptions } from '@storyblok/richtext'
+import type { StoryblokRichTextNode, StoryblokRichTextOptions } from '@storyblok/richtext'
 import { BlockTypes, richTextResolver } from '@storyblok/richtext'
-import SbRichText from './SbRichText'
+import StoryblokRichText from './StoryblokRichText'
 
-function componentResolver(node: SbRichTextNode<React.ReactElement>) {
+function componentResolver(node: StoryblokRichTextNode<React.ReactElement>) {
   // Convert this to use React.createElement or JSX
   // Example with JSX:
   return React.createElement(StoryblokComponent, { blok: node?.attrs?.body[0], id: node.attrs?.id })
 }
 
-export function useSbRichtextResolver(options: SbRichTextOptions<React.ReactElement>) {
+export function useStoryblokRichtextResolver(options: StoryblokRichTextOptions<React.ReactElement>) {
   const mergedOptions = {
     renderFn: React.createElement,
     resolvers: {
@@ -21,4 +21,4 @@ export function useSbRichtextResolver(options: SbRichTextOptions<React.ReactElem
   return richTextResolver(mergedOptions)
 }
 
-export { SbRichText }
+export { StoryblokRichText }

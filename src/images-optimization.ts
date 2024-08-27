@@ -1,6 +1,6 @@
-import { SbRichTextImageOptimizationOptions } from "./types";
+import { StoryblokRichTextImageOptimizationOptions } from "./types";
 
-export function optimizeImage(src: string, options?: boolean | Partial<SbRichTextImageOptimizationOptions>): { src: string, attrs: Record<string, any>} {
+export function optimizeImage(src: string, options?: boolean | Partial<StoryblokRichTextImageOptimizationOptions>): { src: string, attrs: Record<string, any>} {
   if (!options) return {src, attrs: {}};
   let w = 0;
   let h = 0;
@@ -9,7 +9,7 @@ export function optimizeImage(src: string, options?: boolean | Partial<SbRichTex
 
   function validateAndPushFilterParam(value: number, min: number, max: number, filter: string, filterParams: string[]) {
     if (typeof value !== 'number' || value <= min || value >= max) {
-      console.warn(`[SbRichText] - ${filter.charAt(0).toUpperCase() + filter.slice(1)} value must be a number between ${min} and ${max} (inclusive)`);
+      console.warn(`[StoryblokRichText] - ${filter.charAt(0).toUpperCase() + filter.slice(1)} value must be a number between ${min} and ${max} (inclusive)`);
     } else {
       filterParams.push(`${filter}(${value})`);
     }
@@ -20,13 +20,13 @@ export function optimizeImage(src: string, options?: boolean | Partial<SbRichTex
         attrs.width = options.width;
         w = options.width;
       } else {
-        console.warn("[SbRichText] - Width value must be a number greater than 0");
+        console.warn("[StoryblokRichText] - Width value must be a number greater than 0");
       }
       if (options.height && typeof options.height === 'number' && options.height > 0) {
         attrs.height = options.height;
         h = options.height;
       } else {
-        console.warn("[SbRichText] - Height value must be a number greater than 0");
+        console.warn("[StoryblokRichText] - Height value must be a number greater than 0");
       }
       if(options.loading && ['lazy', 'eager'].includes(options.loading)) attrs.loading = options.loading;
       if(options.class) attrs.class = options.class;

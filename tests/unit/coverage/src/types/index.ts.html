@@ -649,31 +649,31 @@ export enum LinkTypes {
   EMAIL = 'email',
 }
 &nbsp;
-export interface SbRichTextDocumentNode {
+export interface StoryblokRichTextDocumentNode {
   type: string,
-  content?: SbRichTextDocumentNode[]
+  content?: StoryblokRichTextDocumentNode[]
   attrs?: Record&lt;string, any&gt;
   text?: string
-  marks?: SbRichTextDocumentNode[]
+  marks?: StoryblokRichTextDocumentNode[]
 }
 &nbsp;
-export type SbRichTextNodeTypes = BlockTypes | MarkTypes | TextTypes
+export type StoryblokRichTextNodeTypes = BlockTypes | MarkTypes | TextTypes
 &nbsp;
-export interface SbRichTextNode&lt;T = string&gt; {
-  type: SbRichTextNodeTypes
-  content: SbRichTextNode&lt;T&gt;[]
+export interface StoryblokRichTextNode&lt;T = string&gt; {
+  type: StoryblokRichTextNodeTypes
+  content: StoryblokRichTextNode&lt;T&gt;[]
   children?: T
   attrs?: Record&lt;string, any&gt;
   text?: string
 }
 &nbsp;
-export interface LinkNode&lt;T = string&gt; extends SbRichTextNode&lt;T&gt; {
+export interface LinkNode&lt;T = string&gt; extends StoryblokRichTextNode&lt;T&gt; {
   type: MarkTypes.LINK | MarkTypes.ANCHOR
   linktype: LinkTypes.ASSET | LinkTypes.EMAIL | LinkTypes.STORY | LinkTypes.URL
   attrs: Record&lt;string, any&gt;
 }
 &nbsp;
-export interface MarkNode&lt;T = string&gt; extends SbRichTextNode&lt;T&gt; {
+export interface MarkNode&lt;T = string&gt; extends StoryblokRichTextNode&lt;T&gt; {
   type: MarkTypes.BOLD |
     MarkTypes.ITALIC |
     MarkTypes.UNDERLINE |
@@ -690,7 +690,7 @@ export interface MarkNode&lt;T = string&gt; extends SbRichTextNode&lt;T&gt; {
   linkType: LinkTypes
 }
 &nbsp;
-export interface TextNode&lt;T = string&gt; extends SbRichTextNode&lt;T&gt; {
+export interface TextNode&lt;T = string&gt; extends StoryblokRichTextNode&lt;T&gt; {
   type: TextTypes.TEXT
   text: string
   marks?: MarkNode&lt;T&gt;[]
@@ -702,12 +702,12 @@ export interface TextNode&lt;T = string&gt; extends SbRichTextNode&lt;T&gt; {
  * @param node - The rich text node to resolve.
  * @returns The resolved value of type T.
  */
-export type SbRichTextNodeResolver&lt;T = string&gt; = (node: SbRichTextNode&lt;T&gt; | TextNode&lt;T&gt; | MarkNode&lt;T&gt; | LinkNode&lt;T&gt;) =&gt; T
+export type StoryblokRichTextNodeResolver&lt;T = string&gt; = (node: StoryblokRichTextNode&lt;T&gt; | TextNode&lt;T&gt; | MarkNode&lt;T&gt; | LinkNode&lt;T&gt;) =&gt; T
 &nbsp;
 /**
  * Represents the configuration options for optimizing images in rich text content.
  */
-export interface SbRichTextImageOptimizationOptions {
+export interface StoryblokRichTextImageOptimizationOptions {
   /**
    * CSS class to be applied to the image.
    */
@@ -734,7 +734,7 @@ export interface SbRichTextImageOptimizationOptions {
    * @example
    * 
    * ```typescript
-   * const filters: Partial&lt;SbRichTextImageOptimizationOptions['filters']&gt; = {
+   * const filters: Partial&lt;StoryblokRichTextImageOptimizationOptions['filters']&gt; = {
    *   blur: 5,
    *   brightness: 150,
    *   grayscale: true
@@ -788,13 +788,13 @@ export interface SbRichTextImageOptimizationOptions {
  * 
  * @template T - The type of the resolved value.
  */
-export type SbRichTextResolvers&lt;T = string&gt; = Partial&lt;Record&lt;SbRichTextNodeTypes, SbRichTextNodeResolver&lt;T&gt;&gt;&gt;
+export type StoryblokRichTextResolvers&lt;T = string&gt; = Partial&lt;Record&lt;StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver&lt;T&gt;&gt;&gt;
 &nbsp;
 &nbsp;
 /**
  * Represents the options for rendering rich text.
  */
-export interface SbRichTextOptions&lt;T = string, S = (tag: string, attrs: Record&lt;string, any&gt;, text: string) =&gt; T&gt; {
+export interface StoryblokRichTextOptions&lt;T = string, S = (tag: string, attrs: Record&lt;string, any&gt;, text: string) =&gt; T&gt; {
   /**
    * Defines the function that will be used to render the final HTML string (vanilla) or Framework component (React, Vue).
    * 
@@ -805,7 +805,7 @@ export interface SbRichTextOptions&lt;T = string, S = (tag: string, attrs: Recor
    *  return `&lt;${tag} ${Object.keys(attrs).map(key =&gt; `${key}="${attrs[key]}"`).join(' ')}&gt;${text}&lt;/${tag}&gt;`
    * }
    * 
-   * const options: SbRichTextOptions = {
+   * const options: StoryblokRichTextOptions = {
    *  renderFn
    * }
    * ```
@@ -820,7 +820,7 @@ export interface SbRichTextOptions&lt;T = string, S = (tag: string, attrs: Recor
    * ```typescript
    * import { h, createTextVNode } from 'vue'
    * 
-   * const options: SbRichTextOptions = {
+   * const options: StoryblokRichTextOptions = {
    *  renderFn: h,
    *  textFn: createTextVNode
    * }
@@ -834,16 +834,16 @@ export interface SbRichTextOptions&lt;T = string, S = (tag: string, attrs: Recor
    * @example
    * 
    * ```typescript
-   * const options: SbRichTextOptions = {
+   * const options: StoryblokRichTextOptions = {
    *  resolvers: {
-   *    [MarkTypes.LINK]: (node: SbRichTextNode) =&gt; {
+   *    [MarkTypes.LINK]: (node: StoryblokRichTextNode) =&gt; {
    *      return `&lt;a href="${node.attrs.href}"&gt;${node.text}&lt;/a&gt;`
    *    }
    *  }
    * }
    * ```
    */
-  resolvers?: SbRichTextResolvers&lt;T&gt;;
+  resolvers?: StoryblokRichTextResolvers&lt;T&gt;;
   
   /**
    * Defines opt-out image optimization options.
@@ -851,7 +851,7 @@ export interface SbRichTextOptions&lt;T = string, S = (tag: string, attrs: Recor
    * @example
    * 
    * ```typescript
-   * const options: SbRichTextOptions = {
+   * const options: StoryblokRichTextOptions = {
    *  optimizeImages: true
    * }
    * ```
@@ -859,7 +859,7 @@ export interface SbRichTextOptions&lt;T = string, S = (tag: string, attrs: Recor
    * @example
    * 
    * ```typescript
-   * const options: SbRichTextOptions = {
+   * const options: StoryblokRichTextOptions = {
    *    optimizeImages: {
    *    class: 'my-image',
    *    width: 800,
@@ -868,7 +868,7 @@ export interface SbRichTextOptions&lt;T = string, S = (tag: string, attrs: Recor
    * }
    * ```
    */
-  optimizeImages?: boolean | Partial&lt;SbRichTextImageOptimizationOptions&gt;;
+  optimizeImages?: boolean | Partial&lt;StoryblokRichTextImageOptimizationOptions&gt;;
 }
 &nbsp;</pre></td></tr></table></pre>
 

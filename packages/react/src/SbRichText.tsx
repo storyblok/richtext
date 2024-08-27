@@ -2,18 +2,18 @@ import React from 'react'
 
 import { forwardRef } from 'react'
 import { convertAttributesInElement } from './utils'
-import { useSbRichtextResolver } from '.'
-import { SbRichTextNode, SbRichTextResolvers } from '@storyblok/richtext'
+import { useStoryblokRichtextResolver } from '.'
+import { StoryblokRichTextNode, StoryblokRichTextResolvers } from '@storyblok/richtext'
 
-interface SbRichTextProps {
-  doc:  SbRichTextNode<React.ReactElement> // Try to avoid 'any' by specifying a more accurate type
-  resolvers?: SbRichTextResolvers<React.ReactElement> // Same here for resolvers
+interface StoryblokRichTextProps {
+  doc:  StoryblokRichTextNode<React.ReactElement> // Try to avoid 'any' by specifying a more accurate type
+  resolvers?: StoryblokRichTextResolvers<React.ReactElement> // Same here for resolvers
 }
 
-// If you're forwarding a ref to SbRichText
-const SbRichText = forwardRef<HTMLDivElement, SbRichTextProps>(({ doc, resolvers }, ref) => {
-  // Assuming useSbRichtextResolver is a hook you've created
-  const { render } = useSbRichtextResolver({
+// If you're forwarding a ref to StoryblokRichText
+const StoryblokRichText = forwardRef<HTMLDivElement, StoryblokRichTextProps>(({ doc, resolvers }, ref) => {
+  // Assuming useStoryblokRichtextResolver is a hook you've created
+  const { render } = useStoryblokRichtextResolver({
     resolvers,
   })
 
@@ -26,4 +26,4 @@ const SbRichText = forwardRef<HTMLDivElement, SbRichTextProps>(({ doc, resolvers
   return <div ref={ref}>{formattedHtml}</div>
 })
 
-export default SbRichText
+export default StoryblokRichText

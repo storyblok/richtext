@@ -690,8 +690,8 @@
 <span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { optimizeImage } from './images-optimization'
-import { BlockTypes, LinkTypes, MarkTypes, TextTypes, SbRichTextOptions } from './types'
-import type { MarkNode, SbRichTextNode, SbRichTextNodeResolver, SbRichTextNodeTypes, TextNode } from './types'
+import { BlockTypes, LinkTypes, MarkTypes, TextTypes, StoryblokRichTextOptions } from './types'
+import type { MarkNode, StoryblokRichTextNode, StoryblokRichTextNodeResolver, StoryblokRichTextNodeTypes, TextNode } from './types'
 &nbsp;
 &nbsp;
 /**
@@ -788,10 +788,10 @@ function defaultRenderFn&lt;T = string | null&gt;(tag: string, attrs: Record&lt;
  *
  * @export
  * @template T
- * @param {SbRichTextOptions&lt;T&gt;} [options={}]
+ * @param {StoryblokRichTextOptions&lt;T&gt;} [options={}]
  * @return {*} 
  */
-export function richTextResolver&lt;T&gt;(options: SbRichTextOptions&lt;T&gt; = {} ) {
+export function richTextResolver&lt;T&gt;(options: StoryblokRichTextOptions&lt;T&gt; = {} ) {
   // Creates an HTML string for a given tag, attributes, and children
   let currentKey = 0
   const {
@@ -802,9 +802,9 @@ export function richTextResolver&lt;T&gt;(options: SbRichTextOptions&lt;T&gt; = 
   } = options
 &nbsp;
 &nbsp;
-  const nodeResolver = (tag: string): SbRichTextNodeResolver&lt;T&gt; =&gt; (node: SbRichTextNode&lt;T&gt;): T =&gt; renderFn(tag, { ...node.attrs, key: `${tag}-${currentKey}` } || {}, node.children || null as any) as T
+  const nodeResolver = (tag: string): StoryblokRichTextNodeResolver&lt;T&gt; =&gt; (node: StoryblokRichTextNode&lt;T&gt;): T =&gt; renderFn(tag, { ...node.attrs, key: `${tag}-${currentKey}` } || {}, node.children || null as any) as T
 &nbsp;
-  const imageResolver: SbRichTextNodeResolver&lt;T&gt; = (node: SbRichTextNode&lt;T&gt;) =&gt; {
+  const imageResolver: StoryblokRichTextNodeResolver&lt;T&gt; = (node: StoryblokRichTextNode&lt;T&gt;) =&gt; {
     const { src, alt, ...rest } = node.<span class="branch-0 cbranch-no" title="branch not covered" >attrs || {};</span>
     let finalSrc = src;
     let finalAttrs = {};
@@ -824,12 +824,12 @@ export function richTextResolver&lt;T&gt;(options: SbRichTextOptions&lt;T&gt; = 
 &nbsp;
     return renderFn('img', imgAttrs, '') as T;
   };
-  const headingResolver: SbRichTextNodeResolver&lt;T&gt; = (node: SbRichTextNode&lt;T&gt;): T =&gt; {
+  const headingResolver: StoryblokRichTextNodeResolver&lt;T&gt; = (node: StoryblokRichTextNode&lt;T&gt;): T =&gt; {
     const { level, ...rest } = node.<span class="branch-0 cbranch-no" title="branch not covered" >attrs || {}</span>
     return renderFn(`h${level}`, { ...rest, key: `h${level}-${currentKey}` } || {}, node.children as any) as T
   }
 &nbsp;
-  const emojiResolver: SbRichTextNodeResolver&lt;T&gt; = (node: SbRichTextNode&lt;T&gt;) =&gt; renderFn('span', {
+  const emojiResolver: StoryblokRichTextNodeResolver&lt;T&gt; = (node: StoryblokRichTextNode&lt;T&gt;) =&gt; renderFn('span', {
     'data-type': 'emoji',
     'data-name': node.attrs?.name,
     'emoji': node.attrs?.emoji,
@@ -842,12 +842,12 @@ export function richTextResolver&lt;T&gt;(options: SbRichTextOptions&lt;T&gt; = 
     loading: 'lazy',
   }, '' as any)) as T
 &nbsp;
-  const codeBlockResolver: SbRichTextNodeResolver&lt;T&gt; = (node: SbRichTextNode&lt;T&gt;): T =&gt; {
+  const codeBlockResolver: StoryblokRichTextNodeResolver&lt;T&gt; = (node: StoryblokRichTextNode&lt;T&gt;): T =&gt; {
     return renderFn('pre', { ...node.attrs, key: `code-${currentKey}` } || {}, renderFn('code', { key: `code-${currentKey}` }, node.<span class="branch-0 cbranch-no" title="branch not covered" >children || '' as any)</span>) as T
   }
 &nbsp;
   // Mark resolver for text formatting
-  const markResolver = (tag: string, styled = false): SbRichTextNodeResolver&lt;T&gt; =&gt; ({ text, attrs }): T =&gt; {
+  const markResolver = (tag: string, styled = false): StoryblokRichTextNodeResolver&lt;T&gt; =&gt; ({ text, attrs }): T =&gt; {
     return renderFn(tag, styled
       ? {
           style: attrsToStyle(attrs),
@@ -863,7 +863,7 @@ export function richTextResolver&lt;T&gt;(options: SbRichTextOptions&lt;T&gt; = 
   }
 &nbsp;
   // Resolver for plain text nodes
-  const textResolver: SbRichTextNodeResolver&lt;T&gt; = (node: SbRichTextNode&lt;T&gt;): T =&gt; {
+  const textResolver: StoryblokRichTextNodeResolver&lt;T&gt; = (node: StoryblokRichTextNode&lt;T&gt;): T =&gt; {
     const { marks, ...rest } = node as TextNode&lt;T&gt;
     if ('text' in node) {
       // Now TypeScript knows that 'node' is a TextNode, so 'marks' can be accessed
@@ -882,7 +882,7 @@ export function richTextResolver&lt;T&gt;(options: SbRichTextOptions&lt;T&gt; = 
 &nbsp;
   // Resolver for link nodes
 &nbsp;
-  const linkResolver: SbRichTextNodeResolver&lt;T&gt; = (node: SbRichTextNode&lt;T&gt;) =&gt; {
+  const linkResolver: StoryblokRichTextNodeResolver&lt;T&gt; = (node: StoryblokRichTextNode&lt;T&gt;) =&gt; {
     const { linktype, href, anchor, ...rest } = node.<span class="branch-0 cbranch-no" title="branch not covered" >attrs || {}</span>
 &nbsp;
     let finalHref = ''
@@ -910,8 +910,8 @@ export function richTextResolver&lt;T&gt;(options: SbRichTextOptions&lt;T&gt; = 
   }
 &nbsp;
   
-  const componentResolver: SbRichTextNodeResolver&lt;T&gt; = <span class="fstat-no" title="function not covered" >(node: SbRichTextNode&lt;T&gt;): T =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    console.warn('[SbRichtText] - BLOK resolver is not available for vanilla usage')</span>
+  const componentResolver: StoryblokRichTextNodeResolver&lt;T&gt; = <span class="fstat-no" title="function not covered" >(node: StoryblokRichTextNode&lt;T&gt;): T =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    console.warn('[StoryblokRichtText] - BLOK resolver is not available for vanilla usage')</span>
 <span class="cstat-no" title="statement not covered" >    return renderFn('span', {</span>
 <span class="cstat-no" title="statement not covered" >      blok: node?.attrs?.body[0],</span>
 <span class="cstat-no" title="statement not covered" >      id: node.attrs?.id,</span>
@@ -920,7 +920,7 @@ export function richTextResolver&lt;T&gt;(options: SbRichTextOptions&lt;T&gt; = 
 <span class="cstat-no" title="statement not covered" >    }, '') as T</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  const mergedResolvers = new Map&lt;SbRichTextNodeTypes, SbRichTextNodeResolver&lt;T&gt;&gt;([
+  const mergedResolvers = new Map&lt;StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver&lt;T&gt;&gt;([
     [BlockTypes.DOCUMENT, nodeResolver('div')],
     [BlockTypes.HEADING, headingResolver],
     [BlockTypes.PARAGRAPH, nodeResolver('p')],
@@ -947,10 +947,10 @@ export function richTextResolver&lt;T&gt;(options: SbRichTextOptions&lt;T&gt; = 
     [MarkTypes.SUPERSCRIPT, markResolver('sup')],
     [MarkTypes.SUBSCRIPT, markResolver('sub')],
     [MarkTypes.HIGHLIGHT, markResolver('mark')],
-    ...(Object.entries(resolvers).map(([type, resolver]) =&gt; [type as SbRichTextNodeTypes, resolver])) as unknown as Array&lt;[SbRichTextNodeTypes, SbRichTextNodeResolver&lt;T&gt;]&gt;,
+    ...(Object.entries(resolvers).map(([type, resolver]) =&gt; [type as StoryblokRichTextNodeTypes, resolver])) as unknown as Array&lt;[StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver&lt;T&gt;]&gt;,
   ])
 &nbsp;
-  function renderNode(node: SbRichTextNode&lt;T&gt;): T {
+  function renderNode(node: StoryblokRichTextNode&lt;T&gt;): T {
     currentKey += 1
     const resolver = mergedResolvers.get(node.type)
     if (!resolver) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
@@ -959,7 +959,7 @@ export function richTextResolver&lt;T&gt;(options: SbRichTextOptions&lt;T&gt; = 
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
     if (node.type === 'text') {
-      return resolver(node as SbRichTextNode&lt;T&gt;) // Fix: Update the type of 'node' to Node&lt;string&gt;
+      return resolver(node as StoryblokRichTextNode&lt;T&gt;) // Fix: Update the type of 'node' to Node&lt;string&gt;
     }
 &nbsp;
     const children = node.content ? node.content.map(render) : undefined
@@ -973,7 +973,7 @@ export function richTextResolver&lt;T&gt;(options: SbRichTextOptions&lt;T&gt; = 
   /**
    * Renders a rich text node coming from Storyblok.
    *
-   * @param {SbRichTextNode&lt;T&gt;} node
+   * @param {StoryblokRichTextNode&lt;T&gt;} node
    * @return {*}  {T}
    * 
    * @example
@@ -994,7 +994,7 @@ export function richTextResolver&lt;T&gt;(options: SbRichTextOptions&lt;T&gt; = 
    * ```
    * 
    */
-  function render(node: SbRichTextNode&lt;T&gt;): T {
+  function render(node: StoryblokRichTextNode&lt;T&gt;): T {
     return Array.isArray(node<span class="branch-0 cbranch-no" title="branch not covered" >) ? node.map(renderNode) as T : r</span>enderNode(node) as T
   }
 &nbsp;
