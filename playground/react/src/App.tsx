@@ -1,6 +1,6 @@
 import { richTextResolver } from '@storyblok/richtext'
 import { StoryblokComponent, useStoryblok } from '@storyblok/react'
-import { SbRichText } from '@storyblok/react-richtext'
+import { StoryblokRichText } from '@storyblok/react-richtext'
 import './App.css'
 import React from 'react'
 
@@ -464,7 +464,7 @@ function App() {
   console.log('formattedHtml', formattedHtml) */
   return (
     <>
-      <SbRichText doc={story.content.richtext} />
+      <StoryblokRichText doc={story.content.richtext} />
     </>
   )
 }
