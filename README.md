@@ -97,7 +97,7 @@ This way the `@storyblok/richtext` is ignorant of framework specific types, avoi
 
 ```ts
 // Vanilla
-const options: SbRichtextOptions<string> = {
+const options: StoryblokRichTextOptions<string> = {
   resolvers: {
     [MarkTypes.LINK]: (node: Node<string>) => {
       return `<button href="${node.attrs?.href}" target="${node.attrs?.target}">${node.children}</button>`
@@ -110,7 +110,7 @@ const html = richTextResolver<string>(options).render(doc)
 
 ```ts
 // Vue
-const options: SbRichtextOptions<VNode> = {
+const options: StoryblokRichTextOptions<VNode> = {
   renderFn: h,
 }
 const root = () => richTextResolver<VNode>(options).render(doc)

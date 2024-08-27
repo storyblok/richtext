@@ -246,7 +246,7 @@ export function optimizeImage(src: string, options?: boolean | Partial&lt;ImageO
 &nbsp;
   function validateAndPushFilterParam(value: number, min: number, max: number, filter: string, filterParams: string[]) {
     if (typeof value !== 'number' || value &lt;= min || value &gt;= max) {
-      console.warn(`[SbRichText] - ${filter.charAt(0).toUpperCase() + filter.slice(1)} value must be a number between ${min} and ${max} (inclusive)`);
+      console.warn(`[StoryblokRichText] - ${filter.charAt(0).toUpperCase() + filter.slice(1)} value must be a number between ${min} and ${max} (inclusive)`);
     } else {
       filterParams.push(`${filter}(${value})`);
     }
@@ -257,13 +257,13 @@ export function optimizeImage(src: string, options?: boolean | Partial&lt;ImageO
         attrs.width = options.width;
         w = options.width;
       } else {
-        console.warn("[SbRichText] - Width value must be a number greater than 0");
+        console.warn("[StoryblokRichText] - Width value must be a number greater than 0");
       }
       if (options.height &amp;&amp; typeof options.height === 'number' &amp;&amp; options.height &gt; 0) {
         attrs.height = options.height;
         h = options.height;
       } else {
-        console.warn("[SbRichText] - Height value must be a number greater than 0");
+        console.warn("[StoryblokRichText] - Height value must be a number greater than 0");
       }
       if(options.loading &amp;&amp; ['lazy', 'eager'].includes(options.loading)) attrs.loading = options.loading;
       if(options.class) attrs.class = options.class;

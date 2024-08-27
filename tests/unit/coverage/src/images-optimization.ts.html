@@ -235,9 +235,9 @@
 <span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-yes">31x</span>
-<span class="cline-any cline-yes">31x</span></td><td class="text"><pre class="prettyprint lang-js">import { SbRichTextImageOptimizationOptions } from "./types";
+<span class="cline-any cline-yes">31x</span></td><td class="text"><pre class="prettyprint lang-js">import { StoryblokRichTextImageOptimizationOptions } from "./types";
 &nbsp;
-export function optimizeImage(src: string, options?: boolean | Partial&lt;SbRichTextImageOptimizationOptions&gt;): { src: string, attrs: Record&lt;string, any&gt;} {
+export function optimizeImage(src: string, options?: boolean | Partial&lt;StoryblokRichTextImageOptimizationOptions&gt;): { src: string, attrs: Record&lt;string, any&gt;} {
   if (!options) return {src, attrs: {}};
   let w = 0;
   let h = 0;
@@ -246,7 +246,7 @@ export function optimizeImage(src: string, options?: boolean | Partial&lt;SbRich
 &nbsp;
   function validateAndPushFilterParam(value: number, min: number, max: number, filter: string, filterParams: string[]) {
     if (typeof value !== 'number' || value &lt;= min || value &gt;= max) {
-      console.warn(`[SbRichText] - ${filter.charAt(0).toUpperCase() + filter.slice(1)} value must be a number between ${min} and ${max} (inclusive)`);
+      console.warn(`[StoryblokRichText] - ${filter.charAt(0).toUpperCase() + filter.slice(1)} value must be a number between ${min} and ${max} (inclusive)`);
     } else {
       filterParams.push(`${filter}(${value})`);
     }
@@ -257,13 +257,13 @@ export function optimizeImage(src: string, options?: boolean | Partial&lt;SbRich
         attrs.width = options.width;
         w = options.width;
       } else {
-        console.warn("[SbRichText] - Width value must be a number greater than 0");
+        console.warn("[StoryblokRichText] - Width value must be a number greater than 0");
       }
       if (options.height &amp;&amp; typeof options.height === 'number' &amp;&amp; options.height &gt; 0) {
         attrs.height = options.height;
         h = options.height;
       } else {
-        console.warn("[SbRichText] - Height value must be a number greater than 0");
+        console.warn("[StoryblokRichText] - Height value must be a number greater than 0");
       }
       if(options.loading &amp;&amp; ['lazy', 'eager'].includes(options.loading)) attrs.loading = options.loading;
       if(options.class) attrs.class = options.class;

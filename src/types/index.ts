@@ -46,31 +46,31 @@ export enum LinkTypes {
   EMAIL = 'email',
 }
 
-export interface SbRichTextDocumentNode {
+export interface StoryblokRichTextDocumentNode {
   type: string,
-  content?: SbRichTextDocumentNode[]
+  content?: StoryblokRichTextDocumentNode[]
   attrs?: Record<string, any>
   text?: string
-  marks?: SbRichTextDocumentNode[]
+  marks?: StoryblokRichTextDocumentNode[]
 }
 
-export type SbRichTextNodeTypes = BlockTypes | MarkTypes | TextTypes
+export type StoryblokRichTextNodeTypes = BlockTypes | MarkTypes | TextTypes
 
-export interface SbRichTextNode<T = string> {
-  type: SbRichTextNodeTypes
-  content: SbRichTextNode<T>[]
+export interface StoryblokRichTextNode<T = string> {
+  type: StoryblokRichTextNodeTypes
+  content: StoryblokRichTextNode<T>[]
   children?: T
   attrs?: Record<string, any>
   text?: string
 }
 
-export interface LinkNode<T = string> extends SbRichTextNode<T> {
+export interface LinkNode<T = string> extends StoryblokRichTextNode<T> {
   type: MarkTypes.LINK | MarkTypes.ANCHOR
   linktype: LinkTypes.ASSET | LinkTypes.EMAIL | LinkTypes.STORY | LinkTypes.URL
   attrs: Record<string, any>
 }
 
-export interface MarkNode<T = string> extends SbRichTextNode<T> {
+export interface MarkNode<T = string> extends StoryblokRichTextNode<T> {
   type: MarkTypes.BOLD |
     MarkTypes.ITALIC |
     MarkTypes.UNDERLINE |
@@ -87,7 +87,7 @@ export interface MarkNode<T = string> extends SbRichTextNode<T> {
   linkType: LinkTypes
 }
 
-export interface TextNode<T = string> extends SbRichTextNode<T> {
+export interface TextNode<T = string> extends StoryblokRichTextNode<T> {
   type: TextTypes.TEXT
   text: string
   marks?: MarkNode<T>[]
@@ -99,12 +99,12 @@ export interface TextNode<T = string> extends SbRichTextNode<T> {
  * @param node - The rich text node to resolve.
  * @returns The resolved value of type T.
  */
-export type SbRichTextNodeResolver<T = string> = (node: SbRichTextNode<T> | TextNode<T> | MarkNode<T> | LinkNode<T>) => T
+export type StoryblokRichTextNodeResolver<T = string> = (node: StoryblokRichTextNode<T> | TextNode<T> | MarkNode<T> | LinkNode<T>) => T
 
 /**
  * Represents the configuration options for optimizing images in rich text content.
  */
-export interface SbRichTextImageOptimizationOptions {
+export interface StoryblokRichTextImageOptimizationOptions {
   /**
    * CSS class to be applied to the image.
    */
@@ -131,7 +131,7 @@ export interface SbRichTextImageOptimizationOptions {
    * @example
    * 
    * ```typescript
-   * const filters: Partial<SbRichTextImageOptimizationOptions['filters']> = {
+   * const filters: Partial<StoryblokRichTextImageOptimizationOptions['filters']> = {
    *   blur: 5,
    *   brightness: 150,
    *   grayscale: true
@@ -185,13 +185,13 @@ export interface SbRichTextImageOptimizationOptions {
  * 
  * @template T - The type of the resolved value.
  */
-export type SbRichTextResolvers<T = string> = Partial<Record<SbRichTextNodeTypes, SbRichTextNodeResolver<T>>>
+export type StoryblokRichTextResolvers<T = string> = Partial<Record<StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver<T>>>
 
 
 /**
  * Represents the options for rendering rich text.
  */
-export interface SbRichTextOptions<T = string, S = (tag: string, attrs: Record<string, any>, text: string) => T> {
+export interface StoryblokRichTextOptions<T = string, S = (tag: string, attrs: Record<string, any>, text: string) => T> {
   /**
    * Defines the function that will be used to render the final HTML string (vanilla) or Framework component (React, Vue).
    * 
@@ -202,7 +202,7 @@ export interface SbRichTextOptions<T = string, S = (tag: string, attrs: Record<s
    *  return `<${tag} ${Object.keys(attrs).map(key => `${key}="${attrs[key]}"`).join(' ')}>${text}</${tag}>`
    * }
    * 
-   * const options: SbRichTextOptions = {
+   * const options: StoryblokRichTextOptions = {
    *  renderFn
    * }
    * ```
@@ -217,7 +217,7 @@ export interface SbRichTextOptions<T = string, S = (tag: string, attrs: Record<s
    * ```typescript
    * import { h, createTextVNode } from 'vue'
    * 
-   * const options: SbRichTextOptions = {
+   * const options: StoryblokRichTextOptions = {
    *  renderFn: h,
    *  textFn: createTextVNode
    * }
@@ -231,16 +231,16 @@ export interface SbRichTextOptions<T = string, S = (tag: string, attrs: Record<s
    * @example
    * 
    * ```typescript
-   * const options: SbRichTextOptions = {
+   * const options: StoryblokRichTextOptions = {
    *  resolvers: {
-   *    [MarkTypes.LINK]: (node: SbRichTextNode) => {
+   *    [MarkTypes.LINK]: (node: StoryblokRichTextNode) => {
    *      return `<a href="${node.attrs.href}">${node.text}</a>`
    *    }
    *  }
    * }
    * ```
    */
-  resolvers?: SbRichTextResolvers<T>;
+  resolvers?: StoryblokRichTextResolvers<T>;
   
   /**
    * Defines opt-out image optimization options.
@@ -248,7 +248,7 @@ export interface SbRichTextOptions<T = string, S = (tag: string, attrs: Record<s
    * @example
    * 
    * ```typescript
-   * const options: SbRichTextOptions = {
+   * const options: StoryblokRichTextOptions = {
    *  optimizeImages: true
    * }
    * ```
@@ -256,7 +256,7 @@ export interface SbRichTextOptions<T = string, S = (tag: string, attrs: Record<s
    * @example
    * 
    * ```typescript
-   * const options: SbRichTextOptions = {
+   * const options: StoryblokRichTextOptions = {
    *    optimizeImages: {
    *    class: 'my-image',
    *    width: 800,
@@ -265,5 +265,5 @@ export interface SbRichTextOptions<T = string, S = (tag: string, attrs: Record<s
    * }
    * ```
    */
-  optimizeImages?: boolean | Partial<SbRichTextImageOptimizationOptions>;
+  optimizeImages?: boolean | Partial<StoryblokRichTextImageOptimizationOptions>;
 }

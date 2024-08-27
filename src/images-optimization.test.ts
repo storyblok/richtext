@@ -31,7 +31,7 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const consoleWarnSpy = vi.spyOn(console, 'warn')
     optimizeImage(src, { width: '800', height: 600 })
-    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Width value must be a number greater than 0')
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Width value must be a number greater than 0')
     consoleWarnSpy.mockRestore()
   })
 
@@ -39,7 +39,7 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const consoleWarnSpy = vi.spyOn(console, 'warn')
     optimizeImage(src, { width: -800, height: 600 })
-    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Width value must be a number greater than 0')
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Width value must be a number greater than 0')
     consoleWarnSpy.mockRestore()
   })
 
@@ -53,7 +53,7 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const consoleWarnSpy = vi.spyOn(console, 'warn')
     optimizeImage(src, { width: 800, height: '600' })
-    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Height value must be a number greater than 0')
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Height value must be a number greater than 0')
     consoleWarnSpy.mockRestore()
   })
 
@@ -61,7 +61,7 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const consoleWarnSpy = vi.spyOn(console, 'warn')
     optimizeImage(src, { width: 800, height: -600 })
-    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Height value must be a number greater than 0')
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Height value must be a number greater than 0')
     consoleWarnSpy.mockRestore()
   })
 
@@ -87,7 +87,7 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const consoleWarnSpy = vi.spyOn(console, 'warn')
     optimizeImage(src, { filters: { blur: '5' } })
-    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Blur value must be a number between 0 and 100 (inclusive)')
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Blur value must be a number between 0 and 100 (inclusive)')
     consoleWarnSpy.mockRestore()
   })
 
@@ -95,7 +95,7 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const consoleWarnSpy = vi.spyOn(console, 'warn')
     optimizeImage(src, { filters: { blur: -5 } })
-    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Blur value must be a number between 0 and 100 (inclusive)')
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Blur value must be a number between 0 and 100 (inclusive)')
     consoleWarnSpy.mockRestore()
   })
 
@@ -103,7 +103,7 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const consoleWarnSpy = vi.spyOn(console, 'warn')
     optimizeImage(src, { filters: { blur: 105 } })
-    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Blur value must be a number between 0 and 100 (inclusive)')
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Blur value must be a number between 0 and 100 (inclusive)')
     consoleWarnSpy.mockRestore()
   })
 
@@ -117,7 +117,7 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const consoleWarnSpy = vi.spyOn(console, 'warn')
     optimizeImage(src, { filters: { brightness: '0.5' } })
-    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Brightness value must be a number between 0 and 100 (inclusive)')
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Brightness value must be a number between 0 and 100 (inclusive)')
     consoleWarnSpy.mockRestore()
   })
 
@@ -125,7 +125,7 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const consoleWarnSpy = vi.spyOn(console, 'warn')
     optimizeImage(src, { filters: { brightness: -0.5 } })
-    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Brightness value must be a number between 0 and 100 (inclusive)')
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Brightness value must be a number between 0 and 100 (inclusive)')
     consoleWarnSpy.mockRestore()
   })
 
@@ -133,7 +133,7 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const consoleWarnSpy = vi.spyOn(console, 'warn')
     optimizeImage(src, { filters: { brightness: 105 } })
-    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Brightness value must be a number between 0 and 100 (inclusive)')
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Brightness value must be a number between 0 and 100 (inclusive)')
     consoleWarnSpy.mockRestore()
   })
 
@@ -159,7 +159,7 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const consoleWarnSpy = vi.spyOn(console, 'warn')
     optimizeImage(src, { filters: { quality: '80' } })
-    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Quality value must be a number between 0 and 100 (inclusive)')
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Quality value must be a number between 0 and 100 (inclusive)')
     consoleWarnSpy.mockRestore()
   })
 
@@ -167,7 +167,7 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const consoleWarnSpy = vi.spyOn(console, 'warn')
     optimizeImage(src, { filters: { quality: -80 } })
-    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Quality value must be a number between 0 and 100 (inclusive)')
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Quality value must be a number between 0 and 100 (inclusive)')
     consoleWarnSpy.mockRestore()
   })
 
@@ -175,7 +175,7 @@ describe('images-optimization', () => {
     const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
     const consoleWarnSpy = vi.spyOn(console, 'warn')
     optimizeImage(src, { filters: { quality: 105 } })
-    expect(consoleWarnSpy).toBeCalledWith('[SbRichText] - Quality value must be a number between 0 and 100 (inclusive)')
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Quality value must be a number between 0 and 100 (inclusive)')
     consoleWarnSpy.mockRestore()
   })
 
