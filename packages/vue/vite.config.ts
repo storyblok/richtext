@@ -25,7 +25,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: 'src/index.ts',
-      name: 'StoryblokRichtext',
+      name: 'StoryblokRichText',
       fileName: format => `storyblok-richtext-vue.${format}.js`,
     },
   },

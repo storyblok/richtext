@@ -2,7 +2,7 @@ import React from 'react'
 
 import { forwardRef } from 'react'
 import { convertAttributesInElement } from './utils'
-import { useStoryblokRichtextResolver } from '.'
+import { useStoryblokRichTextResolver } from '.'
 import { StoryblokRichTextNode, StoryblokRichTextResolvers } from '@storyblok/richtext'
 
 interface StoryblokRichTextProps {
@@ -12,8 +12,8 @@ interface StoryblokRichTextProps {
 
 // If you're forwarding a ref to StoryblokRichText
 const StoryblokRichText = forwardRef<HTMLDivElement, StoryblokRichTextProps>(({ doc, resolvers }, ref) => {
-  // Assuming useStoryblokRichtextResolver is a hook you've created
-  const { render } = useStoryblokRichtextResolver({
+  // Assuming useStoryblokRichTextResolver is a hook you've created
+  const { render } = useStoryblokRichTextResolver({
     resolvers,
   })
 

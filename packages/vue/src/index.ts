@@ -14,7 +14,7 @@ const componentResolver: StoryblokRichTextNodeResolver<VNode> = (node: Storyblok
   }, node.children)
 }
 
-export function useStoryblokRichtextResolver(options: StoryblokRichTextOptions<VNode>) {
+export function useStoryblokRichTextResolver(options: StoryblokRichTextOptions<VNode>) {
   const mergedOptions: StoryblokRichTextOptions<VNode> = {
     renderFn: h,
     textFn: createTextVNode,

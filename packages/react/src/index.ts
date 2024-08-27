@@ -10,7 +10,7 @@ function componentResolver(node: StoryblokRichTextNode<React.ReactElement>) {
   return React.createElement(StoryblokComponent, { blok: node?.attrs?.body[0], id: node.attrs?.id })
 }
 
-export function useStoryblokRichtextResolver(options: StoryblokRichTextOptions<React.ReactElement>) {
+export function useStoryblokRichTextResolver(options: StoryblokRichTextOptions<React.ReactElement>) {
   const mergedOptions = {
     renderFn: React.createElement,
     resolvers: {

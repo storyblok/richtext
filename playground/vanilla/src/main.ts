@@ -1,5 +1,5 @@
 import './style.css'
-import { richTextResolver, type StoryblokRichtextOptions, type StoryblokRichTextDocumentNode, MarkTypes, StoryblokRichTextNode } from '@storyblok/richtext'
+import { richTextResolver, type StoryblokRichTextOptions, type StoryblokRichTextDocumentNode, MarkTypes, StoryblokRichTextNode } from '@storyblok/richtext'
 import StoryblokClient from 'storyblok-js-client'
 
 const doc: StoryblokRichTextDocumentNode = {
@@ -436,7 +436,7 @@ const story = await client.get('cdn/stories/home', {
 
 const docFromStory = story.data.story.content.richtext
 
-const options: StoryblokRichtextOptions<string> = {
+const options: StoryblokRichTextOptions<string> = {
   resolvers: {
     [MarkTypes.LINK]: (node: StoryblokRichTextNode<string>) => {
       return `<button href="${node.attrs?.href}" target="${node.attrs?.target}">${node.children}</button>`
