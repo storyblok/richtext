@@ -49,6 +49,7 @@ export const attrsToString = (attrs: Record<string, string> = {}) => Object.keys
  * const styleString = attrsToStyle(attrs)
  * 
  * console.log(styleString) // 'color: red; font-size: 16px'
+ * ```
  */
 export const attrsToStyle = (attrs: Record<string, string> = {}) => Object.keys(attrs)
   .map(key => `${key}: ${attrs[key]}`)
