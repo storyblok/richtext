@@ -107,10 +107,18 @@ describe('richtext', () => {
         attrs: {
           src: 'https://example.com/image.jpg',
           alt: 'An image',
+          copyright: '© Storyblok',
+          source: 'Storyblok',
+          title: 'An image',
+          meta_data: {
+            alt: 'An image',
+            copyright: '© Storyblok',
+            source: 'Storyblok',
+          },
         },
       }
       const html = render(image as Node<string>)
-      expect(html).toBe('<img src="https://example.com/image.jpg" alt="An image" key="img-1" />')
+      expect(html).toBe('<img src="https://example.com/image.jpg" alt="An image" title="An image" key="img-1" />')
     })
 
     it('should render self-closing tags', async () => {
@@ -128,10 +136,7 @@ describe('richtext', () => {
           type: BlockTypes[type as keyof typeof BlockTypes],
         }
         const html = render(node as Node<string>)
-        if(type === 'IMAGE') {
-          expect(html).toBe(`<${tagMap[type]} src="undefined" alt="" key="${tagMap[type]}-3" />`)
-          return
-        }
+        
         expect(html).toBe(`<${tagMap[type]} key="${tagMap[type]}-${index + 1}" />`)
       })
     })

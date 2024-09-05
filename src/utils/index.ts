@@ -78,3 +78,27 @@ export function escapeHtml(unsafeText: string): string {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;')
 }
+
+/**
+ * Removes undefined values from an object.
+ *  
+ * @param {Record<string, any>} obj
+ * @return {*}  {Record<string, any>}
+ *  
+ * @example
+ * 
+ * ```typescript
+ * const obj = {
+ * name: 'John',
+ * age: undefined,
+ * }
+ * 
+ * const cleanedObj = cleanObject(obj)
+ * 
+ * console.log(cleanedObj) // { name: 'John' }
+ * ```
+ * 
+ */
+export const cleanObject = (obj: Record<string, any>) => {
+  return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v !== undefined))
+}

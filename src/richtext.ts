@@ -1,7 +1,7 @@
 import { optimizeImage } from './images-optimization'
 import { BlockTypes, LinkTypes, MarkTypes, TextTypes, StoryblokRichTextOptions } from './types'
 import type { MarkNode, StoryblokRichTextNode, StoryblokRichTextNodeResolver, StoryblokRichTextNodeTypes, TextNode } from './types'
-import { attrsToString, attrsToStyle, escapeHtml, SELF_CLOSING_TAGS } from './utils'
+import { attrsToString, attrsToStyle, cleanObject, escapeHtml, SELF_CLOSING_TAGS } from './utils'
 
 /**
  * Default render function that creates an HTML string for a given tag, attributes, and children.
@@ -44,7 +44,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {} ) 
   const nodeResolver = (tag: string): StoryblokRichTextNodeResolver<T> => (node: StoryblokRichTextNode<T>): T => renderFn(tag, { ...node.attrs, key: `${tag}-${currentKey}` } || {}, node.children || null as any) as T
 
   const imageResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>) => {
-    const { src, alt, ...rest } = node.attrs || {};
+    const { src, alt, title, srcset, sizes } = node.attrs || {};
     let finalSrc = src;
     let finalAttrs = {};
 
@@ -55,13 +55,15 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {} ) 
     }
     const imgAttrs = {
       src: finalSrc,
-      alt: alt || '',
+      alt,
+      title,
+      srcset,
+      sizes,
       key: `img-${currentKey}`,
-      ...rest,
       ...finalAttrs,
     };
 
-    return renderFn('img', imgAttrs, '') as T;
+    return renderFn('img', cleanObject(imgAttrs), '') as T;
   };
   const headingResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
     const { level, ...rest } = node.attrs || {}
