@@ -1,81 +1,7 @@
 import { optimizeImage } from './images-optimization'
 import { BlockTypes, LinkTypes, MarkTypes, TextTypes, StoryblokRichTextOptions } from './types'
 import type { MarkNode, StoryblokRichTextNode, StoryblokRichTextNodeResolver, StoryblokRichTextNodeTypes, TextNode } from './types'
-
-
-/**
- * Converts an object of attributes to a string.
- *
- * @param {Record<string, string>} [attrs={}]
- * 
- * @returns {string} The string representation of the attributes.
- * 
- * @example
- * 
- * ```typescript
- * const attrs = {
- *  class: 'text-red',
- *  style: 'color: red',
- * }
- * 
- * const attrsString = attrsToString(attrs)
- * 
- * console.log(attrsString) // 'class="text-red" style="color: red"'
- * 
- * ```
- *
- */
-const attrsToString = (attrs: Record<string, string> = {}) => Object.keys(attrs)
-  .map(key => `${key}="${attrs[key]}"`)
-  .join(' ')
-
-/**
- * Converts an object of attributes to a CSS style string.
- *
- * @param {Record<string, string>} [attrs={}]
- * 
- * @returns {string} The string representation of the CSS styles.
- * 
- * @example
- * 
- * ```typescript
- * const attrs = {
- *  color: 'red',
- *  fontSize: '16px',
- * }
- * 
- * const styleString = attrsToStyle(attrs)
- * 
- * console.log(styleString) // 'color: red; font-size: 16px'
- */
-const attrsToStyle = (attrs: Record<string, string> = {}) => Object.keys(attrs)
-  .map(key => `${key}: ${attrs[key]}`)
-  .join('; ')
-
-/**
- * Escapes HTML entities in a string.
- *
- * @param {string} unsafeText
- * @return {*}  {string}
- * 
- * @example
- * 
- * ```typescript
- * const unsafeText = '<script>alert("Hello")</script>'
- * 
- * const safeText = escapeHtml(unsafeText)
- * 
- * console.log(safeText) // '&lt;script&gt;alert("Hello")&lt;/script&gt;'
- * ```
- */
-function escapeHtml(unsafeText: string): string {
-  return unsafeText
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
-}
+import { attrsToString, attrsToStyle, cleanObject, escapeHtml, SELF_CLOSING_TAGS } from './utils'
 
 /**
  * Default render function that creates an HTML string for a given tag, attributes, and children.
@@ -89,6 +15,10 @@ function escapeHtml(unsafeText: string): string {
 function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, any> = {}, children: T): T {
   const attrsString = attrsToString(attrs)
   const tagString = attrsString ? `${tag} ${attrsString}` : tag
+
+  if(SELF_CLOSING_TAGS.includes(tag)) {
+    return `<${tagString} />` as unknown as T
+  }
   return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T
 }
 
@@ -114,7 +44,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {} ) 
   const nodeResolver = (tag: string): StoryblokRichTextNodeResolver<T> => (node: StoryblokRichTextNode<T>): T => renderFn(tag, { ...node.attrs, key: `${tag}-${currentKey}` } || {}, node.children || null as any) as T
 
   const imageResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>) => {
-    const { src, alt, ...rest } = node.attrs || {};
+    const { src, alt, title, srcset, sizes } = node.attrs || {};
     let finalSrc = src;
     let finalAttrs = {};
 
@@ -125,13 +55,15 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {} ) 
     }
     const imgAttrs = {
       src: finalSrc,
-      alt: alt || '',
+      alt,
+      title,
+      srcset,
+      sizes,
       key: `img-${currentKey}`,
-      ...rest,
       ...finalAttrs,
     };
 
-    return renderFn('img', imgAttrs, '') as T;
+    return renderFn('img', cleanObject(imgAttrs), '') as T;
   };
   const headingResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
     const { level, ...rest } = node.attrs || {}
