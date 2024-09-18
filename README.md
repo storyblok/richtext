@@ -133,7 +133,6 @@ const html = richTextResolver({
     sizes: ['(max-width: 400px) 100vw', '50vw'],
     filters: {
       format: 'webp',
-      blur: 120
       quality: 10,
       grayscale: true,
       blur: 10,
