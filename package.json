@@ -120,18 +120,5 @@
     "tabWidth": 2,
     "semi": true,
     "singleQuote": false
-  },
-  "release": {
-    "branches": [
-      "main",
-      {
-        "name": "next",
-        "prerelease": true
-      },
-      {
-        "name": "beta",
-        "prerelease": true
-      }
-    ]
   }
 }
