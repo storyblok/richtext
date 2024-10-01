@@ -2,7 +2,6 @@
 import { VNode, createTextVNode, h } from 'vue'
 import { BlockTypes, richTextResolver, StoryblokRichTextDocumentNode, type StoryblokRichTextNode, type StoryblokRichTextOptions} from '@storyblok/richtext'
 import { RouterLink } from 'vue-router'
-import { StoryblokRichText } from '@storyblok/vue-richtext'
 import { useStoryblok } from '@storyblok/vue'
 
 import CodeBlock from './CodeBlock.vue'
@@ -389,6 +388,5 @@ const root = () => richTextResolver<VNode>(options).render(story.value.content.r
 
 <template>
   <RouterLink to="http://alvarosaburido.dev">About</RouterLink>
-<!--   <root /> -->
-  <StoryblokRichText v-if="story && options.resolvers" :doc="doc" :resolvers="options.resolvers"/>
+  <root />
 </template>
