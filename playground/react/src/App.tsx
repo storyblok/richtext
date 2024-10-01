@@ -1,6 +1,5 @@
 import { richTextResolver } from '@storyblok/richtext'
-import { StoryblokComponent, useStoryblok } from '@storyblok/react'
-import { StoryblokRichText } from '@storyblok/react-richtext'
+import { useStoryblok } from '@storyblok/react'
 import './App.css'
 import React from 'react'
 
@@ -456,15 +455,15 @@ function App() {
     return <div>Loading...</div>
   }
 
-  /*  const html = richTextResolver({
+   const html = richTextResolver({
     renderFn: React.createElement,
   }).render(story.content.richtext)
 
   const formattedHtml = convertAttributesInElement(html)
-  console.log('formattedHtml', formattedHtml) */
+
   return (
     <>
-      <StoryblokRichText doc={story.content.richtext} />
+     {formattedHtml}
     </>
   )
 }
