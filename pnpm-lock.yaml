@@ -20,7 +20,7 @@ importers:
         version: 19.5.0
       '@storyblok/vue':
         specifier: ^8.0.8
-        version: 8.0.8
+        version: 8.1.3
       '@vitejs/plugin-basic-ssl':
         specifier: ^1.1.0
         version: 1.1.0(vite@5.4.7(@types/node@22.0.0))
@@ -1181,8 +1181,8 @@ packages:
   '@storyblok/js@3.0.7':
     resolution: {integrity: sha512-m6MpUhjEpDWMKftyjJhTkthd/I6LZ9xhuT/Wxa1e99Cf4niVC5jgMVPQ5tOsUgn3D8BKNL+6PI3hEj5dGKB9xw==}
 
-  '@storyblok/js@3.0.8':
-    resolution: {integrity: sha512-JY+abbswBId84Ubr0yRwNpq5Klf9546Ia2Qs1pn6en5Trz8o6EcBJIwxvR6evjJ0Vp2cLKT7MV1yfGLAtnzycA==}
+  '@storyblok/js@3.1.6':
+    resolution: {integrity: sha512-CF0JMQyR91co95E9/nTwdDEOVrMBT15BV7azXPYYQVNmdUpdnpNoHThzPZpcED4E23lJDLVRnwHTEZ54ytkaGw==}
 
   '@storyblok/react@3.0.9':
     resolution: {integrity: sha512-N362hE+sBH3QebCrJtqgzGI2l+Dre8hfNJmAJvEtx1bEtfvu6hcA5ch5eQjjILxgDMwtseA0BnCXP7zoqJ2KCg==}
@@ -1190,11 +1190,14 @@ packages:
       react: ^17.0.0 || ^18.0.0
       react-dom: ^17.0.0 || ^18.0.0
 
+  '@storyblok/richtext@2.1.0':
+    resolution: {integrity: sha512-hQoZ+mIMuNuFOgjikY8njA29LZ3PMcqINn2Dc4CH9BB+yyYFosiQuIi51CvYoTT/IuslG58FS0/js91/635UUQ==}
+
   '@storyblok/vue@8.0.7':
     resolution: {integrity: sha512-JrqFC/vuZJyzZCzkdPpLgD1USsJVcKW5K1o5Df2dN0nrvdMsE5zcfRNnkK2uP8xXIT610/H5qwxnrvBAT2CmSw==}
 
-  '@storyblok/vue@8.0.8':
-    resolution: {integrity: sha512-ReYbMVeekQpj6wNE4V/ac2u59YYxsENrtWGmyMwWiqohTOm4106tznMbzWmVJgEwO8N2eXhIkg1MZ7FlADqAlw==}
+  '@storyblok/vue@8.1.3':
+    resolution: {integrity: sha512-/djRGCi5aO22Z0O0PNniMyNbdxHsvHkoD3J/RTyZjQMpSXOGFPO8SATtdK5VlA03BQMZ3uDlSEK3gClQIqhEnA==}
 
   '@swc/core-darwin-arm64@1.4.8':
     resolution: {integrity: sha512-hhQCffRTgzpTIbngSnC30vV6IJVTI9FFBF954WEsshsecVoCGFiMwazBbrkLG+RwXENTrMhgeREEFh6R3KRgKQ==}
@@ -2089,6 +2092,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   eslint@9.8.0:
@@ -3333,6 +3337,9 @@ packages:
   stdin-discarder@0.2.2:
     resolution: {integrity: sha512-UhDfHmA92YAlNnCfhmq0VeNL5bDbiZGg7sZ2IvPsXubGkiNa9EC+tUTsjBRsYUAz87btI6/1wf4XoVvQ3uRnmQ==}
     engines: {node: '>=18'}
+
+  storyblok-js-client@6.10.0:
+    resolution: {integrity: sha512-epyahXRXNM6EfEXxUo6dZ6Id/zTqYlhDHZGTxaeYmzzRqc1M+ve6nVjFOOhUXcWDtiOvC2WLOoJgYoVGN4PExw==}
 
   storyblok-js-client@6.7.3:
     resolution: {integrity: sha512-fBBxtyju6xtFYgAgoWBaU7WagB8M6wN+N+A3UAhZtAPW8yZmlbr3nZu26ErYIbSLaeueyFlcNrI4Kag+Kszsdw==}
@@ -4620,9 +4627,10 @@ snapshots:
     dependencies:
       storyblok-js-client: 6.7.3
 
-  '@storyblok/js@3.0.8':
+  '@storyblok/js@3.1.6':
     dependencies:
-      storyblok-js-client: 6.7.3
+      '@storyblok/richtext': 2.1.0
+      storyblok-js-client: 6.10.0
 
   '@storyblok/react@3.0.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -4630,13 +4638,17 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
+  '@storyblok/richtext@2.1.0':
+    dependencies:
+      consola: 3.2.3
+
   '@storyblok/vue@8.0.7':
     dependencies:
       '@storyblok/js': 3.0.7
 
-  '@storyblok/vue@8.0.8':
+  '@storyblok/vue@8.1.3':
     dependencies:
-      '@storyblok/js': 3.0.8
+      '@storyblok/js': 3.1.6
 
   '@swc/core-darwin-arm64@1.4.8':
     optional: true
@@ -7002,6 +7014,8 @@ snapshots:
   std-env@3.7.0: {}
 
   stdin-discarder@0.2.2: {}
+
+  storyblok-js-client@6.10.0: {}
 
   storyblok-js-client@6.7.3: {}
 
