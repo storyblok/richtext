@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { richTextResolver } from './richtext';
 import { createTextVNode, h } from 'vue';
 import type { VNode } from 'vue';
-import { BlockTypes, MarkTypes, StoryblokRichTextNode, StoryblokRichTextNodeResolver } from './types';
+import { BlockTypes, MarkTypes, type StoryblokRichTextNode, type StoryblokRichTextNodeResolver } from './types';
 import { StoryblokComponent } from '@storyblok/vue';
 
 describe('richtext', () => {
