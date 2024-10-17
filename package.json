@@ -73,7 +73,7 @@
     "typescript": "^5.5.4",
     "vite": "^5.3.5",
     "vite-plugin-banner": "^0.8.0",
-    "vite-plugin-dts": "4.0.3",
+    "vite-plugin-dts": "4.2.4",
     "vite-plugin-inspect": "^0.8.5",
     "vite-plugin-qrcode": "^0.2.3",
     "vitest": "^2.0.4",
