@@ -47,27 +47,27 @@ export enum LinkTypes {
 }
 
 export interface StoryblokRichTextDocumentNode {
-  type: string,
-  content?: StoryblokRichTextDocumentNode[]
-  attrs?: Record<string, any>
-  text?: string
-  marks?: StoryblokRichTextDocumentNode[]
+  type: string;
+  content?: StoryblokRichTextDocumentNode[];
+  attrs?: Record<string, any>;
+  text?: string;
+  marks?: StoryblokRichTextDocumentNode[];
 }
 
-export type StoryblokRichTextNodeTypes = BlockTypes | MarkTypes | TextTypes
+export type StoryblokRichTextNodeTypes = BlockTypes | MarkTypes | TextTypes;
 
 export interface StoryblokRichTextNode<T = string> {
-  type: StoryblokRichTextNodeTypes
-  content: StoryblokRichTextNode<T>[]
-  children?: T
-  attrs?: Record<string, any>
-  text?: string
+  type: StoryblokRichTextNodeTypes;
+  content: StoryblokRichTextNode<T>[];
+  children?: T;
+  attrs?: Record<string, any>;
+  text?: string;
 }
 
 export interface LinkNode<T = string> extends StoryblokRichTextNode<T> {
-  type: MarkTypes.LINK | MarkTypes.ANCHOR
-  linktype: LinkTypes.ASSET | LinkTypes.EMAIL | LinkTypes.STORY | LinkTypes.URL
-  attrs: Record<string, any>
+  type: MarkTypes.LINK | MarkTypes.ANCHOR;
+  linktype: LinkTypes.ASSET | LinkTypes.EMAIL | LinkTypes.STORY | LinkTypes.URL;
+  attrs: Record<string, any>;
 }
 
 export interface MarkNode<T = string> extends StoryblokRichTextNode<T> {
@@ -82,15 +82,15 @@ export interface MarkNode<T = string> extends StoryblokRichTextNode<T> {
     MarkTypes.SUPERSCRIPT |
     MarkTypes.SUBSCRIPT |
     MarkTypes.TEXT_STYLE |
-    MarkTypes.HIGHLIGHT
-  attrs?: Record<string, any>
-  linkType: LinkTypes
+    MarkTypes.HIGHLIGHT;
+  attrs?: Record<string, any>;
+  linkType: LinkTypes;
 }
 
 export interface TextNode<T = string> extends StoryblokRichTextNode<T> {
-  type: TextTypes.TEXT
-  text: string
-  marks?: MarkNode<T>[]
+  type: TextTypes.TEXT;
+  text: string;
+  marks?: MarkNode<T>[];
 }
 
 /**
@@ -99,7 +99,7 @@ export interface TextNode<T = string> extends StoryblokRichTextNode<T> {
  * @param node - The rich text node to resolve.
  * @returns The resolved value of type T.
  */
-export type StoryblokRichTextNodeResolver<T = string> = (node: StoryblokRichTextNode<T> | TextNode<T> | MarkNode<T> | LinkNode<T>) => T
+export type StoryblokRichTextNodeResolver<T = string> = (node: StoryblokRichTextNode<T> | TextNode<T> | MarkNode<T> | LinkNode<T>) => T;
 
 /**
  * Represents the configuration options for optimizing images in rich text content.
@@ -127,9 +127,9 @@ export interface StoryblokRichTextImageOptimizationOptions {
 
   /**
    * Optional filters that can be applied to the image to adjust its appearance.
-   * 
+   *
    * @example
-   * 
+   *
    * ```typescript
    * const filters: Partial<StoryblokRichTextImageOptimizationOptions['filters']> = {
    *   blur: 5,
@@ -151,9 +151,9 @@ export interface StoryblokRichTextImageOptimizationOptions {
   /**
    * Defines a set of source set values that tell the browser different image sizes to load based on screen conditions.
    * The entries can be just the width in pixels or a tuple of width and pixel density.
-   * 
+   *
    * @example
-   * 
+   *
    * ```typescript
    * const srcset: (number | [number, number])[] = [
    *   320,
@@ -165,9 +165,9 @@ export interface StoryblokRichTextImageOptimizationOptions {
 
   /**
    * A list of sizes that correspond to different viewport widths, instructing the browser on which srcset source to use.
-   * 
+   *
    * @example
-   * 
+   *
    * ```typescript
    * const sizes: string[] = [
    *   '(max-width: 320px) 280px',
@@ -179,14 +179,12 @@ export interface StoryblokRichTextImageOptimizationOptions {
   sizes: string[];
 }
 
-
 /**
  * Resolvers for Storyblok RichText nodes.
- * 
+ *
  * @template T - The type of the resolved value.
  */
-export type StoryblokRichTextResolvers<T = string> = Partial<Record<StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver<T>>>
-
+export type StoryblokRichTextResolvers<T = string> = Partial<Record<StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver<T>>>;
 
 /**
  * Represents the options for rendering rich text.
@@ -194,42 +192,42 @@ export type StoryblokRichTextResolvers<T = string> = Partial<Record<StoryblokRic
 export interface StoryblokRichTextOptions<T = string, S = (tag: string, attrs: Record<string, any>, text: string) => T> {
   /**
    * Defines the function that will be used to render the final HTML string (vanilla) or Framework component (React, Vue).
-   * 
-   * @example 
-   * 
+   *
+   * @example
+   *
    * ```typescript
    * const renderFn = (tag: string, attrs: Record<string, any>, text: string) => {
    *  return `<${tag} ${Object.keys(attrs).map(key => `${key}="${attrs[key]}"`).join(' ')}>${text}</${tag}>`
    * }
-   * 
+   *
    * const options: StoryblokRichTextOptions = {
    *  renderFn
    * }
    * ```
    */
   renderFn?: S;
-  
+
   /**
    * Defines the function that will be used to render HTML text.
-   *  
+   *
    * @example
-   * 
+   *
    * ```typescript
    * import { h, createTextVNode } from 'vue'
-   * 
+   *
    * const options: StoryblokRichTextOptions = {
    *  renderFn: h,
    *  textFn: createTextVNode
    * }
    * ```
    */
-  textFn?: Function;
-  
+  textFn?: (text: string) => T;
+
   /**
    * Defines the resolvers for each type of node.
-   *  
+   *
    * @example
-   * 
+   *
    * ```typescript
    * const options: StoryblokRichTextOptions = {
    *  resolvers: {
@@ -241,20 +239,20 @@ export interface StoryblokRichTextOptions<T = string, S = (tag: string, attrs: R
    * ```
    */
   resolvers?: StoryblokRichTextResolvers<T>;
-  
+
   /**
    * Defines opt-out image optimization options.
-   *  
+   *
    * @example
-   * 
+   *
    * ```typescript
    * const options: StoryblokRichTextOptions = {
    *  optimizeImages: true
    * }
    * ```
-   * 
+   *
    * @example
-   * 
+   *
    * ```typescript
    * const options: StoryblokRichTextOptions = {
    *    optimizeImages: {

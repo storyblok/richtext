@@ -26,7 +26,7 @@ const rt = {
       type: 'paragraph',
       content: [
         {
-          text: "Here are a few tools that may help you achieve what you're after.",
+          text: 'Here are a few tools that may help you achieve what you\'re after.',
           type: 'text',
         },
       ],
@@ -133,5 +133,5 @@ const rt = {
   ],
 };
 const html = render(rt);
-
-console.log({ html });
+// eslint-disable-next-line no-console
+console.log(html);

@@ -1,2 +1,2 @@
-export * from './types'
-export * from './richtext'
+export * from './richtext';
+export * from './types';

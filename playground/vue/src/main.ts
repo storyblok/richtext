@@ -1,10 +1,10 @@
-import { createApp } from 'vue'
-import { StoryblokVue, apiPlugin } from '@storyblok/vue'
+import { createApp } from 'vue';
+import { apiPlugin, StoryblokVue } from '@storyblok/vue';
 
-import './style.css'
-import App from './App.vue'
-import { router } from './router'
-import IframeEmbed from './components/IFrameEmbed.vue'
+import './style.css';
+import App from './App.vue';
+import { router } from './router';
+import IframeEmbed from './components/IFrameEmbed.vue';
 
 createApp(App)
   .component('iframe-embed', IframeEmbed)
@@ -13,4 +13,4 @@ createApp(App)
     accessToken: import.meta.env.VITE_STORYBLOK_TOKEN,
     use: [apiPlugin],
   })
-  .mount('#app')
+  .mount('#app');

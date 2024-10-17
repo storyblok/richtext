@@ -4,8 +4,9 @@ defineProps({
     type: Object,
     required: true,
   },
-})
+});
 </script>
+
 <template>
-<iframe :src="blok.url.url" class="w-full aspect-video" frameborder="0"></iframe>
+  <iframe :src="blok.url.url" class="w-full aspect-video" frameborder="0"></iframe>
 </template>

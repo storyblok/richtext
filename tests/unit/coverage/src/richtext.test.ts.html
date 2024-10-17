@@ -1,68 +1,61 @@
-
 <!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <title>Code coverage report for src/richtext.test.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
     <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style type='text/css'>
-        .coverage-summary .sorter {
-            background-image: url(../sort-arrow-sprite.png);
-        }
+    <style type="text/css">
+      .coverage-summary .sorter {
+        background-image: url(../sort-arrow-sprite.png);
+      }
     </style>
-</head>
-    
-<body>
-<div class='wrapper'>
-    <div class='pad1'>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="pad1">
         <h1><a href="../index.html">All files</a> / <a href="index.html">src</a> richtext.test.ts</h1>
-        <div class='clearfix'>
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
-                <span class="quiet">Statements</span>
-                <span class='fraction'>480/480</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>35/35</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
-                <span class="quiet">Lines</span>
-                <span class='fraction'>480/480</span>
-            </div>
-        
-            
+        <div class="clearfix">
+          <div class="fl pad1y space-right2">
+            <span class="strong">100% </span>
+            <span class="quiet">Statements</span>
+            <span class="fraction">480/480</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">100% </span>
+            <span class="quiet">Branches</span>
+            <span class="fraction">35/35</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">100% </span>
+            <span class="quiet">Functions</span>
+            <span class="fraction">2/2</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">100% </span>
+            <span class="quiet">Lines</span>
+            <span class="fraction">480/480</span>
+          </div>
         </div>
         <p class="quiet">
-            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+          Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the
+          previous block.
         </p>
         <template id="filterTemplate">
-            <div class="quiet">
-                Filter:
-                <input type="search" id="fileSearch">
-            </div>
+          <div class="quiet">
+            Filter:
+            <input type="search" id="fileSearch" />
+          </div>
         </template>
-    </div>
-    <div class='status-line high'></div>
-    <pre><table class="coverage">
+      </div>
+      <div class="status-line high"></div>
+      <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -1105,7 +1098,7 @@ describe('richtext', () =&gt; {
       const html = render(paragraph as Node&lt;string&gt;)
       expect(html).toBe('&lt;p key="p-2"&gt;Hello, world!&lt;/p&gt;')
     })
-  
+
     it('should render a heading 1', async () =&gt; {
       const { render } = richTextResolver({})
       const heading = {
@@ -1123,7 +1116,7 @@ describe('richtext', () =&gt; {
       const html = render(heading as Node&lt;string&gt;)
       expect(html).toBe('&lt;h1 key="h1-2"&gt;Headline 1&lt;/h1&gt;')
     })
-  
+
     it('should render an unordered list', async () =&gt; {
       const { render } = richTextResolver({})
       const list = {
@@ -1152,7 +1145,7 @@ describe('richtext', () =&gt; {
       const html = render(list as Node&lt;string&gt;)
       expect(html).toBe('&lt;ul key="ul-5"&gt;&lt;li key="li-3"&gt;Item 1&lt;/li&gt;&lt;li key="li-5"&gt;Item 2&lt;/li&gt;&lt;/ul&gt;')
     })
-  
+
     it('should render an ordered list', async () =&gt; {
       const { render } = richTextResolver({})
       const list = {
@@ -1182,7 +1175,7 @@ describe('richtext', () =&gt; {
       const html = render(list as Node&lt;string&gt;)
       expect(html).toBe('&lt;ol order="1" key="ol-5"&gt;&lt;li key="li-3"&gt;Item 1&lt;/li&gt;&lt;li key="li-5"&gt;Item 2&lt;/li&gt;&lt;/ol&gt;')
     })
-  
+
     it('should render an image with attrs', async () =&gt; {
       const { render } = richTextResolver({})
       const image = {
@@ -1195,7 +1188,7 @@ describe('richtext', () =&gt; {
       const html = render(image as Node&lt;string&gt;)
       expect(html).toBe('&lt;img src="https://example.com/image.jpg" alt="An image" key="img-1"&gt;&lt;/img&gt;')
     })
-  
+
     it('should render an emoji', async () =&gt; {
       const { render } = richTextResolver({})
       const emoji = {
@@ -1207,7 +1200,7 @@ describe('richtext', () =&gt; {
       const html = render(emoji as Node&lt;string&gt;)
       expect(html).toBe('&lt;span data-type="emoji" data-name="undefined" emoji="🚀" key="emoji-1"&gt;&lt;img src="undefined" alt="undefined" style="width: 1.25em; height: 1.25em; vertical-align: text-top" draggable="false" loading="lazy"&gt;&lt;/img&gt;&lt;/span&gt;')
     })
-  
+
     it('should render a code block', async () =&gt; {
       const { render } = richTextResolver({})
       const code = {
@@ -1222,7 +1215,7 @@ describe('richtext', () =&gt; {
       const html = render(code as Node&lt;string&gt;)
       expect(html).toBe('&lt;pre key="code-2"&gt;&lt;code key="code-2"&gt;console.log(&amp;quot;Hello, world!&amp;quot;)&lt;/code&gt;&lt;/pre&gt;')
     })
-  
+
     it('should render a horizontal rule', async () =&gt; {
       const { render } = richTextResolver({})
       const hr = {
@@ -1231,7 +1224,7 @@ describe('richtext', () =&gt; {
       const html = render(hr as Node&lt;string&gt;)
       expect(html).toBe('&lt;hr key="hr-1"&gt;&lt;/hr&gt;')
     })
-  
+
     it('should render a break', async () =&gt; {
       const { render } = richTextResolver({})
       const br = {
@@ -1240,7 +1233,7 @@ describe('richtext', () =&gt; {
       const html = render(br as Node&lt;string&gt;)
       expect(html).toBe('&lt;br key="br-1"&gt;&lt;/br&gt;')
     })
-  
+
     it('should render a quote' , async () =&gt; {
       const { render } = richTextResolver({})
       const quote = {
@@ -1278,7 +1271,7 @@ describe('richtext', () =&gt; {
       const html = render(text as Node&lt;string&gt;)
       expect(html).toBe('&lt;p key="p-5"&gt;&lt;em key="em-5"&gt;&lt;strong key="strong-4"&gt;Bold and italic&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;')
     })
-  
+
     it('should render text with styled marks', async () =&gt; {
       const { render } = richTextResolver({})
       const text = {
@@ -1295,7 +1288,7 @@ describe('richtext', () =&gt; {
       // Update the expected HTML to reflect the styles
       expect(html).toBe('&lt;p key="p-5"&gt;&lt;span style="color: blue" key="span-5"&gt;&lt;span style="color: red" key="span-4"&gt;Bold and italic&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;')
     })
-  
+
     it('should render an external link', async () =&gt; {
       const { render } = richTextResolver({})
       const link = {
@@ -1315,7 +1308,7 @@ describe('richtext', () =&gt; {
       const html = render(link as Node&lt;string&gt;)
       expect(html).toBe('&lt;a target="_blank" href="https://alvarosaburido.dev" key="a-3"&gt;External link&lt;/a&gt;')
     })
-  
+
     it('should render an anchor link', async () =&gt; {
       const { render } = richTextResolver({})
       const link = {
@@ -1335,7 +1328,7 @@ describe('richtext', () =&gt; {
       const html = render(link as Node&lt;string&gt;)
       expect(html).toBe('&lt;a target="_self" href="#anchor" key="a-3"&gt;Anchor link&lt;/a&gt;')
     })
-  
+
     it('should render an email link', async () =&gt; {
       const { render } = richTextResolver({})
       const link = {
@@ -1354,7 +1347,7 @@ describe('richtext', () =&gt; {
       const html = render(link as Node&lt;string&gt;)
       expect(html).toBe('&lt;a href="mailto:hola@alvarosaburido.dev" key="a-3"&gt;hola@alvarosaburido.dev&lt;/a&gt;')
     })
-  
+
     it('should render an internal link', async () =&gt; {
       const { render } = richTextResolver({})
       const link = {
@@ -1376,7 +1369,7 @@ describe('richtext', () =&gt; {
       const html = render(link as Node&lt;string&gt;)
       expect(html).toBe('&lt;a uuid="2bbf3ee7-acbe-401c-ade5-cf33e6e0babb" target="_blank" href="/" key="a-3"&gt;Internal Link&lt;/a&gt;')
     })
-  
+
     it('should render an asset link', async () =&gt; {
       const { render } = richTextResolver({})
       const link = {
@@ -1395,7 +1388,7 @@ describe('richtext', () =&gt; {
       const html = render(link as Node&lt;string&gt;)
       expect(html).toBe('&lt;a href="https://a.storyblok.com/f/67536/400x303/ccbe9ca7b3/nuxt-logo.png" key="a-3"&gt;Asset link&lt;/a&gt;')
     })
-  
+
     it('should render a bold text', async () =&gt; {
       const { render } = richTextResolver({})
       const bold = {
@@ -1406,7 +1399,7 @@ describe('richtext', () =&gt; {
       const html = render(bold as Node&lt;string&gt;)
       expect(html).toBe('&lt;strong key="strong-3"&gt;Bold&lt;/strong&gt;')
     })
-  
+
     it('should render an italic text', async () =&gt; {
       const { render } = richTextResolver({})
       const italic = {
@@ -1417,7 +1410,7 @@ describe('richtext', () =&gt; {
       const html = render(italic as Node&lt;string&gt;)
       expect(html).toBe('&lt;em key="em-3"&gt;Italic&lt;/em&gt;')
     })
-  
+
     it('should render a underline text', async () =&gt; {
       const { render } = richTextResolver({})
       const underline = {
@@ -1428,7 +1421,7 @@ describe('richtext', () =&gt; {
       const html = render(underline as Node&lt;string&gt;)
       expect(html).toBe('&lt;u key="u-3"&gt;Underline&lt;/u&gt;')
     })
-  
+
     it('should render a strike text', async () =&gt; {
       const { render } = richTextResolver({})
       const strike = {
@@ -1439,7 +1432,7 @@ describe('richtext', () =&gt; {
       const html = render(strike as Node&lt;string&gt;)
       expect(html).toBe('&lt;s key="s-3"&gt;Strike&lt;/s&gt;')
     })
-  
+
     it('should render a code text', async () =&gt; {
       const { render } = richTextResolver({})
       const code = {
@@ -1450,7 +1443,7 @@ describe('richtext', () =&gt; {
       const html = render(code as Node&lt;string&gt;)
       expect(html).toBe('&lt;code key="code-3"&gt;Code&lt;/code&gt;')
     })
-  
+
     it('should render a superscript text', async () =&gt; {
       const { render } = richTextResolver({})
       const superscript = {
@@ -1461,7 +1454,7 @@ describe('richtext', () =&gt; {
       const html = render(superscript as Node&lt;string&gt;)
       expect(html).toBe('&lt;sup key="sup-3"&gt;Superscript&lt;/sup&gt;')
     })
-  
+
     it('should render a subscript text', async () =&gt; {
       const { render } = richTextResolver({})
       const subscript = {
@@ -1472,7 +1465,7 @@ describe('richtext', () =&gt; {
       const html = render(subscript as Node&lt;string&gt;)
       expect(html).toBe('&lt;sub key="sub-3"&gt;Subscript&lt;/sub&gt;')
     })
-  
+
     it('should render a highlight text', async () =&gt; {
       const { render } = richTextResolver({})
       const highlight = {
@@ -1592,21 +1585,22 @@ describe('richtext', () =&gt; {
 })
 &nbsp;</pre></td></tr></table></pre>
 
-                <div class='push'></div><!-- for sticky footer -->
-            </div><!-- /wrapper -->
-            <div class='footer quiet pad2 space-top1 center small'>
-                Code coverage generated by
-                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-31T07:14:20.605Z
-            </div>
-        <script src="../prettify.js"></script>
-        <script>
-            window.onload = function () {
-                prettyPrint();
-            };
-        </script>
-        <script src="../sorter.js"></script>
-        <script src="../block-navigation.js"></script>
-    </body>
+      <div class="push"></div>
+      <!-- for sticky footer -->
+    </div>
+    <!-- /wrapper -->
+    <div class="footer quiet pad2 space-top1 center small">
+      Code coverage generated by
+      <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+      at 2024-07-31T07:14:20.605Z
+    </div>
+    <script src="../prettify.js"></script>
+    <script>
+      window.onload = function () {
+        prettyPrint();
+      };
+    </script>
+    <script src="../sorter.js"></script>
+    <script src="../block-navigation.js"></script>
+  </body>
 </html>
-    
