@@ -1,8 +1,8 @@
-import './style.css'
-import { richTextResolver, type StoryblokRichTextOptions, type StoryblokRichTextDocumentNode, MarkTypes, StoryblokRichTextNode } from '@storyblok/richtext'
-import StoryblokClient from 'storyblok-js-client'
+import './style.css';
+import { MarkTypes, richTextResolver, type StoryblokRichTextNode, type StoryblokRichTextOptions } from '@storyblok/richtext';
+import StoryblokClient from 'storyblok-js-client';
 
-const doc: StoryblokRichTextDocumentNode = {
+/* const doc: StoryblokRichTextDocumentNode = {
   type: 'doc',
   content: [
     {
@@ -370,76 +370,24 @@ const doc: StoryblokRichTextDocumentNode = {
       },
     },
   ],
-}
-
-const paragraph = {
-  type: 'paragraph',
-  content: [
-    {
-      text: 'Bold and italic',
-      type: 'text',
-      marks: [{ type: 'bold' }, { type: 'italic' }],
-    },
-  ],
-}
-
-const link = {
-  type: 'paragraph',
-  content: [
-    {
-      text: 'hola@alvarosaburido.dev',
-      type: 'text',
-      marks: [
-        {
-          type: 'link',
-          attrs: {
-            href: 'hola@alvarosaburido.dev',
-            uuid: null,
-            anchor: null,
-            target: null,
-            linktype: 'email',
-          },
-        },
-      ],
-    },
-  ],
-}
-
-const emoji = {
-  type: 'paragraph',
-  content: [
-    {
-      text: 'And this is an emoji 🥳',
-      type: 'text',
-    },
-    {
-      type: 'emoji',/*  */
-      attrs: {
-        name: 'innocent',
-        emoji: '😇',
-        fallbackImage:
-          'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f607.png',
-      },
-    },
-  ],
-}
+}; */
 
 // Storyblok
 
 const client = new StoryblokClient({
   accessToken: import.meta.env.VITE_STORYBLOK_TOKEN,
-})
+});
 
 const story = await client.get('cdn/stories/home', {
   version: 'draft',
-})
+});
 
-const docFromStory = story.data.story.content.richtext
+const docFromStory = story.data.story.content.richtext;
 
 const options: StoryblokRichTextOptions<string> = {
   resolvers: {
     [MarkTypes.LINK]: (node: StoryblokRichTextNode<string>) => {
-      return `<button href="${node.attrs?.href}" target="${node.attrs?.target}">${node.children}</button>`
+      return `<button href="${node.attrs?.href}" target="${node.attrs?.target}">${node.children}</button>`;
     },
   },
   optimizeImages: {
@@ -449,19 +397,19 @@ const options: StoryblokRichTextOptions<string> = {
     height: 600,
     filters: {
       format: 'webp',
-      blur: 120
-     /*  quality: 10,
+      blur: 120,
+      /*  quality: 10,
       grayscale: true,
       blur: 10,
       brightness: 10, */
     },
-  }
-}
+  },
+};
 
-const html = richTextResolver(options).render(doc)
+const html = richTextResolver(options).render(docFromStory);
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
   ${html}
   </div>
-`
+`;

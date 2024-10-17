@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import { resolve } from 'pathe'
-import { qrcode } from 'vite-plugin-qrcode'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import { resolve } from 'pathe';
+import { qrcode } from 'vite-plugin-qrcode';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,4 +15,4 @@ export default defineConfig({
       '@storyblok/react-richtext': resolve(__dirname, '../../packages/react/src/index.ts'),
     },
   },
-})
+});

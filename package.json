@@ -5,12 +5,12 @@
   "packageManager": "pnpm@9.1.4",
   "description": "Storyblok RichText Resolver",
   "author": "Alvaro Saburido <hola@alvarosaburido.dev> (https://github.com/alvarosabu/)",
+  "license": "MIT",
   "homepage": "https://github.com/storyblok/richtext#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/storyblok/richtext.git" 
+    "url": "git+https://github.com/storyblok/richtext.git"
   },
-  "license": "MIT",
   "keywords": [
     "storyblok",
     "richtext",
@@ -57,10 +57,12 @@
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
+    "@storyblok/eslint-config": "^0.3.0",
     "@storyblok/vue": "^8.0.8",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
     "@vitest/coverage-v8": "^2.0.4",
     "@vitest/ui": "^2.0.4",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vue": "^9.27.0",
     "kolorist": "^1.8.0",
@@ -77,48 +79,9 @@
     "vitest": "^2.0.4",
     "vue": "^3.4.34"
   },
-  "dependencies": {
-    "consola": "^3.2.3"
-  },
-  "lint-staged": {
-    "*.{vue,js,css,ts}": [
-      "prettier --write",
-      "eslint"
-    ],
-    "*.md": [
-      "prettier --write"
-    ]
-  },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "eslintConfig": {
-    "root": true,
-    "parser": "vue-eslint-parser",
-    "env": {
-      "node": true,
-      "vue/setup-compiler-macros": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended",
-      "prettier"
-    ],
-    "parserOptions": {
-      "parser": "@typescript-eslint/parser",
-      "sourceType": "module"
-    },
-    "ignorePatterns": "dist/",
-    "rules": {
-      "vue/multi-word-component-names": 0
-    }
-  },
-  "prettier": {
-    "trailingComma": "es5",
-    "tabWidth": 2,
-    "semi": true,
-    "singleQuote": false
   }
 }

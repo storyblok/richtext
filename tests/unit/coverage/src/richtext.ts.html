@@ -1,68 +1,61 @@
-
 <!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <title>Code coverage report for src/richtext.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
     <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style type='text/css'>
-        .coverage-summary .sorter {
-            background-image: url(../sort-arrow-sprite.png);
-        }
+    <style type="text/css">
+      .coverage-summary .sorter {
+        background-image: url(../sort-arrow-sprite.png);
+      }
     </style>
-</head>
-    
-<body>
-<div class='wrapper'>
-    <div class='pad1'>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="pad1">
         <h1><a href="../index.html">All files</a> / <a href="index.html">src</a> richtext.ts</h1>
-        <div class='clearfix'>
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">89.71% </span>
-                <span class="quiet">Statements</span>
-                <span class='fraction'>157/175</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>40/50</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">94.44% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>17/18</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">89.71% </span>
-                <span class="quiet">Lines</span>
-                <span class='fraction'>157/175</span>
-            </div>
-        
-            
+        <div class="clearfix">
+          <div class="fl pad1y space-right2">
+            <span class="strong">89.71% </span>
+            <span class="quiet">Statements</span>
+            <span class="fraction">157/175</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">80% </span>
+            <span class="quiet">Branches</span>
+            <span class="fraction">40/50</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">94.44% </span>
+            <span class="quiet">Functions</span>
+            <span class="fraction">17/18</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">89.71% </span>
+            <span class="quiet">Lines</span>
+            <span class="fraction">157/175</span>
+          </div>
         </div>
         <p class="quiet">
-            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+          Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the
+          previous block.
         </p>
         <template id="filterTemplate">
-            <div class="quiet">
-                Filter:
-                <input type="search" id="fileSearch">
-            </div>
+          <div class="quiet">
+            Filter:
+            <input type="search" id="fileSearch" />
+          </div>
         </template>
-    </div>
-    <div class='status-line high'></div>
-    <pre><table class="coverage">
+      </div>
+      <div class="status-line high"></div>
+      <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -698,21 +691,21 @@ import type { MarkNode, StoryblokRichTextNode, StoryblokRichTextNodeResolver, St
  * Converts an object of attributes to a string.
  *
  * @param {Record&lt;string, string&gt;} [attrs={}]
- * 
+ *
  * @returns {string} The string representation of the attributes.
- * 
+ *
  * @example
- * 
+ *
  * ```typescript
  * const attrs = {
  *  class: 'text-red',
  *  style: 'color: red',
  * }
- * 
+ *
  * const attrsString = attrsToString(attrs)
- * 
+ *
  * console.log(attrsString) // 'class="text-red" style="color: red"'
- * 
+ *
  * ```
  *
  */
@@ -724,19 +717,19 @@ const attrsToString = (attrs: Record&lt;string, string&gt; = {}) =&gt; Object.ke
  * Converts an object of attributes to a CSS style string.
  *
  * @param {Record&lt;string, string&gt;} [attrs={}]
- * 
+ *
  * @returns {string} The string representation of the CSS styles.
- * 
+ *
  * @example
- * 
+ *
  * ```typescript
  * const attrs = {
  *  color: 'red',
  *  fontSize: '16px',
  * }
- * 
+ *
  * const styleString = attrsToStyle(attrs)
- * 
+ *
  * console.log(styleString) // 'color: red; font-size: 16px'
  */
 const attrsToStyle = (attrs: Record&lt;string, string&gt; = {}) =&gt; Object.keys(attrs)
@@ -748,14 +741,14 @@ const attrsToStyle = (attrs: Record&lt;string, string&gt; = {}) =&gt; Object.key
  *
  * @param {string} unsafeText
  * @return {*}  {string}
- * 
+ *
  * @example
- * 
+ *
  * ```typescript
  * const unsafeText = '&lt;script&gt;alert("Hello")&lt;/script&gt;'
- * 
+ *
  * const safeText = escapeHtml(unsafeText)
- * 
+ *
  * console.log(safeText) // '&amp;lt;script&amp;gt;alert("Hello")&amp;lt;/script&amp;gt;'
  * ```
  */
@@ -789,7 +782,7 @@ function defaultRenderFn&lt;T = string | null&gt;(tag: string, attrs: Record&lt;
  * @export
  * @template T
  * @param {StoryblokRichTextOptions&lt;T&gt;} [options={}]
- * @return {*} 
+ * @return {*}
  */
 export function richTextResolver&lt;T&gt;(options: StoryblokRichTextOptions&lt;T&gt; = {} ) {
   // Creates an HTML string for a given tag, attributes, and children
@@ -909,7 +902,7 @@ export function richTextResolver&lt;T&gt;(options: StoryblokRichTextOptions&lt;T
     return renderFn('a', { ...rest, href: finalHref, key: `a-${currentKey}` }, node.text as any) as T
   }
 &nbsp;
-  
+
   const componentResolver: StoryblokRichTextNodeResolver&lt;T&gt; = <span class="fstat-no" title="function not covered" >(node: StoryblokRichTextNode&lt;T&gt;): T =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    console.warn('[StoryblokRichtText] - BLOK resolver is not available for vanilla usage')</span>
 <span class="cstat-no" title="statement not covered" >    return renderFn('span', {</span>
@@ -975,24 +968,24 @@ export function richTextResolver&lt;T&gt;(options: StoryblokRichTextOptions&lt;T
    *
    * @param {StoryblokRichTextNode&lt;T&gt;} node
    * @return {*}  {T}
-   * 
+   *
    * @example
-   * 
+   *
    * ```typescript
    * import StoryblokClient from 'storyblok-js-client'
    * import { richTextResolver } from '@storyblok/richtext'
-   * 
+   *
    * const storyblok = new StoryblokClient({
    *  accessToken:  import.meta.env.VITE_STORYBLOK_TOKEN,
    * })
-   * 
+   *
    * const story = await client.get('cdn/stories/home', {
    *  version: 'draft',
    * })
-   * 
+   *
    * const html = richTextResolver().render(story.data.story.content.richtext)
    * ```
-   * 
+   *
    */
   function render(node: StoryblokRichTextNode&lt;T&gt;): T {
     return Array.isArray(node<span class="branch-0 cbranch-no" title="branch not covered" >) ? node.map(renderNode) as T : r</span>enderNode(node) as T
@@ -1004,21 +997,22 @@ export function richTextResolver&lt;T&gt;(options: StoryblokRichTextOptions&lt;T
 }
 &nbsp;</pre></td></tr></table></pre>
 
-                <div class='push'></div><!-- for sticky footer -->
-            </div><!-- /wrapper -->
-            <div class='footer quiet pad2 space-top1 center small'>
-                Code coverage generated by
-                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-31T07:14:20.605Z
-            </div>
-        <script src="../prettify.js"></script>
-        <script>
-            window.onload = function () {
-                prettyPrint();
-            };
-        </script>
-        <script src="../sorter.js"></script>
-        <script src="../block-navigation.js"></script>
-    </body>
+      <div class="push"></div>
+      <!-- for sticky footer -->
+    </div>
+    <!-- /wrapper -->
+    <div class="footer quiet pad2 space-top1 center small">
+      Code coverage generated by
+      <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+      at 2024-07-31T07:14:20.605Z
+    </div>
+    <script src="../prettify.js"></script>
+    <script>
+      window.onload = function () {
+        prettyPrint();
+      };
+    </script>
+    <script src="../sorter.js"></script>
+    <script src="../block-navigation.js"></script>
+  </body>
 </html>
-    

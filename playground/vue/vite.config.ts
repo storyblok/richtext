@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { resolve } from 'pathe'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import { resolve } from 'pathe';
 
-import { qrcode } from 'vite-plugin-qrcode'
-import basicSsl from '@vitejs/plugin-basic-ssl'
+import { qrcode } from 'vite-plugin-qrcode';
+import basicSsl from '@vitejs/plugin-basic-ssl';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,4 +18,4 @@ export default defineConfig({
       '@storyblok/vue-richtext': resolve(__dirname, '../../packages/vue/src/index.ts'),
     },
   },
-})
+});

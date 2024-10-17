@@ -1,14 +1,14 @@
-import React from 'react'
+import React from 'react';
 
 // Assuming blok prop is an object that contains an url object which, in turn, contains the actual URL string
 interface BlokType {
   url: {
-    url: string
-  }
+    url: string;
+  };
 }
 
 interface Props {
-  blok: BlokType // Defining the expected shape of the 'blok' prop
+  blok: BlokType; // Defining the expected shape of the 'blok' prop
 }
 
 const IFrameEmbed: React.FC<Props> = ({ blok }) => {
@@ -19,7 +19,7 @@ const IFrameEmbed: React.FC<Props> = ({ blok }) => {
       frameBorder="0"
     >
     </iframe>
-  )
-}
+  );
+};
 
-export default IFrameEmbed
+export default IFrameEmbed;

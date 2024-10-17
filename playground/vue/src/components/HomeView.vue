@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { VNode, createTextVNode, h } from 'vue'
-import { BlockTypes, richTextResolver, StoryblokRichTextDocumentNode, type StoryblokRichTextNode, type StoryblokRichTextOptions} from '@storyblok/richtext'
-import { RouterLink } from 'vue-router'
-import { useStoryblok } from '@storyblok/vue'
+import type { VNode } from 'vue';
+import { createTextVNode, h } from 'vue';
+import { BlockTypes, richTextResolver, type StoryblokRichTextNode, type StoryblokRichTextOptions } from '@storyblok/richtext';
+import { RouterLink } from 'vue-router';
+import { useStoryblok } from '@storyblok/vue';
 
-import CodeBlock from './CodeBlock.vue'
-const doc: StoryblokRichTextDocumentNode = {
+import CodeBlock from './CodeBlock.vue';
+
+/* const doc: StoryblokRichTextDocumentNode = {
   type: 'doc',
   content: [
     {
@@ -365,25 +367,25 @@ const doc: StoryblokRichTextDocumentNode = {
       },
     },
   ],
-}
+}; */
 
 const story = await useStoryblok('/home', {
   version: 'draft',
-})
+});
 
-const options : StoryblokRichTextOptions<VNode> = {
+const options: StoryblokRichTextOptions<VNode> = {
   renderFn: h,
   textFn: createTextVNode,
   resolvers: {
     [BlockTypes.CODE_BLOCK]: (node: StoryblokRichTextNode<VNode>) => {
       return h(CodeBlock, {
         class: node?.attrs?.class,
-      }, node.children)
+      }, node.children);
     },
-  }
-}
+  },
+};
 
-const root = () => richTextResolver<VNode>(options).render(story.value.content.richtext)
+const root = () => richTextResolver<VNode>(options).render(story.value.content.richtext);
 </script>
 
 <template>

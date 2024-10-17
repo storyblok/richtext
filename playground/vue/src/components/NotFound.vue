@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 </script>
+
 <template>
-Not found
+  Not found
 </template>
