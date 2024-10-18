@@ -40,7 +40,12 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     optimizeImages = false,
   } = options;
 
-  const nodeResolver = (tag: string): StoryblokRichTextNodeResolver<T> => (node: StoryblokRichTextNode<T>): T => renderFn(tag, { ...node.attrs, key: `${tag}-${currentKey}` }, node.children || null as any) as T;
+  const nodeResolver = (tag: string): StoryblokRichTextNodeResolver<T> =>
+    (node: StoryblokRichTextNode<T>): T =>
+      renderFn(tag, {
+        ...node.attrs,
+        key: `${tag}-${currentKey}`,
+      }, node.children || null as any) as T;
 
   const imageResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>) => {
     const { src, alt, title, srcset, sizes } = node.attrs || {};
@@ -72,21 +77,25 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     }, node.children as any) as T;
   };
 
-  const emojiResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>) => renderFn('span', {
-    'data-type': 'emoji',
-    'data-name': node.attrs?.name,
-    'emoji': node.attrs?.emoji,
-    'key': `emoji-${currentKey}`,
-  }, renderFn('img', {
-    src: node.attrs?.fallbackImage,
-    alt: node.attrs?.alt,
-    style: 'width: 1.25em; height: 1.25em; vertical-align: text-top',
-    draggable: 'false',
-    loading: 'lazy',
-  }, '' as any)) as T;
+  const emojiResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>) =>
+    renderFn('span', {
+      'data-type': 'emoji',
+      'data-name': node.attrs?.name,
+      'emoji': node.attrs?.emoji,
+      'key': `emoji-${currentKey}`,
+    }, renderFn('img', {
+      src: node.attrs?.fallbackImage,
+      alt: node.attrs?.alt,
+      style: 'width: 1.25em; height: 1.25em; vertical-align: text-top',
+      draggable: 'false',
+      loading: 'lazy',
+    }, '' as any)) as T;
 
   const codeBlockResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
-    return renderFn('pre', { ...node.attrs, key: `code-${currentKey}` }, renderFn('code', { key: `code-${currentKey}` }, node.children || '' as any)) as T;
+    return renderFn('pre', {
+      ...node.attrs,
+      key: `code-${currentKey}`,
+    }, renderFn('code', { key: `code-${currentKey}` }, node.children || '' as any)) as T;
   };
 
   // Mark resolver for text formatting
