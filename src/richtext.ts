@@ -40,7 +40,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     optimizeImages = false,
   } = options;
 
-  const nodeResolver = (tag: string): StoryblokRichTextNodeResolver<T> => (node: StoryblokRichTextNode<T>): T => renderFn(tag, { ...node.attrs, key: `${tag}-${currentKey}` } || {}, node.children || null as any) as T;
+  const nodeResolver = (tag: string): StoryblokRichTextNodeResolver<T> => (node: StoryblokRichTextNode<T>): T => renderFn(tag, { ...node.attrs, key: `${tag}-${currentKey}` }, node.children || null as any) as T;
 
   const imageResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>) => {
     const { src, alt, title, srcset, sizes } = node.attrs || {};
@@ -66,7 +66,10 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
   };
   const headingResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
     const { level, ...rest } = node.attrs || {};
-    return renderFn(`h${level}`, { ...rest, key: `h${level}-${currentKey}` } || {}, node.children as any) as T;
+    return renderFn(`h${level}`, {
+      ...rest,
+      key: `h${level}-${currentKey}`,
+    }, node.children as any) as T;
   };
 
   const emojiResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>) => renderFn('span', {
@@ -83,7 +86,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
   }, '' as any)) as T;
 
   const codeBlockResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
-    return renderFn('pre', { ...node.attrs, key: `code-${currentKey}` } || {}, renderFn('code', { key: `code-${currentKey}` }, node.children || '' as any)) as T;
+    return renderFn('pre', { ...node.attrs, key: `code-${currentKey}` }, renderFn('code', { key: `code-${currentKey}` }, node.children || '' as any)) as T;
   };
 
   // Mark resolver for text formatting
@@ -93,7 +96,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
           style: attrsToStyle(attrs),
           key: `${tag}-${currentKey}`,
         }
-      : { ...attrs, key: `${tag}-${currentKey}` } || {}, text as any) as T;
+      : { ...attrs, key: `${tag}-${currentKey}` }, text as any) as T;
   };
 
   const renderToT = (node: any): T => {
