@@ -1,4 +1,4 @@
-import { richTextResolver, type StoryblokRichTextOption } from '@storyblok/richtext';
+import { richTextResolver, type StoryblokRichTextOptions } from '@storyblok/richtext';
 import { useStoryblok } from '@storyblok/react';
 import './App.css';
 import type { ReactElement } from 'react';
@@ -455,7 +455,7 @@ function App() {
   if (!story?.content) {
     return <div>Loading...</div>;
   }
-  const options: StoryblokRichTextOption<ReactElement> = {
+  const options: StoryblokRichTextOptions<ReactElement> = {
     renderFn: React.createElement,
     keyedResolvers: true,
   };
@@ -463,6 +463,8 @@ function App() {
   const html = richTextResolver(
     options,
   ).render(story.content.richtext);
+
+  console.log(html);
 
   const formattedHtml = convertAttributesInElement(html);
 

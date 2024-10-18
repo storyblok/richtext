@@ -189,14 +189,14 @@ export type StoryblokRichTextResolvers<T = string> = Partial<Record<StoryblokRic
 /**
  * Represents the options for rendering rich text.
  */
-export interface StoryblokRichTextOptions<T = string, S = (tag: string, attrs: Record<string, any>, text: string) => T> {
+export interface StoryblokRichTextOptions<T = string, S = (tag: string, attrs: Record<string, any>, children?: T) => T> {
   /**
    * Defines the function that will be used to render the final HTML string (vanilla) or Framework component (React, Vue).
    *
    * @example
    *
    * ```typescript
-   * const renderFn = (tag: string, attrs: Record<string, any>, text: string) => {
+   * const renderFn = (tag: string, attrs: Record<string, any>, text?: string) => {
    *  return `<${tag} ${Object.keys(attrs).map(key => `${key}="${attrs[key]}"`).join(' ')}>${text}</${tag}>`
    * }
    *
