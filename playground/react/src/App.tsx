@@ -1,6 +1,7 @@
-import { richTextResolver } from '@storyblok/richtext';
+import { richTextResolver, type StoryblokRichTextOption } from '@storyblok/richtext';
 import { useStoryblok } from '@storyblok/react';
 import './App.css';
+import type { ReactElement } from 'react';
 import React from 'react';
 
 function camelCase(str: string) {
@@ -454,10 +455,14 @@ function App() {
   if (!story?.content) {
     return <div>Loading...</div>;
   }
-
-  const html = richTextResolver({
+  const options: StoryblokRichTextOption<ReactElement> = {
     renderFn: React.createElement,
-  }).render(story.content.richtext);
+    keyedResolvers: true,
+  };
+
+  const html = richTextResolver(
+    options,
+  ).render(story.content.richtext);
 
   const formattedHtml = convertAttributesInElement(html);
 

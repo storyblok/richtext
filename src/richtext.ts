@@ -17,7 +17,7 @@ function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, a
   const tagString = attrsString ? `${tag} ${attrsString}` : tag;
 
   if (SELF_CLOSING_TAGS.includes(tag)) {
-    return `<${tagString} />` as unknown as T;
+    return `<${tagString} >` as unknown as T;
   }
   return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T;
 }
@@ -38,14 +38,17 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     textFn = escapeHtml,
     resolvers = {},
     optimizeImages = false,
+    keyedResolvers = false,
   } = options;
 
   const nodeResolver = (tag: string): StoryblokRichTextNodeResolver<T> =>
-    (node: StoryblokRichTextNode<T>): T =>
-      renderFn(tag, {
-        ...node.attrs,
-        key: `${tag}-${currentKey}`,
-      }, node.children || null as any) as T;
+    (node: StoryblokRichTextNode<T>): T => {
+      const attributes = node.attrs || {};
+      if (keyedResolvers) {
+        attributes.key = `${tag}-${currentKey}`;
+      }
+      return renderFn(tag, attributes, node.children || null as any) as T;
+    };
 
   const imageResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>) => {
     const { src, alt, title, srcset, sizes } = node.attrs || {};

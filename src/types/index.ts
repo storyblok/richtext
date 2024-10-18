@@ -264,4 +264,18 @@ export interface StoryblokRichTextOptions<T = string, S = (tag: string, attrs: R
    * ```
    */
   optimizeImages?: boolean | Partial<StoryblokRichTextImageOptimizationOptions>;
+  /**
+   * Defines whether to use the key attribute in the resolvers for framework use cases.
+   * @default false
+   * @example
+   *
+   * ```typescript
+   *
+   * const options: StoryblokRichTextOptions = {
+   *  renderFn: h,
+   *  keyedResolvers: true
+   * }
+   * ```
+   */
+  keyedResolvers?: boolean;
 }

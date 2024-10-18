@@ -110,8 +110,18 @@ const html = richTextResolver<string>(options).render(doc);
 // Vue
 const options: StoryblokRichTextOptions<VNode> = {
   renderFn: h,
+  keyedResolvers: true,
 };
 const root = () => richTextResolver<VNode>(options).render(doc);
+```
+
+```ts
+// React
+const options: StoryblokRichTextOptions<React.ReactElement> = {
+  renderFn: React.createElement,
+  keyedResolvers: true,
+};
+const root = () => richTextResolver<React.ReactElement>(options).render(doc);
 ```
 
 ## Optimize Images
