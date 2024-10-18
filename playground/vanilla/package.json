@@ -10,11 +10,11 @@
   },
   "dependencies": {
     "@storyblok/richtext": "workspace:^",
-    "storyblok-js-client": "^6.7.3"
+    "storyblok-js-client": "^6.10.1"
   },
   "devDependencies": {
-    "typescript": "^5.4.5",
-    "vite": "^5.2.11",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.9",
     "vite-plugin-qrcode": "^0.2.3"
   }
 }
