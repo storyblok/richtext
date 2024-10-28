@@ -12,12 +12,12 @@ import { attrsToString, attrsToStyle, cleanObject, escapeHtml, SELF_CLOSING_TAGS
  * @param {T} children
  * @return {*}  {T}
  */
-function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, any> = {}, children: T): T {
+function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, any> = {}, children?: T): T {
   const attrsString = attrsToString(attrs);
   const tagString = attrsString ? `${tag} ${attrsString}` : tag;
 
   if (SELF_CLOSING_TAGS.includes(tag)) {
-    return `<${tagString} />` as unknown as T;
+    return `<${tagString}>` as unknown as T;
   }
   return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T;
 }
@@ -38,14 +38,17 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     textFn = escapeHtml,
     resolvers = {},
     optimizeImages = false,
+    keyedResolvers = false,
   } = options;
 
   const nodeResolver = (tag: string): StoryblokRichTextNodeResolver<T> =>
-    (node: StoryblokRichTextNode<T>): T =>
-      renderFn(tag, {
-        ...node.attrs,
-        key: `${tag}-${currentKey}`,
-      }, node.children || null as any) as T;
+    (node: StoryblokRichTextNode<T>): T => {
+      const attributes = node.attrs || {};
+      if (keyedResolvers) {
+        attributes.key = `${tag}-${currentKey}`;
+      }
+      return renderFn(tag, attributes, node.children || null as any) as T;
+    };
 
   const imageResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>) => {
     const { src, alt, title, srcset, sizes } = node.attrs || {};
@@ -57,39 +60,60 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
       finalSrc = optimizedSrc;
       finalAttrs = optimizedAttrs;
     }
+    if (keyedResolvers) {
+      finalAttrs = {
+        ...finalAttrs,
+        key: `img-${currentKey}`,
+      };
+    }
     const imgAttrs = {
       src: finalSrc,
       alt,
       title,
       srcset,
       sizes,
-      key: `img-${currentKey}`,
       ...finalAttrs,
     };
 
-    return renderFn('img', cleanObject(imgAttrs), '') as T;
+    return renderFn('img', cleanObject(imgAttrs)) as T;
   };
   const headingResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
     const { level, ...rest } = node.attrs || {};
-    return renderFn(`h${level}`, {
+    const attributes = {
       ...rest,
-      key: `h${level}-${currentKey}`,
-    }, node.children as any) as T;
+    };
+
+    if (keyedResolvers) {
+      attributes.key = `h${level}-${currentKey}`;
+    }
+    return renderFn(`h${level}`, attributes, node.children) as T;
   };
 
-  const emojiResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>) =>
-    renderFn('span', {
-      'data-type': 'emoji',
-      'data-name': node.attrs?.name,
-      'emoji': node.attrs?.emoji,
-      'key': `emoji-${currentKey}`,
-    }, renderFn('img', {
+  const emojiResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>) => {
+    const internalImg = renderFn('img', {
       src: node.attrs?.fallbackImage,
       alt: node.attrs?.alt,
       style: 'width: 1.25em; height: 1.25em; vertical-align: text-top',
       draggable: 'false',
       loading: 'lazy',
-    }, '' as any)) as T;
+    }) as T;
+    const attributes: {
+      'data-type': string;
+      'data-name': string;
+      'data-emoji': string;
+      'key'?: string;
+    } = {
+      'data-type': 'emoji',
+      'data-name': node.attrs?.name,
+      'data-emoji': node.attrs?.emoji,
+    };
+
+    if (keyedResolvers) {
+      attributes.key = `emoji-${currentKey}`;
+    }
+
+    return renderFn('span', attributes, internalImg) as T;
+  };
 
   const codeBlockResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
     return renderFn('pre', {
@@ -100,12 +124,11 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
 
   // Mark resolver for text formatting
   const markResolver = (tag: string, styled = false): StoryblokRichTextNodeResolver<T> => ({ text, attrs }): T => {
-    return renderFn(tag, styled
-      ? {
-          style: attrsToStyle(attrs),
-          key: `${tag}-${currentKey}`,
-        }
-      : { ...attrs, key: `${tag}-${currentKey}` }, text as any) as T;
+    const attributes = styled ? { style: attrsToStyle(attrs) } : attrs || {};
+    if (keyedResolvers) {
+      attributes.key = `${tag}-${currentKey}`;
+    }
+    return renderFn(tag, attributes, text as any) as T;
   };
 
   const renderToT = (node: any): T => {
@@ -168,7 +191,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
       id: node.attrs?.id,
       key: `component-${currentKey}`,
       style: 'display: none',
-    }, '') as T;
+    }) as T;
   };
 
   const mergedResolvers = new Map<StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver<T>>([
