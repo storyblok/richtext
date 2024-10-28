@@ -464,6 +464,7 @@ function App() {
     options,
   ).render(story.content.richtext);
 
+  // eslint-disable-next-line no-console
   console.log(html);
 
   const formattedHtml = convertAttributesInElement(html);
