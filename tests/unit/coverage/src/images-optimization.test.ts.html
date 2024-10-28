@@ -1,61 +1,68 @@
+
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <title>Code coverage report for src/images-optimization.test.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
     <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style type="text/css">
-      .coverage-summary .sorter {
-        background-image: url(../sort-arrow-sprite.png);
-      }
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
     </style>
-  </head>
-
-  <body>
-    <div class="wrapper">
-      <div class="pad1">
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
         <h1><a href="../index.html">All files</a> / <a href="index.html">src</a> images-optimization.test.ts</h1>
-        <div class="clearfix">
-          <div class="fl pad1y space-right2">
-            <span class="strong">100% </span>
-            <span class="quiet">Statements</span>
-            <span class="fraction">209/209</span>
-          </div>
-
-          <div class="fl pad1y space-right2">
-            <span class="strong">100% </span>
-            <span class="quiet">Branches</span>
-            <span class="fraction">34/34</span>
-          </div>
-
-          <div class="fl pad1y space-right2">
-            <span class="strong">100% </span>
-            <span class="quiet">Functions</span>
-            <span class="fraction">0/0</span>
-          </div>
-
-          <div class="fl pad1y space-right2">
-            <span class="strong">100% </span>
-            <span class="quiet">Lines</span>
-            <span class="fraction">209/209</span>
-          </div>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>209/209</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>34/34</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>209/209</span>
+            </div>
+        
+            
         </div>
         <p class="quiet">
-          Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the
-          previous block.
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
         <template id="filterTemplate">
-          <div class="quiet">
-            Filter:
-            <input type="search" id="fileSearch" />
-          </div>
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
         </template>
-      </div>
-      <div class="status-line high"></div>
-      <pre><table class="coverage">
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -298,7 +305,8 @@
 <a name='L240'></a><a href='#L240'>240</a>
 <a name='L241'></a><a href='#L241'>241</a>
 <a name='L242'></a><a href='#L242'>242</a>
-<a name='L243'></a><a href='#L243'>243</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -540,201 +548,202 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { describe, expect, it, vi } from 'vitest'
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { describe, expect, it, vi } from 'vitest';
 &nbsp;
-import { optimizeImage } from './images-optimization'
+import { optimizeImage } from './images-optimization';
 &nbsp;
 describe('images-optimization', () =&gt; {
   it('should return the original src if no options are passed', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { src: resultSrc } = optimizeImage(src)
-    expect(resultSrc).toBe(src)
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { src: resultSrc } = optimizeImage(src);
+    expect(resultSrc).toBe(src);
+  });
 &nbsp;
   it('should return an empty attr object if no options are passed', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { attrs } = optimizeImage(src)
-    expect(attrs).toEqual({})
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { attrs } = optimizeImage(src);
+    expect(attrs).toEqual({});
+  });
 &nbsp;
   it('should provide server-side WebP support detection if option is true', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { src: resultSrc } = optimizeImage(src, true)
-    expect(resultSrc).toBe(`${src}/m/`)
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { src: resultSrc } = optimizeImage(src, true);
+    expect(resultSrc).toBe(`${src}/m/`);
+  });
 &nbsp;
   it('should add width and height to the src if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { src: resultSrc } = optimizeImage(src, { width: 800, height: 600 })
-    expect(resultSrc).toBe(`${src}/m/800x600/`)
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { src: resultSrc } = optimizeImage(src, { width: 800, height: 600 });
+    expect(resultSrc).toBe(`${src}/m/800x600/`);
+  });
 &nbsp;
   it('should not add width to the src if width is not a number', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const consoleWarnSpy = vi.spyOn(console, 'warn')
-    optimizeImage(src, { width: '800', height: 600 })
-    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Width value must be a number greater than 0')
-    consoleWarnSpy.mockRestore()
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const consoleWarnSpy = vi.spyOn(console, 'warn');
+    optimizeImage(src, { width: '800', height: 600 });
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Width value must be a number greater than 0');
+    consoleWarnSpy.mockRestore();
+  });
 &nbsp;
   it('should not add width to the src if width is less than 0', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const consoleWarnSpy = vi.spyOn(console, 'warn')
-    optimizeImage(src, { width: -800, height: 600 })
-    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Width value must be a number greater than 0')
-    consoleWarnSpy.mockRestore()
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const consoleWarnSpy = vi.spyOn(console, 'warn');
+    optimizeImage(src, { width: -800, height: 600 });
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Width value must be a number greater than 0');
+    consoleWarnSpy.mockRestore();
+  });
 &nbsp;
   it('should add width to the attrs if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { attrs } = optimizeImage(src, { width: 800, height: 600 })
-    expect(attrs).toEqual({ width: 800, height: 600 })
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { attrs } = optimizeImage(src, { width: 800, height: 600 });
+    expect(attrs).toEqual({ width: 800, height: 600 });
+  });
 &nbsp;
   it('should not add height to the src if height is not a number', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const consoleWarnSpy = vi.spyOn(console, 'warn')
-    optimizeImage(src, { width: 800, height: '600' })
-    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Height value must be a number greater than 0')
-    consoleWarnSpy.mockRestore()
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const consoleWarnSpy = vi.spyOn(console, 'warn');
+    optimizeImage(src, { width: 800, height: '600' });
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Height value must be a number greater than 0');
+    consoleWarnSpy.mockRestore();
+  });
 &nbsp;
   it('should not add height to the src if height is less than 0', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const consoleWarnSpy = vi.spyOn(console, 'warn')
-    optimizeImage(src, { width: 800, height: -600 })
-    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Height value must be a number greater than 0')
-    consoleWarnSpy.mockRestore()
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const consoleWarnSpy = vi.spyOn(console, 'warn');
+    optimizeImage(src, { width: 800, height: -600 });
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Height value must be a number greater than 0');
+    consoleWarnSpy.mockRestore();
+  });
 &nbsp;
   it('should add loading attribute if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { attrs } = optimizeImage(src, { loading: 'lazy' })
-    expect(attrs).toEqual({ loading: 'lazy' })
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { attrs } = optimizeImage(src, { loading: 'lazy' });
+    expect(attrs).toEqual({ loading: 'lazy' });
+  });
 &nbsp;
   it('should add class attribute if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { attrs } = optimizeImage(src, { class: 'doge' })
-    expect(attrs).toEqual({ class: 'doge' })
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { attrs } = optimizeImage(src, { class: 'doge' });
+    expect(attrs).toEqual({ class: 'doge' });
+  });
 &nbsp;
   it('should add blur filter if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { src: resultSrc } = optimizeImage(src, { filters: { blur: 5 } })
-    expect(resultSrc).toBe(`${src}/m/filters:blur(5)`)
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { src: resultSrc } = optimizeImage(src, { filters: { blur: 5 } });
+    expect(resultSrc).toBe(`${src}/m/filters:blur(5)`);
+  });
 &nbsp;
   it('should not add blur filter if value is not a number', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const consoleWarnSpy = vi.spyOn(console, 'warn')
-    optimizeImage(src, { filters: { blur: '5' } })
-    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Blur value must be a number between 0 and 100 (inclusive)')
-    consoleWarnSpy.mockRestore()
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const consoleWarnSpy = vi.spyOn(console, 'warn');
+    optimizeImage(src, { filters: { blur: '5' } });
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Blur value must be a number between 0 and 100 (inclusive)');
+    consoleWarnSpy.mockRestore();
+  });
 &nbsp;
   it('should not add blur filter if value is less than 0', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const consoleWarnSpy = vi.spyOn(console, 'warn')
-    optimizeImage(src, { filters: { blur: -5 } })
-    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Blur value must be a number between 0 and 100 (inclusive)')
-    consoleWarnSpy.mockRestore()
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const consoleWarnSpy = vi.spyOn(console, 'warn');
+    optimizeImage(src, { filters: { blur: -5 } });
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Blur value must be a number between 0 and 100 (inclusive)');
+    consoleWarnSpy.mockRestore();
+  });
 &nbsp;
   it('should not add blur filter if value is greater than 100', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const consoleWarnSpy = vi.spyOn(console, 'warn')
-    optimizeImage(src, { filters: { blur: 105 } })
-    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Blur value must be a number between 0 and 100 (inclusive)')
-    consoleWarnSpy.mockRestore()
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const consoleWarnSpy = vi.spyOn(console, 'warn');
+    optimizeImage(src, { filters: { blur: 105 } });
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Blur value must be a number between 0 and 100 (inclusive)');
+    consoleWarnSpy.mockRestore();
+  });
 &nbsp;
   it('should add brightness filter if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { src: resultSrc } = optimizeImage(src, { filters: { brightness: 0.5 } })
-    expect(resultSrc).toBe(`${src}/m/filters:brightness(0.5)`)
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { src: resultSrc } = optimizeImage(src, { filters: { brightness: 0.5 } });
+    expect(resultSrc).toBe(`${src}/m/filters:brightness(0.5)`);
+  });
 &nbsp;
   it('should not add brightness filter if value is not a number', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const consoleWarnSpy = vi.spyOn(console, 'warn')
-    optimizeImage(src, { filters: { brightness: '0.5' } })
-    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Brightness value must be a number between 0 and 100 (inclusive)')
-    consoleWarnSpy.mockRestore()
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const consoleWarnSpy = vi.spyOn(console, 'warn');
+    optimizeImage(src, { filters: { brightness: '0.5' } });
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Brightness value must be a number between 0 and 100 (inclusive)');
+    consoleWarnSpy.mockRestore();
+  });
 &nbsp;
   it('should not add brightness filter if value is less than 0', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const consoleWarnSpy = vi.spyOn(console, 'warn')
-    optimizeImage(src, { filters: { brightness: -0.5 } })
-    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Brightness value must be a number between 0 and 100 (inclusive)')
-    consoleWarnSpy.mockRestore()
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const consoleWarnSpy = vi.spyOn(console, 'warn');
+    optimizeImage(src, { filters: { brightness: -0.5 } });
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Brightness value must be a number between 0 and 100 (inclusive)');
+    consoleWarnSpy.mockRestore();
+  });
 &nbsp;
   it('should not add brightness filter if value is greater than 100', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const consoleWarnSpy = vi.spyOn(console, 'warn')
-    optimizeImage(src, { filters: { brightness: 105 } })
-    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Brightness value must be a number between 0 and 100 (inclusive)')
-    consoleWarnSpy.mockRestore()
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const consoleWarnSpy = vi.spyOn(console, 'warn');
+    optimizeImage(src, { filters: { brightness: 105 } });
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Brightness value must be a number between 0 and 100 (inclusive)');
+    consoleWarnSpy.mockRestore();
+  });
 &nbsp;
   it('should add fill filter if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { src: resultSrc } = optimizeImage(src, { filters: { fill: 'transparent' } })
-    expect(resultSrc).toBe(`${src}/m/filters:fill(transparent)`)
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { src: resultSrc } = optimizeImage(src, { filters: { fill: 'transparent' } });
+    expect(resultSrc).toBe(`${src}/m/filters:fill(transparent)`);
+  });
 &nbsp;
   it('should add grayscale filter if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { src: resultSrc } = optimizeImage(src, { filters: { grayscale: true } })
-    expect(resultSrc).toBe(`${src}/m/filters:grayscale()`)
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { src: resultSrc } = optimizeImage(src, { filters: { grayscale: true } });
+    expect(resultSrc).toBe(`${src}/m/filters:grayscale()`);
+  });
 &nbsp;
   it('should add quality filter if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { src: resultSrc } = optimizeImage(src, { filters: { quality: 80 } })
-    expect(resultSrc).toBe(`${src}/m/filters:quality(80)`)
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { src: resultSrc } = optimizeImage(src, { filters: { quality: 80 } });
+    expect(resultSrc).toBe(`${src}/m/filters:quality(80)`);
+  });
 &nbsp;
   it('should not add quality filter if value is not a number', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const consoleWarnSpy = vi.spyOn(console, 'warn')
-    optimizeImage(src, { filters: { quality: '80' } })
-    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Quality value must be a number between 0 and 100 (inclusive)')
-    consoleWarnSpy.mockRestore()
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const consoleWarnSpy = vi.spyOn(console, 'warn');
+    optimizeImage(src, { filters: { quality: '80' } });
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Quality value must be a number between 0 and 100 (inclusive)');
+    consoleWarnSpy.mockRestore();
+  });
 &nbsp;
   it('should not add quality filter if value is less than 0', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const consoleWarnSpy = vi.spyOn(console, 'warn')
-    optimizeImage(src, { filters: { quality: -80 } })
-    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Quality value must be a number between 0 and 100 (inclusive)')
-    consoleWarnSpy.mockRestore()
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const consoleWarnSpy = vi.spyOn(console, 'warn');
+    optimizeImage(src, { filters: { quality: -80 } });
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Quality value must be a number between 0 and 100 (inclusive)');
+    consoleWarnSpy.mockRestore();
+  });
 &nbsp;
   it('should not add quality filter if value is greater than 100', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const consoleWarnSpy = vi.spyOn(console, 'warn')
-    optimizeImage(src, { filters: { quality: 105 } })
-    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Quality value must be a number between 0 and 100 (inclusive)')
-    consoleWarnSpy.mockRestore()
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const consoleWarnSpy = vi.spyOn(console, 'warn');
+    optimizeImage(src, { filters: { quality: 105 } });
+    expect(consoleWarnSpy).toBeCalledWith('[StoryblokRichText] - Quality value must be a number between 0 and 100 (inclusive)');
+    consoleWarnSpy.mockRestore();
+  });
 &nbsp;
   it('should add rotate filter if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { src: resultSrc } = optimizeImage(src, { filters: { rotate: 90 } })
-    expect(resultSrc).toBe(`${src}/m/filters:rotate(90)`)
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { src: resultSrc } = optimizeImage(src, { filters: { rotate: 90 } });
+    expect(resultSrc).toBe(`${src}/m/filters:rotate(90)`);
+  });
 &nbsp;
   it('should add format filter if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { src: resultSrc } = optimizeImage(src, { filters: { format: 'webp' } })
-    expect(resultSrc).toBe(`${src}/m/filters:format(webp)`)
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { src: resultSrc } = optimizeImage(src, { filters: { format: 'webp' } });
+    expect(resultSrc).toBe(`${src}/m/filters:format(webp)`);
+  });
 &nbsp;
   it('should add multiple filters if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
     const filters = {
       blur: 5,
       brightness: 0.5,
@@ -743,63 +752,63 @@ describe('images-optimization', () =&gt; {
       quality: 80,
       rotate: 90,
       format: 'webp',
-    }
-    const { src: resultSrc } = optimizeImage(src, { filters })
-    expect(resultSrc).toBe(`${src}/m/filters:blur(5):quality(80):brightness(0.5):fill(transparent):grayscale():rotate(90):format(webp)`)
-  })
+    };
+    const { src: resultSrc } = optimizeImage(src, { filters });
+    expect(resultSrc).toBe(`${src}/m/filters:blur(5):quality(80):brightness(0.5):fill(transparent):grayscale():rotate(90):format(webp)`);
+  });
 &nbsp;
   it('should not add filters if options filter is empty', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const { src: resultSrc } = optimizeImage(src, { filters: {} })
-    expect(resultSrc).toBe(`${src}/m/`)
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const { src: resultSrc } = optimizeImage(src, { filters: {} });
+    expect(resultSrc).toBe(`${src}/m/`);
+  });
 &nbsp;
   it('should add srcset attribute if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const srcset = [400, 800, 1200]
-    const { attrs } = optimizeImage(src, { srcset })
-    expect(attrs).toEqual({ srcset: 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/400x0/ 400w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/800x0/ 800w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/1200x0/ 1200w' })
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const srcset = [400, 800, 1200];
+    const { attrs } = optimizeImage(src, { srcset });
+    expect(attrs).toEqual({ srcset: 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/400x0/ 400w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/800x0/ 800w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/1200x0/ 1200w' });
+  });
 &nbsp;
   it('should add srcset attribute with width and height if provided as an array of arrays', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const srcset = [[400, 300], [800, 600], [1200, 900]]
-    const { attrs } = optimizeImage(src, { srcset })
-    expect(attrs).toEqual({ srcset: 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/400x300/ 400w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/800x600/ 800w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/1200x900/ 1200w' })
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const srcset = [[400, 300], [800, 600], [1200, 900]];
+    const { attrs } = optimizeImage(src, { srcset });
+    expect(attrs).toEqual({ srcset: 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/400x300/ 400w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/800x600/ 800w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/1200x900/ 1200w' });
+  });
 &nbsp;
   it('should add sizes attribute if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const sizes = ['(min-width: 600px) 50vw', '100vw']
-    const { attrs } = optimizeImage(src, { sizes })
-    expect(attrs).toEqual({ sizes: '(min-width: 600px) 50vw, 100vw' })
-  })
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const sizes = ['(min-width: 600px) 50vw', '100vw'];
+    const { attrs } = optimizeImage(src, { sizes });
+    expect(attrs).toEqual({ sizes: '(min-width: 600px) 50vw, 100vw' });
+  });
 &nbsp;
   it('should add srcset and sizes attributes if provided', async () =&gt; {
-    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg'
-    const srcset = [400, 800, 1200]
-    const sizes = ['(min-width: 600px) 50vw', '100vw']
-    const { attrs } = optimizeImage(src, { srcset, sizes })
-    expect(attrs).toEqual({ srcset: 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/400x0/ 400w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/800x0/ 800w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/1200x0/ 1200w', sizes: '(min-width: 600px) 50vw, 100vw' })
-  })
-})</pre></td></tr></table></pre>
+    const src = 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg';
+    const srcset = [400, 800, 1200];
+    const sizes = ['(min-width: 600px) 50vw', '100vw'];
+    const { attrs } = optimizeImage(src, { srcset, sizes });
+    expect(attrs).toEqual({ srcset: 'https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/400x0/ 400w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/800x0/ 800w, https://a.storyblok.com/f/279818/710x528/c53330ed26/tresjs-doge.jpg/m/1200x0/ 1200w', sizes: '(min-width: 600px) 50vw, 100vw' });
+  });
+});
+&nbsp;</pre></td></tr></table></pre>
 
-      <div class="push"></div>
-      <!-- for sticky footer -->
-    </div>
-    <!-- /wrapper -->
-    <div class="footer quiet pad2 space-top1 center small">
-      Code coverage generated by
-      <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2024-07-31T07:14:20.605Z
-    </div>
-    <script src="../prettify.js"></script>
-    <script>
-      window.onload = function () {
-        prettyPrint();
-      };
-    </script>
-    <script src="../sorter.js"></script>
-    <script src="../block-navigation.js"></script>
-  </body>
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2024-10-28T08:44:56.481Z
+            </div>
+        <script src="../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
+    </body>
 </html>
+    

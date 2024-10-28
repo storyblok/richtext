@@ -17,7 +17,7 @@ function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, a
   const tagString = attrsString ? `${tag} ${attrsString}` : tag;
 
   if (SELF_CLOSING_TAGS.includes(tag)) {
-    return `<${tagString} >` as unknown as T;
+    return `<${tagString}>` as unknown as T;
   }
   return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T;
 }
@@ -60,13 +60,18 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
       finalSrc = optimizedSrc;
       finalAttrs = optimizedAttrs;
     }
+    if (keyedResolvers) {
+      finalAttrs = {
+        ...finalAttrs,
+        key: `img-${currentKey}`,
+      };
+    }
     const imgAttrs = {
       src: finalSrc,
       alt,
       title,
       srcset,
       sizes,
-      key: `img-${currentKey}`,
       ...finalAttrs,
     };
 
@@ -74,10 +79,14 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
   };
   const headingResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
     const { level, ...rest } = node.attrs || {};
-    return renderFn(`h${level}`, {
+    const attributes = {
       ...rest,
-      key: `h${level}-${currentKey}`,
-    }, node.children) as T;
+    };
+
+    if (keyedResolvers) {
+      attributes.key = `h${level}-${currentKey}`;
+    }
+    return renderFn(`h${level}`, attributes, node.children) as T;
   };
 
   const emojiResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>) => {
@@ -88,12 +97,22 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
       draggable: 'false',
       loading: 'lazy',
     }) as T;
-    return renderFn('span', {
+    const attributes: {
+      'data-type': string;
+      'data-name': string;
+      'data-emoji': string;
+      'key'?: string;
+    } = {
       'data-type': 'emoji',
       'data-name': node.attrs?.name,
-      'emoji': node.attrs?.emoji,
-      'key': `emoji-${currentKey}`,
-    }, internalImg) as T;
+      'data-emoji': node.attrs?.emoji,
+    };
+
+    if (keyedResolvers) {
+      attributes.key = `emoji-${currentKey}`;
+    }
+
+    return renderFn('span', attributes, internalImg) as T;
   };
 
   const codeBlockResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
@@ -105,12 +124,11 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
 
   // Mark resolver for text formatting
   const markResolver = (tag: string, styled = false): StoryblokRichTextNodeResolver<T> => ({ text, attrs }): T => {
-    return renderFn(tag, styled
-      ? {
-          style: attrsToStyle(attrs),
-          key: `${tag}-${currentKey}`,
-        }
-      : { ...attrs, key: `${tag}-${currentKey}` }, text as any) as T;
+    const attributes = styled ? { style: attrsToStyle(attrs) } : attrs || {};
+    if (keyedResolvers) {
+      attributes.key = `${tag}-${currentKey}`;
+    }
+    return renderFn(tag, attributes, text as any) as T;
   };
 
   const renderToT = (node: any): T => {

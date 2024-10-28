@@ -19,6 +19,23 @@ describe('richtext', () => {
         ],
       };
       const html = render(paragraph as StoryblokRichTextNode<string>);
+      expect(html).toBe('<p>Hello, world!</p>');
+    });
+
+    it('should render a paragraph with key property', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
+      const paragraph = {
+        type: 'paragraph',
+        content: [
+          {
+            type: 'text',
+            text: 'Hello, world!',
+          },
+        ],
+      };
+      const html = render(paragraph as StoryblokRichTextNode<string>);
       expect(html).toBe('<p key="p-2">Hello, world!</p>');
     });
 
@@ -37,11 +54,62 @@ describe('richtext', () => {
         ],
       };
       const html = render(heading as unknown as StoryblokRichTextNode<string>);
-      expect(html).toBe('<h1 key="h1-2">Headline 1</h1>');
+      expect(html).toBe('<h1>Headline 1</h1>');
+    });
+
+    it('should render heading with key property', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
+      const heading = {
+        type: 'heading',
+        attrs: {
+          level: 2,
+        },
+        content: [
+          {
+            text: 'Headline 2',
+            type: 'text',
+          },
+        ],
+      };
+      const html = render(heading as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<h2 key="h2-2">Headline 2</h2>');
     });
 
     it('should render an unordered list', async () => {
       const { render } = richTextResolver({});
+      const list = {
+        type: 'bullet_list',
+        content: [
+          {
+            type: 'list_item',
+            content: [
+              {
+                type: 'text',
+                text: 'Item 1',
+              },
+            ],
+          },
+          {
+            type: 'list_item',
+            content: [
+              {
+                type: 'text',
+                text: 'Item 2',
+              },
+            ],
+          },
+        ],
+      };
+      const html = render(list as StoryblokRichTextNode<string>);
+      expect(html).toBe('<ul><li>Item 1</li><li>Item 2</li></ul>');
+    });
+
+    it('should render list items with keys if keyedResolvers is true', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
       const list = {
         type: 'bullet_list',
         content: [
@@ -96,7 +164,7 @@ describe('richtext', () => {
         ],
       };
       const html = render(list as unknown as StoryblokRichTextNode<string>);
-      expect(html).toBe('<ol order="1" key="ol-5"><li key="li-3">Item 1</li><li key="li-5">Item 2</li></ol>');
+      expect(html).toBe('<ol order="1"><li>Item 1</li><li>Item 2</li></ol>');
     });
 
     it('should render an image with attrs', async () => {
@@ -117,7 +185,42 @@ describe('richtext', () => {
         },
       };
       const html = render(image as unknown as StoryblokRichTextNode<string>);
-      expect(html).toBe('<img src="https://example.com/image.jpg" alt="An image" title="An image" key="img-1" />');
+      expect(html).toBe('<img src="https://example.com/image.jpg" alt="An image" title="An image">');
+    });
+
+    it('should render an image with key property', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
+      const image = {
+        type: 'image',
+        attrs: {
+          src: 'https://example.com/image.jpg',
+          alt: 'An image',
+        },
+      };
+      const html = render(image as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<img src="https://example.com/image.jpg" alt="An image" key="img-1">');
+    });
+
+    it('should optimize image attrs', async () => {
+      const { render } = richTextResolver({
+        optimizeImages: true,
+      });
+      const image = {
+        type: 'image',
+        attrs: {
+          src: 'https://example.com/image.jpg',
+          alt: 'An image',
+          title: 'An image',
+          meta_data: {
+            alt: 'An image',
+            title: 'An image',
+          },
+        },
+      };
+      const html = render(image as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<img src="https://example.com/image.jpg/m/" alt="An image" title="An image">');
     });
 
     it('should render self-closing tags', async () => {
@@ -132,13 +235,13 @@ describe('richtext', () => {
         BR: 'br',
         IMAGE: 'img',
       };
-      selfClosingBlockTypes.forEach((type, index) => {
+      selfClosingBlockTypes.forEach((type) => {
         const node = {
           type: BlockTypes[type as keyof typeof BlockTypes],
         };
         const html = render(node as StoryblokRichTextNode<string>);
 
-        expect(html).toBe(`<${tagMap[type]} key="${tagMap[type]}-${index + 1}" />`);
+        expect(html).toBe(`<${tagMap[type]}>`);
       });
     });
 
@@ -151,7 +254,7 @@ describe('richtext', () => {
         },
       };
       const html = render(emoji as unknown as StoryblokRichTextNode<string>);
-      expect(html).toBe('<span data-type="emoji" data-name="undefined" emoji="🚀" key="emoji-1"><img src="undefined" alt="undefined" style="width: 1.25em; height: 1.25em; vertical-align: text-top" draggable="false" loading="lazy" /></span>');
+      expect(html).toBe('<span data-type="emoji" data-name="undefined" data-emoji="🚀"><img src="undefined" alt="undefined" style="width: 1.25em; height: 1.25em; vertical-align: text-top" draggable="false" loading="lazy"></span>');
     });
 
     it('should render a code block', async () => {
@@ -175,7 +278,7 @@ describe('richtext', () => {
         type: 'horizontal_rule',
       };
       const html = render(hr as StoryblokRichTextNode<string>);
-      expect(html).toBe('<hr key="hr-1" />');
+      expect(html).toBe('<hr>');
     });
 
     it('should render a break', async () => {
@@ -184,7 +287,7 @@ describe('richtext', () => {
         type: 'hard_break',
       };
       const html = render(br as StoryblokRichTextNode<string>);
-      expect(html).toBe('<br key="br-1" />');
+      expect(html).toBe('<br>');
     });
 
     it('should render a quote', async () => {
@@ -204,7 +307,7 @@ describe('richtext', () => {
         ],
       };
       const html = render(quote as unknown as StoryblokRichTextNode<string>);
-      expect(html).toBe('<blockquote key="blockquote-3"><p key="p-3">Quote</p></blockquote>');
+      expect(html).toBe('<blockquote><p>Quote</p></blockquote>');
     });
   });
 
@@ -222,7 +325,7 @@ describe('richtext', () => {
         ],
       };
       const html = render(text as unknown as StoryblokRichTextNode<string>);
-      expect(html).toBe('<p key="p-5"><em key="em-5"><strong key="strong-4">Bold and italic</strong></em></p>');
+      expect(html).toBe('<p><em><strong>Bold and italic</strong></em></p>');
     });
 
     it('should render text with styled marks', async () => {
@@ -239,7 +342,7 @@ describe('richtext', () => {
       };
       const html = render(text as unknown as StoryblokRichTextNode<string>);
       // Update the expected HTML to reflect the styles
-      expect(html).toBe('<p key="p-5"><span style="color: blue" key="span-5"><span style="color: red" key="span-4">Bold and italic</span></span></p>');
+      expect(html).toBe('<p><span style="color: blue"><span style="color: red">Bold and italic</span></span></p>');
     });
 
     it('should render an external link', async () => {
@@ -350,11 +453,37 @@ describe('richtext', () => {
         marks: [{ type: 'bold' }],
       };
       const html = render(bold as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<strong>Bold</strong>');
+    });
+
+    it('should render a bold text with key property', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
+      const bold = {
+        text: 'Bold',
+        type: 'text',
+        marks: [{ type: 'bold' }],
+      };
+      const html = render(bold as unknown as StoryblokRichTextNode<string>);
       expect(html).toBe('<strong key="strong-3">Bold</strong>');
     });
 
     it('should render an italic text', async () => {
       const { render } = richTextResolver({});
+      const italic = {
+        text: 'Italic',
+        type: 'text',
+        marks: [{ type: 'italic' }],
+      };
+      const html = render(italic as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<em>Italic</em>');
+    });
+
+    it('should render an italic text with key', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
       const italic = {
         text: 'Italic',
         type: 'text',
@@ -372,11 +501,37 @@ describe('richtext', () => {
         marks: [{ type: 'underline' }],
       };
       const html = render(underline as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<u>Underline</u>');
+    });
+
+    it('should render a underline text with key', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
+      const underline = {
+        text: 'Underline',
+        type: 'text',
+        marks: [{ type: 'underline' }],
+      };
+      const html = render(underline as unknown as StoryblokRichTextNode<string>);
       expect(html).toBe('<u key="u-3">Underline</u>');
     });
 
     it('should render a strike text', async () => {
       const { render } = richTextResolver({});
+      const strike = {
+        text: 'Strike',
+        type: 'text',
+        marks: [{ type: 'strike' }],
+      };
+      const html = render(strike as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<s>Strike</s>');
+    });
+
+    it('should render a strike text with key', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
       const strike = {
         text: 'Strike',
         type: 'text',
@@ -394,11 +549,37 @@ describe('richtext', () => {
         marks: [{ type: 'code' }],
       };
       const html = render(code as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<code>Code</code>');
+    });
+
+    it('should render a code text with key', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
+      const code = {
+        text: 'Code',
+        type: 'text',
+        marks: [{ type: 'code' }],
+      };
+      const html = render(code as unknown as StoryblokRichTextNode<string>);
       expect(html).toBe('<code key="code-3">Code</code>');
     });
 
     it('should render a superscript text', async () => {
       const { render } = richTextResolver({});
+      const superscript = {
+        text: 'Superscript',
+        type: 'text',
+        marks: [{ type: 'superscript' }],
+      };
+      const html = render(superscript as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<sup>Superscript</sup>');
+    });
+
+    it('should render a superscript text with key', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
       const superscript = {
         text: 'Superscript',
         type: 'text',
@@ -416,11 +597,37 @@ describe('richtext', () => {
         marks: [{ type: 'subscript' }],
       };
       const html = render(subscript as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<sub>Subscript</sub>');
+    });
+
+    it('should render a subscript text with key', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
+      const subscript = {
+        text: 'Subscript',
+        type: 'text',
+        marks: [{ type: 'subscript' }],
+      };
+      const html = render(subscript as unknown as StoryblokRichTextNode<string>);
       expect(html).toBe('<sub key="sub-3">Subscript</sub>');
     });
 
     it('should render a highlight text', async () => {
       const { render } = richTextResolver({});
+      const highlight = {
+        text: 'Highlight',
+        type: 'text',
+        marks: [{ type: 'highlight' }],
+      };
+      const html = render(highlight as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<mark>Highlight</mark>');
+    });
+
+    it('should render a highlight text with key', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
       const highlight = {
         text: 'Highlight',
         type: 'text',
