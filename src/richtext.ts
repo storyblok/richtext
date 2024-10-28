@@ -124,11 +124,18 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
 
   // Mark resolver for text formatting
   const markResolver = (tag: string, styled = false): StoryblokRichTextNodeResolver<T> => ({ text, attrs }): T => {
-    const attributes = styled ? { style: attrsToStyle(attrs) } : attrs || {};
+    const { class: className, id: idName, ...styleAttrs } = attrs || {};
+    const attributes = styled
+      ? {
+          class: className,
+          id: idName,
+          style: attrsToStyle(styleAttrs) || undefined,
+        }
+      : attrs || {};
     if (keyedResolvers) {
       attributes.key = `${tag}-${currentKey}`;
     }
-    return renderFn(tag, attributes, text as any) as T;
+    return renderFn(tag, cleanObject(attributes), text as any) as T;
   };
 
   const renderToT = (node: any): T => {
