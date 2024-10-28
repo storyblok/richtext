@@ -76,3 +76,8 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.custom-penguin {
+  color: teal;
+  font-weight: 700;
+}
