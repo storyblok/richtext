@@ -6,6 +6,42 @@ import { BlockTypes, MarkTypes, type StoryblokRichTextNode, type StoryblokRichTe
 import { StoryblokComponent } from '@storyblok/vue';
 
 describe('richtext', () => {
+  describe('document', () => {
+    it('should not render any wrapper tag', () => {
+      const { render } = richTextResolver({});
+      const richdata = {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'Hey ',
+              },
+            ],
+          },
+          {
+            type: 'doc',
+            content: [
+              {
+                type: 'paragraph',
+                content: [
+                  {
+                    type: 'text',
+                    text: 'nested',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+
+      const html = render(richdata as StoryblokRichTextNode<string>);
+      expect(html).toBe('<p>Hey </p><p>nested</p>');
+    });
+  });
   describe('blocktypes', () => {
     it('should render a paragraph', async () => {
       const { render } = richTextResolver({});

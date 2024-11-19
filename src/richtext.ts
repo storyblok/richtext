@@ -15,11 +15,15 @@ import { attrsToString, attrsToStyle, cleanObject, escapeHtml, SELF_CLOSING_TAGS
 function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, any> = {}, children?: T): T {
   const attrsString = attrsToString(attrs);
   const tagString = attrsString ? `${tag} ${attrsString}` : tag;
+  const content = Array.isArray(children) ? children.join('') : children || '';
 
-  if (SELF_CLOSING_TAGS.includes(tag)) {
+  if (!tag) {
+    return content as unknown as T;
+  }
+  else if (SELF_CLOSING_TAGS.includes(tag)) {
     return `<${tagString}>` as unknown as T;
   }
-  return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T;
+  return `<${tagString}>${content}</${tag}>` as unknown as T;
 }
 
 /**
@@ -202,7 +206,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
   };
 
   const mergedResolvers = new Map<StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver<T>>([
-    [BlockTypes.DOCUMENT, nodeResolver('div')],
+    [BlockTypes.DOCUMENT, nodeResolver('')],
     [BlockTypes.HEADING, headingResolver],
     [BlockTypes.PARAGRAPH, nodeResolver('p')],
     [BlockTypes.UL_LIST, nodeResolver('ul')],
