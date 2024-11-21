@@ -2,7 +2,6 @@
 import type { VNode } from 'vue';
 import { createTextVNode, h } from 'vue';
 import { BlockTypes, richTextResolver, type StoryblokRichTextNode, type StoryblokRichTextOptions } from '@storyblok/richtext';
-import { RouterLink } from 'vue-router';
 import { useStoryblok } from '@storyblok/vue';
 
 import CodeBlock from './CodeBlock.vue';

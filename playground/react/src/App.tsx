@@ -474,7 +474,7 @@ function App() {
 
   const formattedHtml = convertAttributesInElement(html);
 
-  console.log(formattedHtml);
+  // console.log(formattedHtml);
   return (
     <>
       {formattedHtml}

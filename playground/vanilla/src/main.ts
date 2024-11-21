@@ -2,7 +2,7 @@ import './style.css';
 import { MarkTypes, richTextResolver, type StoryblokRichTextNode, type StoryblokRichTextOptions } from '@storyblok/richtext';
 import StoryblokClient from 'storyblok-js-client';
 
-const test = {
+/* const test = {
   type: 'doc',
   content: [
     {
@@ -29,7 +29,7 @@ const test = {
       ],
     },
   ],
-};
+}; */
 /* const doc: StoryblokRichTextDocumentNode = {
   type: 'doc',
   content: [
@@ -434,7 +434,7 @@ const options: StoryblokRichTextOptions<string> = {
   },
 };
 
-const html = richTextResolver(options).render(test);
+const html = richTextResolver(options).render(docFromStory);
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div class="this-div-is-on-purpose">
