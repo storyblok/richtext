@@ -44,6 +44,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     optimizeImages = false,
     keyedResolvers = false,
   } = options;
+  const isExternalRenderFn = renderFn !== defaultRenderFn;
 
   const nodeResolver = (tag: string): StoryblokRichTextNodeResolver<T> =>
     (node: StoryblokRichTextNode<T>): T => {
@@ -280,6 +281,9 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
    *
    */
   function render(node: StoryblokRichTextNode<T>): T {
+    if (node.type === 'doc') {
+      return isExternalRenderFn ? node.content.map(renderNode) as T : node.content.map(renderNode).join('') as T;
+    }
     return Array.isArray(node) ? node.map(renderNode) as T : renderNode(node) as T;
   }
 

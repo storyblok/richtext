@@ -389,6 +389,5 @@ const root = () => richTextResolver<VNode>(options).render(story.value.content.r
 </script>
 
 <template>
-  <RouterLink to="http://alvarosaburido.dev">About</RouterLink>
   <root />
 </template>

@@ -2,6 +2,34 @@ import './style.css';
 import { MarkTypes, richTextResolver, type StoryblokRichTextNode, type StoryblokRichTextOptions } from '@storyblok/richtext';
 import StoryblokClient from 'storyblok-js-client';
 
+const test = {
+  type: 'doc',
+  content: [
+    {
+      type: 'paragraph',
+      content: [
+        {
+          type: 'text',
+          text: 'Hey ',
+        },
+      ],
+    },
+    {
+      type: 'doc',
+      content: [
+        {
+          type: 'paragraph',
+          content: [
+            {
+              type: 'text',
+              text: 'nested',
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
 /* const doc: StoryblokRichTextDocumentNode = {
   type: 'doc',
   content: [
@@ -406,10 +434,10 @@ const options: StoryblokRichTextOptions<string> = {
   },
 };
 
-const html = richTextResolver(options).render(docFromStory);
+const html = richTextResolver(options).render(test);
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
+  <div class="this-div-is-on-purpose">
   ${html}
   </div>
 `;

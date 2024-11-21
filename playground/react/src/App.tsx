@@ -26,7 +26,11 @@ function convertStyleStringToObject(styleString: string) {
  * @param {React.ReactElement} element The React element to process.
  * @return {React.ReactElement} A new React element with converted attributes.
  */
-export function convertAttributesInElement(element: React.ReactElement): React.ReactElement {
+export function convertAttributesInElement(element: React.ReactElement | React.ReactElement[]): React.ReactElement | React.ReactElement[] {
+  if (Array.isArray(element)) {
+    return element.map(el => convertAttributesInElement(el)) as React.ReactElement[];
+  }
+
   // Base case: if the element is not a React element, return it unchanged.
   if (!React.isValidElement(element)) {
     return element;
@@ -51,6 +55,8 @@ export function convertAttributesInElement(element: React.ReactElement): React.R
     acc[mappedKey] = value;
     return acc;
   }, {});
+
+  newProps.key = (element.key as string);
 
   // Process children recursively.
   const children = React.Children.map((element.props as React.PropsWithChildren).children, child => convertAttributesInElement(child));
@@ -464,11 +470,11 @@ function App() {
     options,
   ).render(story.content.richtext);
 
-  // eslint-disable-next-line no-console
-  console.log(html);
+  // console.log(html);
 
   const formattedHtml = convertAttributesInElement(html);
 
+  console.log(formattedHtml);
   return (
     <>
       {formattedHtml}
