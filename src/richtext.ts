@@ -15,11 +15,15 @@ import { attrsToString, attrsToStyle, cleanObject, escapeHtml, SELF_CLOSING_TAGS
 function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, any> = {}, children?: T): T {
   const attrsString = attrsToString(attrs);
   const tagString = attrsString ? `${tag} ${attrsString}` : tag;
+  const content = Array.isArray(children) ? children.join('') : children || '';
 
-  if (SELF_CLOSING_TAGS.includes(tag)) {
+  if (!tag) {
+    return content as unknown as T;
+  }
+  else if (SELF_CLOSING_TAGS.includes(tag)) {
     return `<${tagString}>` as unknown as T;
   }
-  return `<${tagString}>${Array.isArray(children) ? children.join('') : children || ''}</${tag}>` as unknown as T;
+  return `<${tagString}>${content}</${tag}>` as unknown as T;
 }
 
 /**
@@ -40,6 +44,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     optimizeImages = false,
     keyedResolvers = false,
   } = options;
+  const isExternalRenderFn = renderFn !== defaultRenderFn;
 
   const nodeResolver = (tag: string): StoryblokRichTextNodeResolver<T> =>
     (node: StoryblokRichTextNode<T>): T => {
@@ -202,7 +207,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
   };
 
   const mergedResolvers = new Map<StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver<T>>([
-    [BlockTypes.DOCUMENT, nodeResolver('div')],
+    [BlockTypes.DOCUMENT, nodeResolver('')],
     [BlockTypes.HEADING, headingResolver],
     [BlockTypes.PARAGRAPH, nodeResolver('p')],
     [BlockTypes.UL_LIST, nodeResolver('ul')],
@@ -276,6 +281,9 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
    *
    */
   function render(node: StoryblokRichTextNode<T>): T {
+    if (node.type === 'doc') {
+      return isExternalRenderFn ? node.content.map(renderNode) as T : node.content.map(renderNode).join('') as T;
+    }
     return Array.isArray(node) ? node.map(renderNode) as T : renderNode(node) as T;
   }
 
