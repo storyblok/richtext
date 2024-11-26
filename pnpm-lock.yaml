@@ -3322,6 +3322,9 @@ packages:
   storyblok-js-client@6.10.1:
     resolution: {integrity: sha512-vfV6BRuE/elcpPDfhValfC2TkxPZzdAlWGhwo2piN8REaxbzeMmsKpQ7yENBrkQTGXFYxZWi39SCxgRrCGGj+w==}
 
+  storyblok-js-client@6.10.3:
+    resolution: {integrity: sha512-q6YK/f+F8PAJLsKR7jzlTRO9yIUXWLON2Fy02QjywYaSYwyS9ETzIuOtmCSstLrDAP5I+Vnw9PzEU30roxS15g==}
+
   string-argv@0.3.2:
     resolution: {integrity: sha512-aqD2Q0144Z+/RqG52NeHEkZauTAUWJO8c6yTftGJKO3Tja5tUgIfmIl6kExvhtxSDP7fXB6DvzkfMpCd/F3G+Q==}
     engines: {node: '>=0.6.19'}
@@ -4486,7 +4489,7 @@ snapshots:
   '@storyblok/js@3.1.6':
     dependencies:
       '@storyblok/richtext': 2.1.0
-      storyblok-js-client: 6.10.1
+      storyblok-js-client: 6.10.3
 
   '@storyblok/react@3.0.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -7319,6 +7322,8 @@ snapshots:
   stdin-discarder@0.2.2: {}
 
   storyblok-js-client@6.10.1: {}
+
+  storyblok-js-client@6.10.3: {}
 
   string-argv@0.3.2: {}
 
