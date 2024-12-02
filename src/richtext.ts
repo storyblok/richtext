@@ -185,20 +185,23 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
         // Assuming you are not using Vue Router in a vanilla implementation.
         // Directly link to the story URL.
         finalHref = href;
+        if (anchor) {
+          finalHref = `${finalHref}#${anchor}`;
+        }
         break;
       default:
         // Optional: Handle default case or log an error.
         finalHref = href;
         break;
     }
-    if (anchor) {
-      finalHref = `${finalHref}#${anchor}`;
-    }
-    const attrs: Record<string, any> = { ...rest, key: `a-${currentKey}` };
+    const attributes: Record<string, any> = { ...rest };
     if (finalHref) {
-      attrs.href = finalHref;
+      attributes.href = finalHref;
     }
-    return renderFn('a', attrs, node.text as any) as T;
+    if (keyedResolvers) {
+      attributes.key = `a-${currentKey}`;
+    }
+    return renderFn('a', attributes, node.text as any) as T;
   };
 
   const componentResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
