@@ -194,7 +194,11 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     if (anchor) {
       finalHref = `${finalHref}#${anchor}`;
     }
-    return renderFn('a', { ...rest, href: finalHref, key: `a-${currentKey}` }, node.text as any) as T;
+    const attrs: Record<string, any> = { ...rest, key: `a-${currentKey}` };
+    if (finalHref) {
+      attrs.href = finalHref;
+    }
+    return renderFn('a', attrs, node.text as any) as T;
   };
 
   const componentResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
