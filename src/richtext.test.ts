@@ -398,7 +398,7 @@ describe('richtext', () => {
         ],
       };
       const html = render(link as unknown as StoryblokRichTextNode<string>);
-      expect(html).toBe('<a target="_blank" href="https://alvarosaburido.dev" key="a-3">External link</a>');
+      expect(html).toBe('<a target="_blank" href="https://alvarosaburido.dev">External link</a>');
     });
 
     it('should render an anchor link', async () => {
@@ -410,15 +410,16 @@ describe('richtext', () => {
           {
             type: 'link',
             attrs: {
-              href: 'https://alvarosaburido.dev',
+              href: '/home',
               target: '_self',
               anchor: 'anchor',
+              linktype: 'story',
             },
           },
         ],
       };
       const html = render(link as unknown as StoryblokRichTextNode<string>);
-      expect(html).toBe('<a target="_self" href="#anchor" key="a-3">Anchor link</a>');
+      expect(html).toBe('<a target="_self" href="/home#anchor">Anchor link</a>');
     });
 
     it('should render an email link', async () => {
@@ -437,7 +438,7 @@ describe('richtext', () => {
         ],
       };
       const html = render(link as unknown as StoryblokRichTextNode<string>);
-      expect(html).toBe('<a href="mailto:hola@alvarosaburido.dev" key="a-3">hola@alvarosaburido.dev</a>');
+      expect(html).toBe('<a href="mailto:hola@alvarosaburido.dev">hola@alvarosaburido.dev</a>');
     });
 
     it('should render an internal link', async () => {
@@ -459,7 +460,7 @@ describe('richtext', () => {
         ],
       };
       const html = render(link as unknown as StoryblokRichTextNode<string>);
-      expect(html).toBe('<a uuid="2bbf3ee7-acbe-401c-ade5-cf33e6e0babb" target="_blank" href="/" key="a-3">Internal Link</a>');
+      expect(html).toBe('<a uuid="2bbf3ee7-acbe-401c-ade5-cf33e6e0babb" target="_blank" href="/">Internal Link</a>');
     });
 
     it('should render an asset link', async () => {
@@ -478,7 +479,65 @@ describe('richtext', () => {
         ],
       };
       const html = render(link as unknown as StoryblokRichTextNode<string>);
-      expect(html).toBe('<a href="https://a.storyblok.com/f/67536/400x303/ccbe9ca7b3/nuxt-logo.png" key="a-3">Asset link</a>');
+      expect(html).toBe('<a href="https://a.storyblok.com/f/67536/400x303/ccbe9ca7b3/nuxt-logo.png">Asset link</a>');
+    });
+
+    it('should render a key when keyedResolvers is set', async () => {
+      const { render } = richTextResolver({ keyedResolvers: true });
+      const link = {
+        text: 'Link text',
+        type: 'text',
+        marks: [
+          {
+            type: 'link',
+            attrs: {
+              href: 'https://url.com',
+              linktype: 'url',
+            },
+          },
+        ],
+      };
+      const html = render(link as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<a href="https://url.com" key="a-3">Link text</a>');
+    });
+
+    it('should not render href when is empty', async () => {
+      const { render } = richTextResolver({ });
+      const link: any = {
+        text: 'Link text',
+        type: 'text',
+        marks: [
+          {
+            type: 'link',
+            attrs: {
+              linktype: 'url',
+            },
+          },
+        ],
+      };
+      const html = render(link as unknown as StoryblokRichTextNode<string>);
+      link.marks[0].attrs.href = '';
+      const html2 = render(link as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<a>Link text</a>');
+      expect(html2).toBe('<a>Link text</a>');
+    });
+
+    it('should render as a URL when linktype is not defined', async () => {
+      const { render } = richTextResolver({ });
+      const link = {
+        text: 'Link text',
+        type: 'text',
+        marks: [
+          {
+            type: 'link',
+            attrs: {
+              href: 'https://url.com',
+            },
+          },
+        ],
+      };
+      const html = render(link as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<a href="https://url.com">Link text</a>');
     });
 
     it('should render a bold text', async () => {
