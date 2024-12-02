@@ -188,6 +188,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
         break;
       default:
         // Optional: Handle default case or log an error.
+        finalHref = href;
         break;
     }
     if (anchor) {
