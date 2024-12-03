@@ -83,6 +83,65 @@ const html = richTextResolver({
 }).render(doc);
 ```
 
+### Framework usage
+
+The `@storyblok/richtext` package is framework-agnostic and can be used with any frontend framework. Below are examples of how to use the package with different frameworks:
+
+### Vue
+
+> [!TIP]
+> For a better developer experience, use the correspondant APIs available in the framework SDK. Example `StoryblokRichtText` component in `@storyblok/vue`. See more [here](https://github.com/storyblok/storyblok-vue?tab=readme-ov-file#rendering-rich-text).
+
+```html
+<script setup>
+  import type { VNode } from 'vue';
+  import { createTextVNode, h } from 'vue';
+  import { BlockTypes, richTextResolver, type StoryblokRichTextNode, type StoryblokRichTextOptions } from '@storyblok/richtext';
+
+  const options: StoryblokRichTextOptions<VNode> = {
+    renderFn: h,
+    textFn: createTextVNode,
+    keyedResolvers: true,
+  };
+
+  const root = () => richTextResolver<VNode>(options).render(doc);
+</script>
+
+<template>
+  <root />
+</template>
+```
+
+### React
+
+> [!TIP]
+> For a better developer experience, use the correspondant APIs available in the framework SDK.  `StoryblokRichtText` component in `@storyblok/react` will be available [soon](https://github.com/storyblok/storyblok-react/pull/1243/files).
+
+```tsx
+import React from 'react';
+import { richTextResolver } from '@storyblok/richtext';
+
+const options: StoryblokRichTextOptions<ReactElement> = {
+  renderFn: React.createElement,
+  keyedResolvers: true,
+};
+
+const html = richTextResolver(
+  options,
+).render(doc);
+
+// Convert attributes in element to JSX. Refer to the `convertAttributesInElement` function in the playground/react
+const formattedHtml = convertAttributesInElement(html);
+
+return (
+  <>
+    {formattedHtml}
+  </>
+);
+```
+
+Refer to the [playground/react](/playground/react) for the complete example.
+
 ### Typing with Generics
 
 It is possible to ensure correct typing support in a framework-agnostic way by using [Typescript Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html)
