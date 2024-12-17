@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@storyblok/react": "^3.0.15",
+    "@storyblok/react": "^4.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.3.1"
   },
