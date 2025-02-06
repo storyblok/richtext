@@ -153,7 +153,7 @@ importers:
         version: link:../..
       '@storyblok/vue':
         specifier: ^8.1.4
-        version: 8.1.4
+        version: 8.1.10(vue@3.5.12(typescript@5.6.3))
       vue:
         specifier: ^3.4.21
         version: 3.5.12(typescript@5.6.3)
@@ -1124,9 +1124,6 @@ packages:
     resolution: {integrity: sha512-pCWhtDF1u0/LaWrsap0xxi9BvbNg+XWvYvYKcL9TJ2/JIR+idVGKSiIE9Yvq/fvSG0/wZ9gW6KWkBmi8qyr4xw==}
     peerDependencies:
       vue: '>=3.4'
-
-  '@storyblok/vue@8.1.4':
-    resolution: {integrity: sha512-q+5G4bV8hK9cY7n/3/8e+1D/CRON65upAQnpuN6GDhfstTS7DHW9963ALXNv9u8zUMifK8229m3kk2W5Ul+fzQ==}
 
   '@stylistic/eslint-plugin@2.9.0':
     resolution: {integrity: sha512-OrDyFAYjBT61122MIY1a3SfEgy3YCMgt2vL4eoPmvTwDBwyQhAXurxNQznlRD/jESNfYWfID8Ej+31LljvF7Xg==}
@@ -5013,14 +5010,15 @@ snapshots:
 
   '@storyblok/richtext@3.0.2': {}
 
+  '@storyblok/vue@8.1.10(vue@3.5.12(typescript@5.6.3))':
+    dependencies:
+      '@storyblok/js': 3.2.1
+      vue: 3.5.12(typescript@5.6.3)
+
   '@storyblok/vue@8.1.10(vue@3.5.13(typescript@5.7.3))':
     dependencies:
       '@storyblok/js': 3.2.1
       vue: 3.5.13(typescript@5.7.3)
-
-  '@storyblok/vue@8.1.4':
-    dependencies:
-      '@storyblok/js': 3.1.6
 
   '@stylistic/eslint-plugin@2.9.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.3)':
     dependencies:
