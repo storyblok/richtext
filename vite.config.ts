@@ -1,6 +1,4 @@
-/// <reference types="vitest" />
-
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vitest/config';
 import { lightGreen } from 'kolorist';
 import banner from 'vite-plugin-banner';
 import dts from 'vite-plugin-dts';
@@ -17,8 +15,8 @@ export default defineConfig({
     }),
     banner({
       content: `/**\n * name: ${pkg.name}\n * (c) ${new Date().getFullYear()}\n * description: ${pkg.description}\n * author: ${pkg.author}\n */`,
-    }),
-  ],
+    }) as unknown as Plugin,
+  ] as Plugin[],
   build: {
     lib: {
       entry: 'src/index.ts',
