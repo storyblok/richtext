@@ -345,6 +345,210 @@ describe('richtext', () => {
       const html = render(quote as unknown as StoryblokRichTextNode<string>);
       expect(html).toBe('<blockquote><p>Quote</p></blockquote>');
     });
+
+    it('should render a table', async () => {
+      const { render } = richTextResolver({});
+      const table = {
+        type: 'table',
+        content: [
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Cell 1',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Cell 2',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+      const html = render(table as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tr><td><p>Cell 1</p></td><td><p>Cell 2</p></td></tr></table>');
+    });
+
+    it('should render a table with colspan and rowspan', async () => {
+      const { render } = richTextResolver({});
+      const table = {
+        type: 'table',
+        content: [
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 2,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Merged Cell',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Cell 1',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Cell 2',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+      const html = render(table as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tr><td colspan="2"><p>Merged Cell</p></td></tr><tr><td><p>Cell 1</p></td><td><p>Cell 2</p></td></tr></table>');
+    });
+
+    it('should render a table with colwidth', async () => {
+      const { render } = richTextResolver({});
+      const table = {
+        type: 'table',
+        content: [
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: 200,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Fixed Width Cell',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+      const html = render(table as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tr><td style="width: 200px;"><p>Fixed Width Cell</p></td></tr></table>');
+    });
+
+    it('should render a table with keyed resolvers', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
+      const table = {
+        type: 'table',
+        content: [
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Cell 1',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+      const html = render(table as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table key="table-5"><tr key="tr-5"><td key="td-5"><p key="p-5">Cell 1</p></td></tr></table>');
+    });
   });
 
   describe('textTypes & MarksTypes', () => {
