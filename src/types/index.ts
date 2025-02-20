@@ -15,6 +15,7 @@ export enum BlockTypes {
   TABLE = 'table',
   TABLE_ROW = 'tableRow',
   TABLE_CELL = 'tableCell',
+  TABLE_HEADER = 'tableHeader',
 }
 
 export enum MarkTypes {

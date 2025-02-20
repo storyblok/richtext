@@ -236,7 +236,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
   };
 
   const tableCellResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
-    const { colspan, rowspan, colwidth, ...rest } = node.attrs || {};
+    const { colspan, rowspan, colwidth, backgroundColor, ...rest } = node.attrs || {};
     const attributes = {
       ...rest,
     };
@@ -249,8 +249,19 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
       attributes.rowspan = rowspan;
     }
 
+    // Handle both width and background color in style attribute
+    const styles: string[] = [];
+
     if (colwidth) {
-      attributes.style = `width: ${colwidth}px;`;
+      styles.push(`width: ${colwidth}px;`);
+    }
+
+    if (backgroundColor) {
+      styles.push(`background-color: ${backgroundColor};`);
+    }
+
+    if (styles.length > 0) {
+      attributes.style = styles.join(' ');
     }
 
     if (keyedResolvers) {
@@ -258,6 +269,42 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     }
 
     return renderFn('td', cleanObject(attributes), node.children) as T;
+  };
+
+  const tableHeaderResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
+    const { colspan, rowspan, colwidth, backgroundColor, ...rest } = node.attrs || {};
+    const attributes = {
+      ...rest,
+    };
+
+    if (colspan > 1) {
+      attributes.colspan = colspan;
+    }
+
+    if (rowspan > 1) {
+      attributes.rowspan = rowspan;
+    }
+
+    // Handle both width and background color in style attribute
+    const styles: string[] = [];
+
+    if (colwidth) {
+      styles.push(`width: ${colwidth}px;`);
+    }
+
+    if (backgroundColor) {
+      styles.push(`background-color: ${backgroundColor};`);
+    }
+
+    if (styles.length > 0) {
+      attributes.style = styles.join(' ');
+    }
+
+    if (keyedResolvers) {
+      attributes.key = `th-${currentKey}`;
+    }
+
+    return renderFn('th', cleanObject(attributes), node.children) as T;
   };
 
   const mergedResolvers = new Map<StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver<T>>([
@@ -290,6 +337,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     [BlockTypes.TABLE, tableResolver],
     [BlockTypes.TABLE_ROW, tableRowResolver],
     [BlockTypes.TABLE_CELL, tableCellResolver],
+    [BlockTypes.TABLE_HEADER, tableHeaderResolver],
     ...(Object.entries(resolvers).map(([type, resolver]) => [type as StoryblokRichTextNodeTypes, resolver])) as unknown as Array<[StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver<T>]>,
   ]);
 
