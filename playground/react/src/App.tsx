@@ -87,6 +87,8 @@ function App() {
     options,
   ).render(story.content.richtext);
 
+  console.log(html);
+
   const formattedHtml = convertAttributesInElement(html);
   return (
     <>

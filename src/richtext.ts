@@ -35,7 +35,8 @@ function defaultRenderFn<T = string | null>(tag: string, attrs: Record<string, a
  * @return {*}
  */
 export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
-  let currentKey = 0;
+  const keyCounters = new Map<string, number>();
+
   const {
     renderFn = defaultRenderFn,
     textFn = escapeHtml,
@@ -48,8 +49,9 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
   const createRenderContext = () => {
     const contextRenderFn = (tag: string, attrs: Record<string, any> = {}, children?: T): T => {
       if (keyedResolvers && tag) {
-        currentKey += 1;
-        attrs.key = `${tag}-${currentKey}`;
+        const currentCount = keyCounters.get(tag) || 0;
+        keyCounters.set(tag, currentCount + 1);
+        attrs.key = `${tag}-${currentCount}`;
       }
       return renderFn(tag, attrs, children);
     };
@@ -98,33 +100,20 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
       draggable: 'false',
       loading: 'lazy',
     }) as T;
-    const attributes: {
-      'data-type': string;
-      'data-name': string;
-      'data-emoji': string;
-      'key'?: string;
-    } = {
+
+    return context.render('span', {
       'data-type': 'emoji',
       'data-name': node.attrs?.name,
       'data-emoji': node.attrs?.emoji,
-    };
-
-    if (keyedResolvers) {
-      attributes.key = `emoji-${currentKey}`;
-    }
-
-    return context.render('span', attributes, internalImg) as T;
+    }, internalImg) as T;
   };
 
   const codeBlockResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>, context): T => {
-    return context.render('pre', {
-      ...node.attrs,
-      key: `code-${currentKey}`,
-    }, context.render('code', { key: `code-${currentKey}` }, node.children || '' as any)) as T;
+    return context.render('pre', node.attrs || {}, context.render('code', {}, node.children || '' as any),
+    ) as T;
   };
 
-  // Mark resolver for text formatting
-  const markResolver = (tag: string, styled = false): StoryblokRichTextNodeResolver<T> => ({ text, attrs }): T => {
+  const markResolver = (tag: string, styled = false): StoryblokRichTextNodeResolver<T> => ({ text, attrs }, context): T => {
     const { class: className, id: idName, ...styleAttrs } = attrs || {};
     const attributes = styled
       ? {
@@ -133,10 +122,8 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
           style: attrsToStyle(styleAttrs) || undefined,
         }
       : attrs || {};
-    if (keyedResolvers) {
-      attributes.key = `${tag}-${currentKey}`;
-    }
-    return renderFn(tag, cleanObject(attributes), text as any) as T;
+
+    return context.render(tag, cleanObject(attributes), text as any) as T;
   };
 
   const renderToT = (node: any): T => {
@@ -145,24 +132,19 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     return render(node) as unknown as T;
   };
 
-  // Resolver for plain text nodes
   const textResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>, context): T => {
     const { marks, ...rest } = node as TextNode<T>;
     if ('text' in node) {
-      // Now TypeScript knows that 'node' is a TextNode, so 'marks' can be accessed
       if (marks) {
         return marks.reduce(
           (text: T, mark: MarkNode<T>) => renderToT({ ...mark, text }) as T,
           renderToT({ ...rest, children: rest.children as T }) as T,
         );
       }
-      // Use context.render for text nodes when no marks
-      return context.render('span', {}, textFn(rest.text)) as T;
+      return textFn(rest.text) as T;
     }
     return '' as T;
   };
-
-  // Resolver for link nodes
 
   const linkResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>, context) => {
     const { linktype, href, anchor, ...rest } = node.attrs || {};
@@ -177,24 +159,18 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
         finalHref = `mailto:${href}`;
         break;
       case LinkTypes.STORY:
-        // Assuming you are not using Vue Router in a vanilla implementation.
-        // Directly link to the story URL.
         finalHref = href;
         if (anchor) {
           finalHref = `${finalHref}#${anchor}`;
         }
         break;
       default:
-        // Optional: Handle default case or log an error.
         finalHref = href;
         break;
     }
     const attributes: Record<string, any> = { ...rest };
     if (finalHref) {
       attributes.href = finalHref;
-    }
-    if (keyedResolvers) {
-      attributes.key = `a-${currentKey}`;
     }
     return context.render('a', attributes, node.text as any) as T;
   };
@@ -204,7 +180,6 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     return context.render('span', {
       blok: node?.attrs?.body[0],
       id: node.attrs?.id,
-      key: `component-${currentKey}`,
       style: 'display: none',
     }) as T;
   };
