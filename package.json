@@ -1,7 +1,7 @@
 {
   "name": "@storyblok/richtext",
   "type": "module",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "packageManager": "pnpm@10.2.0",
   "description": "Storyblok RichText Resolver",
   "author": "Alvaro Saburido <hola@alvarosaburido.dev> (https://github.com/alvarosabu/)",
@@ -80,14 +80,20 @@
     "vue": "^3.5.13"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["cypress"]
+    "onlyBuiltDependencies": [
+      "cypress"
+    ]
   },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
     ],
     "rules": {
-      "body-max-line-length": [2, "always", 200]
+      "body-max-line-length": [
+        2,
+        "always",
+        200
+      ]
     }
   }
 }
