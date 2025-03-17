@@ -12,6 +12,10 @@ export enum BlockTypes {
   IMAGE = 'image',
   EMOJI = 'emoji',
   COMPONENT = 'blok',
+  TABLE = 'table',
+  TABLE_ROW = 'tableRow',
+  TABLE_CELL = 'tableCell',
+  TABLE_HEADER = 'tableHeader',
 }
 
 export enum MarkTypes {

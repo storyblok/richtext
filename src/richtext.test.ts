@@ -345,6 +345,380 @@ describe('richtext', () => {
       const html = render(quote as unknown as StoryblokRichTextNode<string>);
       expect(html).toBe('<blockquote><p>Quote</p></blockquote>');
     });
+
+    it('should render a table', async () => {
+      const { render } = richTextResolver({});
+      const table = {
+        type: 'table',
+        content: [
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Cell 1',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Cell 2',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+      const html = render(table as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tr><td><p>Cell 1</p></td><td><p>Cell 2</p></td></tr></table>');
+    });
+
+    it('should render a table with colspan and rowspan', async () => {
+      const { render } = richTextResolver({});
+      const table = {
+        type: 'table',
+        content: [
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 2,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Merged Cell',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Cell 1',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Cell 2',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+      const html = render(table as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tr><td colspan="2"><p>Merged Cell</p></td></tr><tr><td><p>Cell 1</p></td><td><p>Cell 2</p></td></tr></table>');
+    });
+
+    it('should render a table with colwidth', async () => {
+      const { render } = richTextResolver({});
+      const table = {
+        type: 'table',
+        content: [
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: 200,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Fixed Width Cell',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+      const html = render(table as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tr><td style="width: 200px;"><p>Fixed Width Cell</p></td></tr></table>');
+    });
+
+    it('should render a table with keyed resolvers', async () => {
+      const { render } = richTextResolver({
+        keyedResolvers: true,
+      });
+      const table = {
+        type: 'table',
+        content: [
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Cell 1',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+      const html = render(table as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table key="table-5"><tr key="tr-5"><td key="td-5"><p key="p-5">Cell 1</p></td></tr></table>');
+    });
+
+    it('should render a table cell with background color', async () => {
+      const { render } = richTextResolver({});
+      const table = {
+        type: 'table',
+        content: [
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                  backgroundColor: '#F11F1F',
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Colored Cell',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+      const html = render(table as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tr><td style="background-color: #F11F1F;"><p>Colored Cell</p></td></tr></table>');
+    });
+
+    it('should render a table cell with both width and background color', async () => {
+      const { render } = richTextResolver({});
+      const table = {
+        type: 'table',
+        content: [
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: 200,
+                  backgroundColor: '#F11F1F',
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Styled Cell',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+      const html = render(table as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tr><td style="width: 200px; background-color: #F11F1F;"><p>Styled Cell</p></td></tr></table>');
+    });
+
+    it('should render a table with header cells', async () => {
+      const { render } = richTextResolver({});
+      const table = {
+        type: 'table',
+        content: [
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableHeader',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                  backgroundColor: '#F5F5F5',
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Header Cell',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: 'tableHeader',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Another Header',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: 'tableRow',
+            content: [
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Regular Cell',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: 'tableCell',
+                attrs: {
+                  colspan: 1,
+                  rowspan: 1,
+                  colwidth: null,
+                },
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      {
+                        text: 'Another Cell',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+      const html = render(table as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tr><th style="background-color: #F5F5F5;"><p>Header Cell</p></th><th><p>Another Header</p></th></tr><tr><td><p>Regular Cell</p></td><td><p>Another Cell</p></td></tr></table>');
+    });
   });
 
   describe('textTypes & MarksTypes', () => {
