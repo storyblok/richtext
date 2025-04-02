@@ -243,7 +243,7 @@ export interface StoryblokRichTextOptions<T = string, S = (tag: string, attrs: R
    * }
    * ```
    */
-  textFn?: (text: string) => T;
+  textFn?: (text: string, attrs?: Record<string, any>) => T;
 
   /**
    * Defines the resolvers for each type of node.

@@ -132,7 +132,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     return render(node) as unknown as T;
   };
 
-  const textResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>, context): T => {
+  const textResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
     const { marks, ...rest } = node as TextNode<T>;
     if ('text' in node) {
       if (marks) {
@@ -141,7 +141,13 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
           renderToT({ ...rest, children: rest.children as T }) as T,
         );
       }
-      return textFn(rest.text) as T;
+      const attributes = node.attrs || {};
+      if (keyedResolvers) {
+        const currentCount = keyCounters.get('txt') || 0;
+        keyCounters.set('txt', currentCount + 1);
+        attributes.key = `${'txt'}-${currentCount}`;
+      }
+      return textFn(rest.text, attributes) as T;
     }
     return '' as T;
   };
@@ -184,28 +190,20 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     }) as T;
   };
 
-  const tableResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
+  const tableResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>, context): T => {
     const attributes: Record<string, unknown> = {
     };
 
-    if (keyedResolvers) {
-      attributes.key = `table-${currentKey}`;
-    }
-
-    return renderFn('table', attributes, node.children) as T;
+    return context.render('table', attributes, node.children) as T;
   };
 
-  const tableRowResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
+  const tableRowResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>, context): T => {
     const attributes: Record<string, unknown> = {};
 
-    if (keyedResolvers) {
-      attributes.key = `tr-${currentKey}`;
-    }
-
-    return renderFn('tr', attributes, node.children) as T;
+    return context.render('tr', attributes, node.children) as T;
   };
 
-  const tableCellResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
+  const tableCellResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>, context): T => {
     const { colspan, rowspan, colwidth, backgroundColor, ...rest } = node.attrs || {};
     const attributes = {
       ...rest,
@@ -234,14 +232,10 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
       attributes.style = styles.join(' ');
     }
 
-    if (keyedResolvers) {
-      attributes.key = `td-${currentKey}`;
-    }
-
-    return renderFn('td', cleanObject(attributes), node.children) as T;
+    return context.render('td', cleanObject(attributes), node.children) as T;
   };
 
-  const tableHeaderResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
+  const tableHeaderResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>, context): T => {
     const { colspan, rowspan, colwidth, backgroundColor, ...rest } = node.attrs || {};
     const attributes = {
       ...rest,
@@ -270,11 +264,7 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
       attributes.style = styles.join(' ');
     }
 
-    if (keyedResolvers) {
-      attributes.key = `th-${currentKey}`;
-    }
-
-    return renderFn('th', cleanObject(attributes), node.children) as T;
+    return context.render('th', cleanObject(attributes), node.children) as T;
   };
 
   const mergedResolvers = new Map<StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver<T>>([

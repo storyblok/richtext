@@ -1,4 +1,4 @@
-import { BlockTypes, richTextResolver, type StoryblokRichTextContext, type StoryblokRichTextNode, type StoryblokRichTextOptions } from '@storyblok/richtext';
+import { BlockTypes, richTextResolver, type StoryblokRichTextNode, type StoryblokRichTextOptions } from '@storyblok/richtext';
 import { useStoryblok } from '@storyblok/react';
 import './App.css';
 import type { ReactElement } from 'react';
@@ -65,6 +65,16 @@ export function convertAttributesInElement(element: React.ReactElement | React.R
   return newElement;
 }
 
+/* const doc = {
+  type: 'doc',
+  content: [
+    {
+      type: 'paragraph',
+      content: [{ type: 'text', text: 'Hello, world!' }],
+    },
+  ],
+}; */
+
 function App() {
   const story = useStoryblok('home', { version: 'draft' });
 
@@ -74,22 +84,21 @@ function App() {
 
   const options: StoryblokRichTextOptions<ReactElement> = {
     renderFn: React.createElement,
-    textFn: (text: string, attributes: Record<string, unknown>) => React.createElement(React.Fragment, attributes, text),
+    textFn: (text: string, attrs?: Record<string, any>) => React.createElement(React.Fragment, attrs, text),
     keyedResolvers: true,
     resolvers: {
       [BlockTypes.LIST_ITEM]: (node: StoryblokRichTextNode<ReactElement>, ctx: StoryblokRichTextContext<ReactElement>) => {
-        return ctx.render('li', {}, node.children[0].props.children);
+        return ctx.render('li', {}, node?.children[0]?.props.children);
       },
     },
   };
 
-  const html = richTextResolver(
+  const html = richTextResolver<ReactElement>(
     options,
   ).render(story.content.richtext);
 
-  console.log(html);
-
   const formattedHtml = convertAttributesInElement(html);
+
   return (
     <>
       {formattedHtml}

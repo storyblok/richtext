@@ -548,7 +548,7 @@ describe('richtext', () => {
         ],
       };
       const html = render(table as StoryblokRichTextNode<string>);
-      expect(html).toBe('<table key="table-5"><tr key="tr-5"><td key="td-5"><p key="p-5">Cell 1</p></td></tr></table>');
+      expect(html).toBe('<table key="table-0"><tr key="tr-0"><td key="td-0"><p key="p-0">Cell 1</p></td></tr></table>');
     });
 
     it('should render a table cell with background color', async () => {
