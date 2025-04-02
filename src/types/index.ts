@@ -98,12 +98,30 @@ export interface TextNode<T = string> extends StoryblokRichTextNode<T> {
 }
 
 /**
+ * Represents the render context provided to resolvers
+ * @template T - The type of the resolved value
+ */
+export interface StoryblokRichTextContext<T = string> {
+  /**
+   * Render function that automatically handles key generation
+   * @param tag - The HTML tag to render
+   * @param attrs - The attributes for the tag
+   * @param children - Optional children content
+   */
+  render: (tag: string, attrs?: Record<string, any>, children?: T) => T;
+}
+
+/**
  * Represents a resolver function for a Storyblok rich text node.
  * @template T - The type of the resolved value.
  * @param node - The rich text node to resolve.
+ * @param context - The render context with utilities
  * @returns The resolved value of type T.
  */
-export type StoryblokRichTextNodeResolver<T = string> = (node: StoryblokRichTextNode<T> | TextNode<T> | MarkNode<T> | LinkNode<T>) => T;
+export type StoryblokRichTextNodeResolver<T = string> = (
+  node: StoryblokRichTextNode<T> | TextNode<T> | MarkNode<T> | LinkNode<T>,
+  context: StoryblokRichTextContext<T>
+) => T;
 
 /**
  * Represents the configuration options for optimizing images in rich text content.
@@ -225,7 +243,7 @@ export interface StoryblokRichTextOptions<T = string, S = (tag: string, attrs: R
    * }
    * ```
    */
-  textFn?: (text: string) => T;
+  textFn?: (text: string, attrs?: Record<string, any>) => T;
 
   /**
    * Defines the resolvers for each type of node.
