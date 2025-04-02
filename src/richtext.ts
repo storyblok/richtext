@@ -184,6 +184,99 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     }) as T;
   };
 
+  const tableResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
+    const attributes: Record<string, unknown> = {
+    };
+
+    if (keyedResolvers) {
+      attributes.key = `table-${currentKey}`;
+    }
+
+    return renderFn('table', attributes, node.children) as T;
+  };
+
+  const tableRowResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
+    const attributes: Record<string, unknown> = {};
+
+    if (keyedResolvers) {
+      attributes.key = `tr-${currentKey}`;
+    }
+
+    return renderFn('tr', attributes, node.children) as T;
+  };
+
+  const tableCellResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
+    const { colspan, rowspan, colwidth, backgroundColor, ...rest } = node.attrs || {};
+    const attributes = {
+      ...rest,
+    };
+
+    if (colspan > 1) {
+      attributes.colspan = colspan;
+    }
+
+    if (rowspan > 1) {
+      attributes.rowspan = rowspan;
+    }
+
+    // Handle both width and background color in style attribute
+    const styles: string[] = [];
+
+    if (colwidth) {
+      styles.push(`width: ${colwidth}px;`);
+    }
+
+    if (backgroundColor) {
+      styles.push(`background-color: ${backgroundColor};`);
+    }
+
+    if (styles.length > 0) {
+      attributes.style = styles.join(' ');
+    }
+
+    if (keyedResolvers) {
+      attributes.key = `td-${currentKey}`;
+    }
+
+    return renderFn('td', cleanObject(attributes), node.children) as T;
+  };
+
+  const tableHeaderResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
+    const { colspan, rowspan, colwidth, backgroundColor, ...rest } = node.attrs || {};
+    const attributes = {
+      ...rest,
+    };
+
+    if (colspan > 1) {
+      attributes.colspan = colspan;
+    }
+
+    if (rowspan > 1) {
+      attributes.rowspan = rowspan;
+    }
+
+    // Handle both width and background color in style attribute
+    const styles: string[] = [];
+
+    if (colwidth) {
+      styles.push(`width: ${colwidth}px;`);
+    }
+
+    if (backgroundColor) {
+      styles.push(`background-color: ${backgroundColor};`);
+    }
+
+    if (styles.length > 0) {
+      attributes.style = styles.join(' ');
+    }
+
+    if (keyedResolvers) {
+      attributes.key = `th-${currentKey}`;
+    }
+
+    return renderFn('th', cleanObject(attributes), node.children) as T;
+  };
+
   const mergedResolvers = new Map<StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver<T>>([
     [BlockTypes.DOCUMENT, nodeResolver('')],
     [BlockTypes.HEADING, headingResolver],
@@ -211,6 +304,10 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
     [MarkTypes.SUPERSCRIPT, markResolver('sup')],
     [MarkTypes.SUBSCRIPT, markResolver('sub')],
     [MarkTypes.HIGHLIGHT, markResolver('mark')],
+    [BlockTypes.TABLE, tableResolver],
+    [BlockTypes.TABLE_ROW, tableRowResolver],
+    [BlockTypes.TABLE_CELL, tableCellResolver],
+    [BlockTypes.TABLE_HEADER, tableHeaderResolver],
     ...(Object.entries(resolvers).map(([type, resolver]) => [type as StoryblokRichTextNodeTypes, resolver])) as unknown as Array<[StoryblokRichTextNodeTypes, StoryblokRichTextNodeResolver<T>]>,
   ]);
 

@@ -1,7 +1,7 @@
 {
   "name": "@storyblok/richtext",
   "type": "module",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "packageManager": "pnpm@10.2.0",
   "description": "Storyblok RichText Resolver",
   "author": "Alvaro Saburido <hola@alvarosaburido.dev> (https://github.com/alvarosabu/)",
@@ -52,7 +52,8 @@
     "playground:react": "cd playground/react && npm run dev",
     "playground:all": "pnpm -r --parallel --filter='./playground/*' run dev",
     "release": "release-it",
-    "release:dry": "release-it --dry-run"
+    "release:dry": "release-it --dry-run",
+    "check-licenses": "node scripts/license-checker.mjs"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.7.1",
@@ -66,6 +67,7 @@
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-vue": "^9.32.0",
     "kolorist": "^1.8.0",
+    "license-checker": "^25.0.1",
     "lint-staged": "^15.4.3",
     "pathe": "^2.0.2",
     "prettier": "^3.4.2",
@@ -73,21 +75,27 @@
     "typescript": "^5.7.3",
     "vite": "^5.4.14",
     "vite-plugin-banner": "^0.8.0",
-    "vite-plugin-dts": "4.5.0",
+    "vite-plugin-dts": "4.5.3",
     "vite-plugin-inspect": "^10.1.0",
     "vite-plugin-qrcode": "^0.2.4",
     "vitest": "^3.0.5",
     "vue": "^3.5.13"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["cypress"]
+    "onlyBuiltDependencies": [
+      "cypress"
+    ]
   },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
     ],
     "rules": {
-      "body-max-line-length": [2, "always", 200]
+      "body-max-line-length": [
+        2,
+        "always",
+        200
+      ]
     }
   }
 }

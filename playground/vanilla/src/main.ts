@@ -400,6 +400,268 @@ import StoryblokClient from 'storyblok-js-client';
   ],
 }; */
 
+/* const tableDoc: StoryblokRichTextDocumentNode = {
+  type: 'doc',
+  content: [
+    {
+      type: 'table',
+      content: [
+        {
+          type: 'tableRow',
+          content: [
+            {
+              type: 'tableCell',
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: null,
+              },
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      text: 'Header 1',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'tableCell',
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: null,
+              },
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      text: 'Header  2',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'tableCell',
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: null,
+              },
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      text: 'Header 3',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'tableRow',
+          content: [
+            {
+              type: 'tableCell',
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: null,
+              },
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      text: 'R1C1',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'tableCell',
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: null,
+              },
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      text: 'R1C2',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'tableCell',
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: null,
+              },
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      text: 'R1C3',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'tableRow',
+          content: [
+            {
+              type: 'tableCell',
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: null,
+              },
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      text: 'R2C1',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'tableCell',
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: null,
+              },
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      text: 'R2C2',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'tableCell',
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: null,
+              },
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      text: 'R2C3',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'tableRow',
+          content: [
+            {
+              type: 'tableCell',
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: null,
+              },
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      text: 'R3C1',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'tableCell',
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: null,
+              },
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      text: 'R3C2',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'tableCell',
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: null,
+              },
+              content: [
+                {
+                  type: 'paragraph',
+                  content: [
+                    {
+                      text: 'R3C3',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'paragraph',
+    },
+  ],
+}; */
+
 // Storyblok
 
 const client = new StoryblokClient({
