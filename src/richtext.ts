@@ -215,14 +215,15 @@ export function richTextResolver<T>(options: StoryblokRichTextOptions<T> = {}) {
   };
 
   const tableResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {
-    const attributes: Record<string, unknown> = {
-    };
+    const attributes: Record<string, unknown> = {};
 
     if (keyedResolvers) {
       attributes.key = `table-${currentKey}`;
     }
 
-    return renderFn('table', attributes, node.children) as T;
+    // Wrap children in tbody to ensure proper table structure
+    const tableBody = renderFn('tbody', { key: `tbody-${currentKey}` }, node.children) as T;
+    return renderFn('table', attributes, tableBody) as T;
   };
 
   const tableRowResolver: StoryblokRichTextNodeResolver<T> = (node: StoryblokRichTextNode<T>): T => {

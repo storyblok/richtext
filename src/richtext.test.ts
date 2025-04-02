@@ -396,8 +396,8 @@ describe('richtext', () => {
           },
         ],
       };
-      const html = render(table as StoryblokRichTextNode<string>);
-      expect(html).toBe('<table><tr><td><p>Cell 1</p></td><td><p>Cell 2</p></td></tr></table>');
+      const html = render(table as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tbody key="tbody-8"><tr><td><p>Cell 1</p></td><td><p>Cell 2</p></td></tr></tbody></table>');
     });
 
     it('should render a table with colspan and rowspan', async () => {
@@ -474,8 +474,8 @@ describe('richtext', () => {
           },
         ],
       };
-      const html = render(table as StoryblokRichTextNode<string>);
-      expect(html).toBe('<table><tr><td colspan="2"><p>Merged Cell</p></td></tr><tr><td><p>Cell 1</p></td><td><p>Cell 2</p></td></tr></table>');
+      const html = render(table as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tbody key="tbody-12"><tr><td colspan="2"><p>Merged Cell</p></td></tr><tr><td><p>Cell 1</p></td><td><p>Cell 2</p></td></tr></tbody></table>');
     });
 
     it('should render a table with colwidth', async () => {
@@ -509,8 +509,8 @@ describe('richtext', () => {
           },
         ],
       };
-      const html = render(table as StoryblokRichTextNode<string>);
-      expect(html).toBe('<table><tr><td style="width: 200px;"><p>Fixed Width Cell</p></td></tr></table>');
+      const html = render(table as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tbody key="tbody-5"><tr><td style="width: 200px;"><p>Fixed Width Cell</p></td></tr></tbody></table>');
     });
 
     it('should render a table with keyed resolvers', async () => {
@@ -546,8 +546,8 @@ describe('richtext', () => {
           },
         ],
       };
-      const html = render(table as StoryblokRichTextNode<string>);
-      expect(html).toBe('<table key="table-5"><tr key="tr-5"><td key="td-5"><p key="p-5">Cell 1</p></td></tr></table>');
+      const html = render(table as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table key="table-5"><tbody key="tbody-5"><tr key="tr-5"><td key="td-5"><p key="p-5">Cell 1</p></td></tr></tbody></table>');
     });
 
     it('should render a table cell with background color', async () => {
@@ -582,8 +582,8 @@ describe('richtext', () => {
           },
         ],
       };
-      const html = render(table as StoryblokRichTextNode<string>);
-      expect(html).toBe('<table><tr><td style="background-color: #F11F1F;"><p>Colored Cell</p></td></tr></table>');
+      const html = render(table as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tbody key="tbody-5"><tr><td style="background-color: #F11F1F;"><p>Colored Cell</p></td></tr></tbody></table>');
     });
 
     it('should render a table cell with both width and background color', async () => {
@@ -618,8 +618,8 @@ describe('richtext', () => {
           },
         ],
       };
-      const html = render(table as StoryblokRichTextNode<string>);
-      expect(html).toBe('<table><tr><td style="width: 200px; background-color: #F11F1F;"><p>Styled Cell</p></td></tr></table>');
+      const html = render(table as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tbody key="tbody-5"><tr><td style="width: 200px; background-color: #F11F1F;"><p>Styled Cell</p></td></tr></tbody></table>');
     });
 
     it('should render a table with header cells', async () => {
@@ -716,8 +716,8 @@ describe('richtext', () => {
           },
         ],
       };
-      const html = render(table as StoryblokRichTextNode<string>);
-      expect(html).toBe('<table><tr><th style="background-color: #F5F5F5;"><p>Header Cell</p></th><th><p>Another Header</p></th></tr><tr><td><p>Regular Cell</p></td><td><p>Another Cell</p></td></tr></table>');
+      const html = render(table as unknown as StoryblokRichTextNode<string>);
+      expect(html).toBe('<table><tbody key="tbody-15"><tr><th style="background-color: #F5F5F5;"><p>Header Cell</p></th><th><p>Another Header</p></th></tr><tr><td><p>Regular Cell</p></td><td><p>Another Cell</p></td></tr></tbody></table>');
     });
   });
 
