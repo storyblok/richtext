@@ -375,6 +375,7 @@ const story = await useStoryblok('/home', {
 const options: StoryblokRichTextOptions<VNode> = {
   renderFn: h,
   textFn: createTextVNode,
+  keyedResolvers: true,
   resolvers: {
     [BlockTypes.CODE_BLOCK]: (node: StoryblokRichTextNode<VNode>) => {
       return h(CodeBlock, {
