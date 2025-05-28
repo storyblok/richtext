@@ -66,8 +66,7 @@ Make sure the playground project has the root project as a dependency using `wor
 Use the Google Chrome developer tools to debug the package from the playground project by resolving the package from the local file system in your `vite.config.ts` file. Example:
 
 ```ts
-import { defineConfig } from 'vite'
-
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   resolve: {
@@ -75,7 +74,7 @@ export default defineConfig({
       '@storyblok/richtext': resolve(__dirname, '../src/index.ts'),
     },
   },
-})
+});
 ```
 
 ## Test
@@ -85,7 +84,6 @@ export default defineConfig({
 ```bash
 pnpm test
 ```
-
 
 ## Community
 
@@ -104,9 +102,9 @@ For bugs or feature requests, please [submit an issue](https://github.com/storyb
 > [!IMPORTANT]
 > Please search existing issues before submitting a new one. Issues without a minimal reproducible example will be closed. [Why reproductions are Required](https://antfu.me/posts/why-reproductions-are-required).
 
-### I can't share my company project code 
+### I can't share my company project code
 
-We understand that you might not be able to share your company's project code. Please provide a minimal reproducible example that demonstrates the issue by using tools like [Stackblitz](https://stackblitz.com) or a link to a Github Repo lease make sure you include a README file with the instructions to build and run the project, important not to include any access token, password or personal information of any kind. 
+We understand that you might not be able to share your company's project code. Please provide a minimal reproducible example that demonstrates the issue by using tools like [Stackblitz](https://stackblitz.com) or a link to a Github Repo lease make sure you include a README file with the instructions to build and run the project, important not to include any access token, password or personal information of any kind.
 
 ### I only have a question
 
