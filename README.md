@@ -4,7 +4,7 @@
 
 <h1 align="center">@storyblok/richtext</h1>
  <p>
-     The JavaScript SDK to interact with <a href="http://www.storyblok.com?utm_source=github.com&utm_medium=readme&utm_campaign=storyblok-richtext" target="_blank">Storyblok API</a> and enable the <a href="https://www.storyblok.com/docs/guide/essentials/visual-editor?utm_source=github.com&utm_medium=readme&utm_campaign=storyblok-richtext" target="_blank">Real-time Visual Editing Experience</a>.
+    Official utility designed to convert rich text content—stored in JSON format within Storyblok's CMS—into HTML or framework-specific renderable elements
   </p>
   <br />
 </div>
@@ -29,9 +29,13 @@
 
 ## Features
 
-- Fetch content from the Content Delivery API
-- Connect frontend components with the Visual Editor via StoryblokBridge
-- Render rich text content with the Storyblok Rich Text Renderer based on `@storyblok/richtext`
+- **Framework-Agnostic Rendering**: Outputs raw HTML by default but can be configured to produce framework-specific elements, such as React components or Vue nodes.
+- **Custom Resolvers**: Allows developers to override default rendering behavior for specific elements like links, images, and embedded components. This enables integration with custom components or styling frameworks like Tailwind CSS. 
+Storyblok
+- **Image Optimization**: Supports image optimization options, including lazy loading, responsive sizing, and format conversion (e.g., to WebP), enhancing performance and user experience. 
+Storyblok
+- **TypeScript Support**: Provides full TypeScript typings with generics, ensuring type safety and improved developer experience across different frameworks. 
+
 
 ## Documentation
 
