@@ -6,7 +6,7 @@ Thank you for considering contributing to this package. Please take a moment to 
 
 Find useful these guidelines and set of recommendations to help improving this library.
 
-## Setup
+### Setup
 
 This package relies on [pnpm workspaces](https://pnpm.io/workspaces) to manage dependencies. For instructions on how to install pnpm, please visit [pnpm.io](https://pnpm.io/installation).
 
@@ -14,13 +14,13 @@ This package relies on [pnpm workspaces](https://pnpm.io/workspaces) to manage d
 pnpm install
 ```
 
-## Build
+### Build
 
 ```bash
 pnpm build
 ```
 
-## Development
+### Development
 
 We strongly recommend using the `playgrounds` within the package to develop and manually test the package.
 
@@ -46,7 +46,7 @@ export default defineConfig({
 });
 ```
 
-## Test
+### Test
 
 Depending on the package, you might have a combination of unit tests, integration tests, and/or end-to-end tests. Make sure to check `scripts` in `package.json` and run the right command, like:
 
