@@ -27,8 +27,10 @@ We strongly recommend using the `playgrounds` within the package to develop and 
 Make sure the playground project has the root project as a dependency using `workspace:^` in the `package.json`:
 
 ```json
-"dependencies": {
-  "@storyblok/richtext": "workspace:^"
+{
+  "dependencies": {
+    "@storyblok/richtext": "workspace:^"
+  }
 }
 ```
 
