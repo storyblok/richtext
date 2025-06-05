@@ -146,7 +146,7 @@ importers:
         version: link:../..
       storyblok-js-client:
         specifier: ^6.10.1
-        version: 6.10.7
+        version: 6.11.0
     devDependencies:
       typescript:
         specifier: ^5.6.3
@@ -4620,8 +4620,8 @@ packages:
   storyblok-js-client@6.10.11:
     resolution: {integrity: sha512-4FuGbQ93X7Ok1hvTRvMy/p4bfX/3C+Uw/m7Mv+wGZyX22IGdCe01qdwgD3CP1F9l5C0lEFCsWxc2PloiM9NutA==}
 
-  storyblok-js-client@6.10.7:
-    resolution: {integrity: sha512-4AdVrJxemKowvsCi+gPIZCo3/5k7JDZzOZ7HBY+GqnhhutcfqE9GvtIeg4INsOibz77XdwcJ8J6u2+Cn7bMeuw==}
+  storyblok-js-client@6.11.0:
+    resolution: {integrity: sha512-2uhd/VA51AB88XoqQ+rw9JqkWNoPl2ydg+J49w+2KBqqFvV2EtUhrS2umnabU8sD7HftFsMg0n69EWhkeDyM/A==}
 
   storyblok-js-client@7.0.0:
     resolution: {integrity: sha512-00zWW3jscL4W1kek9QCrInq1jw4xwjeM0jXuKg4sa/bCT8QuLGaGU9Wn3hat/hkvZLRFC09fV4sJRxDqwsFaKQ==}
@@ -10189,7 +10189,7 @@ snapshots:
 
   storyblok-js-client@6.10.11: {}
 
-  storyblok-js-client@6.10.7: {}
+  storyblok-js-client@6.11.0: {}
 
   storyblok-js-client@7.0.0: {}
 
