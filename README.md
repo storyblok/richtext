@@ -5,7 +5,7 @@
 > 
 > **⚠️ This repository has been archived and is no longer maintained. Development has moved to the monorepo.**
 > 
-> **New Location**: You can now find this package at [packages/richtext](https://github.com/storyblok/monoblok/tree/main/packages/rich-text)
+> **New Location**: You can now find this package at [packages/richtext](https://github.com/storyblok/monoblok/tree/main/packages/richtext)
 > 
 > Please visit the monorepo for the latest updates, issues, and contributions.
 <div align="center">
